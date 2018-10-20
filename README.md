@@ -9,7 +9,7 @@ rendering is turned on.
 If whitespace rendering is turned on, you will see symbol for either LF (`↓`),
 CRLF (`↵`), or CR (`←`).
 
-![Screenshot](images/screenshot.gif)
+![Screenshot](https://raw.githubusercontent.com/medo64/render-crlf/master/images/screenshot.gif)
 
 
 ## Extension Settings
