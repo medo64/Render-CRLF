@@ -1,0 +1,57 @@
+{
+    "name": "render-crlf",
+    "displayName": "Render CRLF",
+    "description": "Display end-of line characters when render whitespace is turned on.",
+    "version": "1.0.0",
+    "publisher": "medo64",
+	"repository": {
+		"url": "https://github.com/medo64/render-crlf/"
+	},
+	"license": "MIT",
+    "engines": {
+        "vscode": "^1.28.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "*"
+    ],
+    "main": "./out/extension",
+    "contributes": {
+        "configuration": [
+            {
+                "type": "object",
+                "title": "End-of-Line Character Configuration",
+                "properties": {
+                    "code-eol.newlineCharacter": {
+                        "description": "Character used to display LF (line-feed) line ending (aka Linux/Mac line ending).",
+                        "type": [ "string", "null" ],
+                        "default": "↓"
+                    },
+                    "code-eol.returnCharacter": {
+                        "description": "Character used to display CR (carriage-return) line ending (aka old Macintosh line ending).",
+                        "type": [ "string", "null" ],
+                        "default": "←"
+                    },
+                    "code-eol.crlfCharacter": {
+                        "description": "Character used to display CRLF (carriage-return, line-feed) line ending (aka Windows line ending).",
+                        "type": [ "string", "null" ],
+                        "default": "↵"
+                    }
+                }
+            }
+        ]
+    },
+    "scripts": {
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.21",
+        "eslint": "^4.11.0",
+        "@types/node": "^8.10.25",
+        "@types/mocha": "^2.2.42"
+    }
+}

@@ -1,0 +1,8 @@
+.gitignore
+.eslintrc.json
+jsconfig.json
+vsc-extension-quickstart.md
+
+.vscode/**
+.vscode-test/**
+test/**
