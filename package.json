@@ -1,7 +1,7 @@
 {
     "name": "render-crlf",
     "displayName": "Render CRLF",
-    "description": "Display end-of line characters when render whitespace is turned on.",
+    "description": "Displays LF/CR/CRLF end-of-line (EOL) symbols when render whitespace is turned on.",
     "version": "1.0.0",
     "publisher": "medo64",
 	"repository": {
