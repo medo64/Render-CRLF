@@ -17,15 +17,11 @@ CRLF (`↵`), or CR (`←`).
 This extension contributes the following settings (compatible with `code-eol`
 extension):
 
-* `code-eol.newlineCharacter`: Character used to display LF (line-feed) line
-                               ending (aka Linux/Mac line ending).
+* `code-eol.newlineCharacter`: Character used to display LF (line-feed) line ending (aka Linux/Mac line ending).
 
-* `code-eol.returnCharacter`: Character used to display CR (carriage-return)
-                              line ending (aka old Macintosh line ending).
+* `code-eol.returnCharacter`: Character used to display CR (carriage-return) line ending (aka old Macintosh line ending).
 
-* `code-eol.code-eol.crlfCharacter`: Character used to display CRLF
-                                     (carriage-return, line-feed) line ending
-                                     (aka Windows line ending).
+* `code-eol.code-eol.crlfCharacter`: Character used to display CRLF (carriage-return, line-feed) line ending (aka Windows line ending).
 
 Color is taken from `editorWhitespace.foreground` theme color (also used by
 Visual Studio Code to color whitespace symbols).
@@ -53,8 +49,7 @@ based on https://github.com/sohamkamani/code-eol. Major credit goes to them.
 
 ### Whats improved?
 
-1. Visibility of EOL is taken from `editor.renderwhitespace` that's conviniently
-   controlled by `View`, `Toogle Render Whitespace`.
+1. Visibility of EOL is taken from `editor.renderwhitespace` that's conviniently controlled by `View`, `Toogle Render Whitespace`.
 
 2. Configuration is dynamically updated upon setting change.
 
