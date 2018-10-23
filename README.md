@@ -26,6 +26,18 @@ extension):
 Color is taken from `editorWhitespace.foreground` theme color (also used by
 Visual Studio Code to color whitespace symbols).
 
+### Atom Style Configuration
+
+    "code-eol.newlineCharacter":"¬",
+    "code-eol.returnCharacter" :"¤",
+    "code-eol.crlfCharacter"   :"¤¬",
+
+### Default Configuration
+
+    "code-eol.newlineCharacter":"↓",
+    "code-eol.returnCharacter" :"←",
+    "code-eol.crlfCharacter"   :"↵",
+
 
 ## Known Issues
 
