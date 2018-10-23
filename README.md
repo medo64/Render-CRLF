@@ -35,6 +35,11 @@ Visual Studio Code normalizes line endings upon load and thus this extension
 will only show one kind of line ending character. Currently it is not possible
 to have multiple different line endings (see [issue 127](https://github.com/Microsoft/vscode/issues/127)).
 
+### CR Line Ending Is Not Supported
+
+Visual Studio does not support CR line ending (see [issue 35797](https://github.com/Microsoft/vscode/issues/35797)).
+Therefore, while you can configure it, you will never see CR as a line ending.
+
 ### Not Rendering Glyphs For Large Files
 
 For performance reasons Visual Studio Code doesn't synchronise files that are
