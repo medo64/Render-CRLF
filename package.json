@@ -22,21 +22,27 @@
         "configuration": [
             {
                 "type": "object",
-                "title": "End-of-Line Character Configuration",
+                "title": "Render CRLF",
                 "properties": {
                     "code-eol.newlineCharacter": {
                         "description": "Character used to display LF (line-feed) line ending (aka Linux/Mac line ending).",
-                        "type": [ "string", "null" ],
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1,
                         "default": "↓"
                     },
                     "code-eol.returnCharacter": {
                         "description": "Character used to display CR (carriage-return) line ending (aka old Macintosh line ending).",
-                        "type": [ "string", "null" ],
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1,
                         "default": "←"
                     },
                     "code-eol.crlfCharacter": {
                         "description": "Character used to display CRLF (carriage-return, line-feed) line ending (aka Windows line ending).",
-                        "type": [ "string", "null" ],
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 2,
                         "default": "↵"
                     }
                 }
