@@ -29,13 +29,13 @@ Visual Studio Code to color whitespace symbols).
 
 ## Known Issues
 
-### Mixed line-endings are not supported
+### Mixed Line Endings Are Not Supported
 
 Visual Studio Code normalizes line endings upon load and thus this extension
 will only show one kind of line ending character. Currently it is not possible
 to have multiple different line endings (see [issue 127](https://github.com/Microsoft/vscode/issues/127)).
 
-### Not rendering glyphs for large files
+### Not Rendering Glyphs For Large Files
 
 For performance reasons Visual Studio Code doesn't synchronise files that are
 over 5MB in size (see [issue 27100](https://github.com/Microsoft/vscode/issues/27100)).
