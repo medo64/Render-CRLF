@@ -70,6 +70,10 @@ based on https://github.com/sohamkamani/code-eol. Major credit goes to them.
 
 2. Configuration is dynamically updated upon setting change.
 
+### 1.1.1
+
+Security update of event-stream package dependency.
+
 ### 1.1.0
 
 Improved interface for settings.
