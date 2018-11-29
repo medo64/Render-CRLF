@@ -54,7 +54,7 @@ Therefore, while you can configure it, you will never see CR as a line ending.
 
 ### Not Rendering Glyphs For Large Files
 
-For performance reasons Visual Studio Code doesn't synchronise files that are
+For performance reasons Visual Studio Code doesn't synchronize files that are
 over 5MB in size (see [issue 27100](https://github.com/Microsoft/vscode/issues/27100)).
 Therefore, no line-ending characters will be visible on large files.
 
@@ -66,7 +66,7 @@ based on https://github.com/sohamkamani/code-eol. Major credit goes to them.
 
 ### Whats improved?
 
-1. Visibility of EOL is taken from `editor.renderwhitespace` that's conviniently controlled by `View`, `Toogle Render Whitespace`.
+1. Visibility of EOL is taken from `editor.renderwhitespace` that's conveniently controlled by `View`, `Toogle Render Whitespace`.
 
 2. Configuration is dynamically updated upon setting change.
 
