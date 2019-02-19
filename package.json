@@ -44,6 +44,11 @@
                         "minLength": 1,
                         "maxLength": 2,
                         "default": "↵"
+                    },
+                    "code-eol.highlightNonDefault": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "If set, non-default line endings will be hightlighted as errors."
                     }
                 }
             }

@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.2.0]
+
+### Changed
+- Added non-default line ending highlight option
+
+
 ## [1.1.1]
 
 ### Fixed

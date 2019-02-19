@@ -1,7 +1,8 @@
 # Render CRLF
 
 This extension shows end-of-line character (CR, LF, or CRLF) when whitespace
-rendering is turned on.
+rendering is turned on. Additionally, it can mark all non-default line endings
+in a different color.
 
 
 ## Features
@@ -26,17 +27,23 @@ extension):
 Color is taken from `editorWhitespace.foreground` theme color (also used by
 Visual Studio Code to color whitespace symbols).
 
-### Atom Style Configuration
-
-    "code-eol.newlineCharacter":"¬",
-    "code-eol.returnCharacter" :"¤",
-    "code-eol.crlfCharacter"   :"¤¬",
-
 ### Default Configuration
 
-    "code-eol.newlineCharacter":"↓",
-    "code-eol.returnCharacter" :"←",
-    "code-eol.crlfCharacter"   :"↵",
+    "code-eol.newlineCharacter": "↓",
+    "code-eol.returnCharacter" : "←",
+    "code-eol.crlfCharacter"   : "↵",
+
+### Atom Style Configuration
+
+    "code-eol.newlineCharacter": "¬",
+    "code-eol.returnCharacter" : "¤",
+    "code-eol.crlfCharacter"   : "¤¬",
+
+### Mark Non-Default Line Ending
+
+    "code-eol.highlightNonDefault": true,
+
+Color for non-default line ending is taken from `errorForeground` theme color.
 
 
 ## Known Issues
