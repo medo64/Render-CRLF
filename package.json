@@ -59,10 +59,10 @@
         "test": "node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.22",
+        "@types/mocha": "^2.2.42",
+        "@types/node": "^8.10.40",
         "eslint": "^4.11.0",
-        "@types/node": "^8.10.25",
-        "@types/mocha": "^2.2.42"
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.29"
     }
 }
