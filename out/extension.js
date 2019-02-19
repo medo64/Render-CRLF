@@ -24,14 +24,18 @@ function activate(context) {
         if (!editor) { return }
 
         const document = editor.document
+
         const text = document.getText()
         const lineEnding = document.eol
 
+        var currentSymbol = symbolNone
         var nonDefaultLineEnding = false
-        if ((lineEnding == LF) && (defaultEol != '\n')) {
-            nonDefaultLineEnding = true
-        } else if ((lineEnding == CRLF) && (defaultEol != '\r\n')) {
-            nonDefaultLineEnding = true
+        if (lineEnding == LF) {
+            currentSymbol = symbolLF
+            nonDefaultLineEnding = (defaultEol != '\n')
+        } else if (lineEnding == CRLF) {
+            currentSymbol = symbolCRLF
+            nonDefaultLineEnding = (defaultEol != '\r\n')
         }
 
         //created on every call as there is no theme change event
@@ -39,26 +43,11 @@ function activate(context) {
         const themeColorWhitespace = new vscode.ThemeColor('editorWhitespace.foreground')
 
         const whitespaceColor = highlightNonDefault && nonDefaultLineEnding ? themeColorError : themeColorWhitespace
-        const decorationNone = { after: { contentText: symbolNone, color: whitespaceColor } }
-        const decorationLf   = { after: { contentText: symbolLF,   color: whitespaceColor } }
-        const decorationCr   = { after: { contentText: symbolCR,   color: whitespaceColor } }
-        const decorationCrLf = { after: { contentText: symbolCRLF, color: whitespaceColor } }
+        const decoration = { after: { contentText: currentSymbol, color: whitespaceColor } }
 
         var decorations = []
         var match
         while (match = regEx.exec(text)) {
-            var decoration
-            if (shouldRenderEOL) {
-                switch (match[0]) {
-                    case '\n':   decoration = decorationLf;   break
-                    case '\r\n': decoration = decorationCrLf; break
-                    case '\r':   decoration = decorationCr;   break
-                    default:     decoration = decorationNone; break
-                }
-            } else {
-                decoration = decorationNone
-            }
-
             var position = document.positionAt(match.index)
             decorations.push({
                 range: new vscode.Range(position, position),

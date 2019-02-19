@@ -4,6 +4,7 @@
 
 ### Changed
 - Added non-default line ending highlight option
+- Simplified processing as there is only one line ending per file anyhow
 
 
 ## [1.1.1]
