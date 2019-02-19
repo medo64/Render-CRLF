@@ -43,7 +43,7 @@ function activate(context) {
         const themeColorWhitespace = new vscode.ThemeColor('editorWhitespace.foreground')
 
         const whitespaceColor = highlightNonDefault && nonDefaultLineEnding ? themeColorError : themeColorWhitespace
-        const decoration = { after: { contentText: currentSymbol, color: whitespaceColor } }
+        const decoration = { after: { contentText: shouldRenderEOL ? currentSymbol : symbolNone, color: whitespaceColor } }
 
         var decorations = []
         var match

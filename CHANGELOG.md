@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.2.1]
+
+### Fixed
+- Turning off whitespace didn't turn off line ending symbols
+
+
 ## [1.2.0]
 
 ### Changed
