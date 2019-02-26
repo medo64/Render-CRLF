@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.3.0]
+
+### Changed
+- Rendering decorations for only visible text.
+
+
 ## [1.2.1]
 
 ### Fixed

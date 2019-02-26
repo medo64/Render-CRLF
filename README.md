@@ -1,8 +1,12 @@
-# Render CRLF
+Render CRLF
+===========
 
 This extension shows end-of-line character (CR, LF, or CRLF) when whitespace
 rendering is turned on. Additionally, it can mark all non-default line endings
 in a different color.
+
+Since extension only renders visible portion of text, it is fast even for huge
+documents.
 
 
 ## Features

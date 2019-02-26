@@ -5,7 +5,6 @@ const vscode = require('vscode')
 
 function activate(context) {
     const decorationType = vscode.window.createTextEditorDecorationType({});
-    const regEx = /(\r(?!\n))|(\r?\n)/g
     const defaultLFSymbol   = '↓'
     const defaultCRSymbol   = '←'
     const defaultCRLFSymbol = '↵'
@@ -20,16 +19,34 @@ function activate(context) {
     var highlightNonDefault;
     var defaultEol
 
-    function renderDecorations(editor) {
+    function renderDecorations(editor, ranges) {
         if (!editor) { return }
 
         var decorations = []
         if (shouldRenderEOL) {
             const document = editor.document
 
-            const text = document.getText()
+            //determine what is exactly visible
+            var visibleRanges = (ranges == null) ? editor.visibleRanges : ranges
+            var startOffset = document.offsetAt(visibleRanges[0].start)
+            var endOffset = document.offsetAt(visibleRanges[0].end)
+            for(var i=1; i<visibleRanges.length; i++) {
+                 var nextStartOffset = document.offsetAt(visibleRanges[i].start)
+                 var nextEndOffset = document.offsetAt(visibleRanges[i].end)
+                 if (startOffset > nextStartOffset) { startOffset = nextStartOffset; }
+                 if (endOffset < nextEndOffset) { endOffset = nextEndOffset; }
+            }
+
+            var lastPosition = document.validatePosition(new vscode.Position(2147483647, 0))
+            var startPosition = document.positionAt(startOffset)
+            var endPosition = document.positionAt(endOffset)
+
+            var lastLine = document.lineAt(lastPosition).lineNumber
+            var startLine = Number(document.lineAt(startPosition).lineNumber)
+            var endLine = Math.min(Number(document.lineAt(endPosition).lineNumber) + 2, lastLine)
+
             const lineEnding = document.eol
-    
+
             var currentSymbol = symbolNone
             var nonDefaultLineEnding = false
             if (lineEnding == LF) {
@@ -47,13 +64,14 @@ function activate(context) {
             const whitespaceColor = highlightNonDefault && nonDefaultLineEnding ? themeColorError : themeColorWhitespace
             const decoration = { after: { contentText: currentSymbol, color: whitespaceColor } }
 
-            var match
-            while (match = regEx.exec(text)) {
-                var position = document.positionAt(match.index)
-                decorations.push({
-                    range: new vscode.Range(position, position),
-                    renderOptions: decoration
-                })
+            for (var i=startLine; i<=endLine; i++) {
+                var line = document.lineAt(i)
+                if (line.lineNumber != lastLine) {
+                    decorations.push({
+                        range: new vscode.Range(line.range.end, line.range.end),
+                        renderOptions: decoration
+                    })
+                }
             }
         }
 
@@ -103,11 +121,19 @@ function activate(context) {
         return anyChanges
     }
 
+
     updateConfiguration()
     renderDecorations(vscode.window.activeTextEditor)
 
-    vscode.window.onDidChangeActiveTextEditor(editor => {
-        renderDecorations(editor)
+
+    vscode.window.onDidChangeActiveTextEditor((e) => {
+        renderDecorations(e)
+    }, null, context.subscriptions)
+
+    vscode.window.onDidChangeTextEditorVisibleRanges((e) => {
+        if ((e.textEditor != null) && (e.textEditor.document != null) && (e.visibleRanges.length > 0)) {
+            renderDecorations(e.textEditor, e.visibleRanges);
+        }
     }, null, context.subscriptions)
 
     vscode.workspace.onDidChangeTextDocument(() => {
