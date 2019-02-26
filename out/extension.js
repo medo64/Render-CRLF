@@ -23,36 +23,38 @@ function activate(context) {
     function renderDecorations(editor) {
         if (!editor) { return }
 
-        const document = editor.document
-
-        const text = document.getText()
-        const lineEnding = document.eol
-
-        var currentSymbol = symbolNone
-        var nonDefaultLineEnding = false
-        if (lineEnding == LF) {
-            currentSymbol = symbolLF
-            nonDefaultLineEnding = (defaultEol != '\n')
-        } else if (lineEnding == CRLF) {
-            currentSymbol = symbolCRLF
-            nonDefaultLineEnding = (defaultEol != '\r\n')
-        }
-
-        //created on every call as there is no theme change event
-        const themeColorError = new vscode.ThemeColor('errorForeground')
-        const themeColorWhitespace = new vscode.ThemeColor('editorWhitespace.foreground')
-
-        const whitespaceColor = highlightNonDefault && nonDefaultLineEnding ? themeColorError : themeColorWhitespace
-        const decoration = { after: { contentText: shouldRenderEOL ? currentSymbol : symbolNone, color: whitespaceColor } }
-
         var decorations = []
-        var match
-        while (match = regEx.exec(text)) {
-            var position = document.positionAt(match.index)
-            decorations.push({
-                range: new vscode.Range(position, position),
-                renderOptions: decoration
-            })
+        if (shouldRenderEOL) {
+            const document = editor.document
+
+            const text = document.getText()
+            const lineEnding = document.eol
+    
+            var currentSymbol = symbolNone
+            var nonDefaultLineEnding = false
+            if (lineEnding == LF) {
+                currentSymbol = symbolLF
+                nonDefaultLineEnding = (defaultEol != '\n')
+            } else if (lineEnding == CRLF) {
+                currentSymbol = symbolCRLF
+                nonDefaultLineEnding = (defaultEol != '\r\n')
+            }
+
+            //created on every call as there is no theme change event
+            const themeColorError = new vscode.ThemeColor('errorForeground')
+            const themeColorWhitespace = new vscode.ThemeColor('editorWhitespace.foreground')
+
+            const whitespaceColor = highlightNonDefault && nonDefaultLineEnding ? themeColorError : themeColorWhitespace
+            const decoration = { after: { contentText: currentSymbol, color: whitespaceColor } }
+
+            var match
+            while (match = regEx.exec(text)) {
+                var position = document.positionAt(match.index)
+                decorations.push({
+                    range: new vscode.Range(position, position),
+                    renderOptions: decoration
+                })
+            }
         }
 
         if (editor.setDecorations) { editor.setDecorations(decorationType, decorations) }
