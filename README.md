@@ -1,7 +1,7 @@
-Render CRLF
-===========
+Render CRLF Line Endings
+========================
 
-This extension shows end-of-line character (CR, LF, or CRLF) when whitespace
+This extension shows end-of-line characters (CR, LF, or CRLF) when whitespace
 rendering is turned on. Additionally, it can mark all non-default line endings
 in a different color.
 

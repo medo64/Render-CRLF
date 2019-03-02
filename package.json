@@ -1,8 +1,8 @@
 {
     "name": "render-crlf",
-    "displayName": "Render CRLF",
-    "description": "Displays LF/CR/CRLF line ending (aka end-of-line, EOL) symbols when Render whitespace is turned on.",
-    "version": "1.3.0",
+    "displayName": "Render CRLF Line Ending",
+    "description": "Displays LF/CR/CRLF line endings (aka end-of-line, EOL) symbols when Render whitespace is turned on.",
+    "version": "1.3.1",
     "publisher": "medo64",
     "repository": {
         "url": "https://github.com/medo64/render-crlf/"
@@ -60,7 +60,7 @@
     },
     "devDependencies": {
         "@types/mocha": "^2.2.42",
-        "@types/node": "^8.10.40",
+        "@types/node": "^8.10.42",
         "eslint": "^4.11.0",
         "typescript": "^2.6.1",
         "vscode": "^1.1.30"
