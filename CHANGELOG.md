@@ -1,5 +1,18 @@
 # Change Log
 
+## [1.3.2]
+
+### Fixed
+- Added forgotten changelog.
+
+
+## [1.3.1]
+
+### Changed
+- Updated name.
+- Updated packages.
+
+
 ## [1.3.0]
 
 ### Changed

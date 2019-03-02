@@ -47,7 +47,8 @@ Visual Studio Code to color whitespace symbols).
 
     "code-eol.highlightNonDefault": true,
 
-Color for non-default line ending is taken from `errorForeground` theme color.
+Default line ending is determined base on `files.eol` setting and color for
+non-default line ending is taken from `errorForeground` theme color.
 
 
 ## Known Issues
