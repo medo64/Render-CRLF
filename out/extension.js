@@ -64,8 +64,8 @@ function activate(context) {
             const whitespaceColor = highlightNonDefault && nonDefaultLineEnding ? themeColorError : themeColorWhitespace
             const decoration = { after: { contentText: currentSymbol, color: whitespaceColor } }
 
-            for (var i=startLine; i<=endLine; i++) {
-                var line = document.lineAt(i)
+            for (var j=startLine; j<=endLine; j++) {
+                var line = document.lineAt(j)
                 if (line.lineNumber != lastLine) {
                     decorations.push({
                         range: new vscode.Range(line.range.end, line.range.end),
