@@ -3,7 +3,7 @@
     "displayName": "Render CRLF Line Endings",
     "description": "Displays LF/CR/CRLF line endings (aka end-of-line, EOL) symbols when Render whitespace is turned on.",
     "icon": "ICON.png",
-    "version": "1.3.2",
+    "version": "1.3.3",
     "publisher": "medo64",
     "galleryBanner": {
         "color": "#C80000",

@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.3.3]
+
+### Changed
+- Added icon.
+- Development improvements.
+
+
 ## [1.3.2]
 
 ### Fixed
