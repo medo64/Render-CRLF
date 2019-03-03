@@ -1,9 +1,10 @@
 {
+    "publisher": "medo64",
     "name": "render-crlf",
     "displayName": "Render CRLF Line Endings",
     "description": "Displays LF/CR/CRLF line endings (aka end-of-line, EOL) symbols when Render whitespace is turned on.",
+    "icon": "ICON.png",
     "version": "1.3.2",
-    "publisher": "medo64",
     "repository": {
         "url": "https://github.com/medo64/render-crlf/"
     },
@@ -14,6 +15,13 @@
     "categories": [
         "Other"
     ],
+    "keywords": [
+        "line endings",
+        "end-of-line",
+        "whitespace",
+        "crlf",
+        "lf"
+    ],
     "activationEvents": [
         "*"
     ],
@@ -22,7 +30,7 @@
         "configuration": [
             {
                 "type": "object",
-                "title": "Render CRLF",
+                "title": "Render CRLF Line Endings",
                 "properties": {
                     "code-eol.newlineCharacter": {
                         "description": "Character used to display LF (line-feed) line ending (aka Linux/Mac line ending).",
