@@ -75,11 +75,10 @@
         "postinstall": "node ./node_modules/vscode/bin/install",
         "test": "node ./node_modules/vscode/bin/test"
     },
-    "dependencies": {
-        "vscode": "^1.1.30"
-    },
+    "dependencies": {},
     "devDependencies": {
         "eslint": "^4.19.1",
-        "vsce": "^1.50.0"
+        "vsce": "^1.50.0",
+        "vscode": "^1.1.30"
     }
 }
