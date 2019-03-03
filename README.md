@@ -28,8 +28,14 @@ extension):
 
 * `code-eol.code-eol.crlfCharacter`: Character used to display CRLF (carriage-return, line-feed) line ending (aka Windows line ending).
 
+* `code-eol.highlightNonDefault`: If true, non-default line ending will be colored as error.
+
 Color is taken from `editorWhitespace.foreground` theme color (also used by
-Visual Studio Code to color whitespace symbols).
+Visual Studio Code to color whitespace symbols). color for non-default line
+ending is taken from `errorForeground` theme color.
+
+Default line ending is determined based on `files.eol` setting.
+
 
 ### Default Configuration
 
@@ -46,9 +52,6 @@ Visual Studio Code to color whitespace symbols).
 ### Mark Non-Default Line Ending
 
     "code-eol.highlightNonDefault": true,
-
-Default line ending is determined base on `files.eol` setting and color for
-non-default line ending is taken from `errorForeground` theme color.
 
 
 ## Known Issues
