@@ -37,13 +37,11 @@ function activate(context) {
                  if (endOffset < nextEndOffset) { endOffset = nextEndOffset; }
             }
 
-            var lastPosition = document.validatePosition(new vscode.Position(2147483647, 0))
             var startPosition = document.positionAt(startOffset)
             var endPosition = document.positionAt(endOffset)
 
-            var lastLine = document.lineAt(lastPosition).lineNumber
             var startLine = Number(document.lineAt(startPosition).lineNumber)
-            var endLine = Math.min(Number(document.lineAt(endPosition).lineNumber) + 2, lastLine)
+            var endLine = Number(document.validatePosition(endPosition.translate(2, 0)).line);
 
             const lineEnding = document.eol
 
@@ -66,12 +64,10 @@ function activate(context) {
 
             for (var j=startLine; j<=endLine; j++) {
                 var line = document.lineAt(j)
-                if (line.lineNumber != lastLine) {
-                    decorations.push({
-                        range: new vscode.Range(line.range.end, line.range.end),
-                        renderOptions: decoration
-                    })
-                }
+                decorations.push({
+                    range: new vscode.Range(line.range.end, line.range.end),
+                    renderOptions: decoration
+                })
             }
         }
 
