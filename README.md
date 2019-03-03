@@ -70,14 +70,9 @@ For performance reasons Visual Studio Code doesn't synchronize files that are
 over 5MB in size (see [issue 27100](https://github.com/Microsoft/vscode/issues/27100)).
 Therefore, no line-ending characters will be visible on large files.
 
+### Slow Update For Large Files
 
-## Release Notes
-
-Parsing code is based on https://github.com/jeff-hykin/code-eol that's in turn
-based on https://github.com/sohamkamani/code-eol. Major credit goes to them.
-
-### Whats improved?
-
-1. Visibility of EOL is taken from `editor.renderwhitespace` that's conveniently controlled by `View`, `Toogle Render Whitespace`.
-
-2. Configuration is dynamically updated upon setting change.
+If there is an extension that parses the whole text (e.g. other line ending
+visualization extension), you might see delayed line ending character updates
+and temporary visual artefacts. This is due to serial nature of event processing
+within VS Code. The only workaround is to disable other line ending extension.
