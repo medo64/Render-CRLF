@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.3.4]
+
+### Changed
+- Updated README.
+- Updated visible range calculation.
+
+
 ## [1.3.3]
 
 ### Changed
