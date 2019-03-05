@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.3.5]
+
+### Fixed
+- Incorrect decoration of the last line
+
+
 ## [1.3.4]
 
 ### Changed

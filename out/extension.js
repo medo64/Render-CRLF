@@ -64,10 +64,12 @@ function activate(context) {
 
             for (let i=startLine; i<=endLine; i++) {
                 var line = document.lineAt(i)
-                decorations.push({
-                    range: new vscode.Range(line.range.end, line.range.end),
-                    renderOptions: decoration
-                })
+                if (i != endLine) {
+                    decorations.push({
+                        range: new vscode.Range(line.range.end, line.range.end),
+                        renderOptions: decoration
+                    })
+                }
             }
         }
 
