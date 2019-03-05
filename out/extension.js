@@ -27,26 +27,26 @@ function activate(context) {
             const document = editor.document
 
             //determine what is exactly visible
-            var visibleRanges = (ranges == null) ? editor.visibleRanges : ranges
-            var startOffset = document.offsetAt(visibleRanges[0].start)
-            var endOffset = document.offsetAt(visibleRanges[0].end)
-            for(var i=1; i<visibleRanges.length; i++) {
-                 var nextStartOffset = document.offsetAt(visibleRanges[i].start)
-                 var nextEndOffset = document.offsetAt(visibleRanges[i].end)
+            let visibleRanges = (ranges == null) ? editor.visibleRanges : ranges
+            let startOffset = document.offsetAt(visibleRanges[0].start)
+            let endOffset = document.offsetAt(visibleRanges[0].end)
+            for(let i=1; i<visibleRanges.length; i++) {
+                 let nextStartOffset = document.offsetAt(visibleRanges[i].start)
+                 let nextEndOffset = document.offsetAt(visibleRanges[i].end)
                  if (startOffset > nextStartOffset) { startOffset = nextStartOffset; }
                  if (endOffset < nextEndOffset) { endOffset = nextEndOffset; }
             }
 
-            var startPosition = document.positionAt(startOffset)
-            var endPosition = document.positionAt(endOffset)
+            let startPosition = document.positionAt(startOffset)
+            let endPosition = document.positionAt(endOffset)
 
-            var startLine = Number(document.lineAt(startPosition).lineNumber)
-            var endLine = Number(document.validatePosition(endPosition.translate(2, 0)).line);
+            let startLine = Number(document.lineAt(startPosition).lineNumber)
+            let endLine = Number(document.validatePosition(endPosition.translate(2, 0)).line);
 
             const lineEnding = document.eol
 
-            var currentSymbol = symbolNone
-            var nonDefaultLineEnding = false
+            let currentSymbol = symbolNone
+            let nonDefaultLineEnding = false
             if (lineEnding == LF) {
                 currentSymbol = symbolLF
                 nonDefaultLineEnding = (defaultEol != '\n')
@@ -62,8 +62,8 @@ function activate(context) {
             const whitespaceColor = highlightNonDefault && nonDefaultLineEnding ? themeColorError : themeColorWhitespace
             const decoration = { after: { contentText: currentSymbol, color: whitespaceColor } }
 
-            for (var j=startLine; j<=endLine; j++) {
-                var line = document.lineAt(j)
+            for (let i=startLine; i<=endLine; i++) {
+                var line = document.lineAt(i)
                 decorations.push({
                     range: new vscode.Range(line.range.end, line.range.end),
                     renderOptions: decoration
@@ -75,22 +75,22 @@ function activate(context) {
     }
 
     function updateConfiguration() {
-        var anyChanges = false;
+        let anyChanges = false;
 
-        var newShouldRenderEOL = (vscode.workspace.getConfiguration('editor', null).get('renderWhitespace', 'none') !== 'none')
+        let newShouldRenderEOL = (vscode.workspace.getConfiguration('editor', null).get('renderWhitespace', 'none') !== 'none')
         if (shouldRenderEOL !== newShouldRenderEOL) {
             shouldRenderEOL = newShouldRenderEOL
             anyChanges = true
         }
 
-        var customConfiguration = vscode.workspace.getConfiguration('code-eol', null)
-        var newSymbolLF =   customConfiguration.get('newlineCharacter', defaultLFSymbol)   || defaultLFSymbol
-        var newSymbolCR =   customConfiguration.get('returnCharacter',  defaultCRSymbol)   || defaultCRSymbol
-        var newSymbolCRLF = customConfiguration.get('crlfCharacter',    defaultCRLFSymbol) || defaultCRLFSymbol
-        var newHighlightNonDefault = customConfiguration.get('highlightNonDefault', false)
+        let customConfiguration = vscode.workspace.getConfiguration('code-eol', null)
+        let newSymbolLF =   customConfiguration.get('newlineCharacter', defaultLFSymbol)   || defaultLFSymbol
+        let newSymbolCR =   customConfiguration.get('returnCharacter',  defaultCRSymbol)   || defaultCRSymbol
+        let newSymbolCRLF = customConfiguration.get('crlfCharacter',    defaultCRLFSymbol) || defaultCRLFSymbol
+        let newHighlightNonDefault = customConfiguration.get('highlightNonDefault', false)
 
-        var filesConfiguration = vscode.workspace.getConfiguration('files', null)
-        var newDefaultEol = filesConfiguration.get('eol', 'auto') || 'auto'
+        let filesConfiguration = vscode.workspace.getConfiguration('files', null)
+        let newDefaultEol = filesConfiguration.get('eol', 'auto') || 'auto'
 
         if (symbolLF !== newSymbolLF) {
             symbolLF = newSymbolLF
