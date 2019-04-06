@@ -58,13 +58,13 @@
 - Security update of event-stream package dependency
 
 
-## [1.1.0] - 2018-10-22
+## [1.1.0]
 
 ### Changed
 - Improved interface for settings
 - Improved README.md
 
 
-## [1.0.0] - 2018-10-20
+## [1.0.0]
 
 - Initial release
