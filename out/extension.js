@@ -5,6 +5,7 @@ const vscode = require('vscode')
 
 function activate(context) {
     const decorationType = vscode.window.createTextEditorDecorationType({});
+    const extraWhitespaceDecorationType = vscode.window.createTextEditorDecorationType({ color: new vscode.ThemeColor('errorForeground') });
     const defaultLFSymbol   = '↓'
     const defaultCRSymbol   = '←'
     const defaultCRLFSymbol = '↵'
@@ -17,12 +18,14 @@ function activate(context) {
     var symbolCRLF
     var shouldRenderEOL
     var highlightNonDefault;
+    var highlightExtraWhitespace;
     var defaultEol
 
     function renderDecorations(editor, ranges) {
         if (!editor) { return }
 
         var decorations = []
+        var extraWhitespaceDecorations = []
         if (shouldRenderEOL) {
             const document = editor.document
 
@@ -70,10 +73,19 @@ function activate(context) {
                         renderOptions: decoration
                     })
                 }
+                if (highlightExtraWhitespace) {
+                    const lastWhitespace = line.text.search("\\s+$")
+                    if (lastWhitespace >= 0) {
+                        extraWhitespaceDecorations.push({
+                            range: new vscode.Range(new vscode.Position(line.range.end.line, lastWhitespace), line.range.end)
+                        })
+                    }
+                }
             }
         }
 
         if (editor.setDecorations) { editor.setDecorations(decorationType, decorations) }
+        if (editor.setDecorations && highlightExtraWhitespace) { editor.setDecorations(extraWhitespaceDecorationType, extraWhitespaceDecorations) }
     }
 
     function updateConfiguration() {
@@ -90,6 +102,7 @@ function activate(context) {
         let newSymbolCR =   customConfiguration.get('returnCharacter',  defaultCRSymbol)   || defaultCRSymbol
         let newSymbolCRLF = customConfiguration.get('crlfCharacter',    defaultCRLFSymbol) || defaultCRLFSymbol
         let newHighlightNonDefault = customConfiguration.get('highlightNonDefault', false)
+        let newHighlightExtraWhitespace = customConfiguration.get('highlightExtraWhitespace', false)
 
         let filesConfiguration = vscode.workspace.getConfiguration('files', null)
         let newDefaultEol = filesConfiguration.get('eol', 'auto') || 'auto'
@@ -108,6 +121,10 @@ function activate(context) {
         }
         if (highlightNonDefault !== newHighlightNonDefault) {
             highlightNonDefault = newHighlightNonDefault
+            anyChanges = true
+        }
+        if (highlightExtraWhitespace !== newHighlightExtraWhitespace) {
+            highlightExtraWhitespace = newHighlightExtraWhitespace
             anyChanges = true
         }
 

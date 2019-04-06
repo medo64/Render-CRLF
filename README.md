@@ -3,7 +3,8 @@ Render CRLF Line Endings
 
 This extension shows end-of-line characters (CR, LF, or CRLF) when whitespace
 rendering is turned on. Additionally, it can mark all non-default line endings
-in a different color.
+in a different color. Furthermore, it can be also configured to show trailing
+whitespace characters as errors.
 
 Since extension only renders visible portion of text, it is fast even for huge
 documents.
@@ -30,6 +31,8 @@ extension):
 
 * `code-eol.highlightNonDefault`: If true, non-default line ending will be colored as error.
 
+* `code-eol.highlightExtraWhitespace`: If true, trailing whitespace will be colored as error. Note this is only shown if `renderWhitespace` is turned on.
+
 Color is taken from `editorWhitespace.foreground` theme color (also used by
 Visual Studio Code to color whitespace symbols). color for non-default line
 ending is taken from `errorForeground` theme color.
@@ -52,6 +55,10 @@ Default line ending is determined based on `files.eol` setting.
 ### Mark Non-Default Line Ending
 
     "code-eol.highlightNonDefault": true,
+
+### Mark Extra Whitespace
+
+    "code-eol.highlightExtraWhitespace": true,
 
 
 ## Known Issues
