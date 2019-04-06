@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.4.0]
+
+### Changed
+- Added `highlightExtraWhitespace` option.
+
+
 ## [1.3.5]
 
 ### Fixed
