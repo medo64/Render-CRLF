@@ -71,6 +71,11 @@
                         "type": "boolean",
                         "default": false,
                         "description": "If set, extra whitespace at line ending will be hightlighted as errors."
+                    },
+                    "code-eol.alwaysHighlightIssues": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "If set, extra whitespace and/or non-default line ending will be highlighted even when whitespace rendering is turned off. Note that each of these settings has to be turned on separately."
                     }
                 }
             }

@@ -16,9 +16,11 @@ function activate(context) {
     var symbolLF
     var symbolCR
     var symbolCRLF
-    var shouldRenderEOL
+    var shouldRender
+    var renderWhitespace
     var highlightNonDefault;
     var highlightExtraWhitespace;
+    var alwaysHighlightIssues;
     var defaultEol
 
     function renderDecorations(editor, ranges) {
@@ -26,7 +28,7 @@ function activate(context) {
 
         var decorations = []
         var extraWhitespaceDecorations = []
-        if (shouldRenderEOL) {
+        if (shouldRender) {
             const document = editor.document
 
             //determine what is exactly visible
@@ -65,15 +67,18 @@ function activate(context) {
             const whitespaceColor = highlightNonDefault && nonDefaultLineEnding ? themeColorError : themeColorWhitespace
             const decoration = { after: { contentText: currentSymbol, color: whitespaceColor } }
 
+            const shouldRenderEOL = renderWhitespace || (alwaysHighlightIssues && nonDefaultLineEnding)
+            const shouldRenderExtraWhitespace = (renderWhitespace && highlightExtraWhitespace) || (alwaysHighlightIssues && highlightExtraWhitespace)
+
             for (let i=startLine; i<=endLine; i++) {
                 var line = document.lineAt(i)
-                if (i != endLine) {
+                if (shouldRenderEOL && (i != endLine)) {
                     decorations.push({
                         range: new vscode.Range(line.range.end, line.range.end),
                         renderOptions: decoration
                     })
                 }
-                if (highlightExtraWhitespace) {
+                if (shouldRenderExtraWhitespace) {
                     const lastWhitespace = line.text.search("\\s+$")
                     if (lastWhitespace >= 0) {
                         extraWhitespaceDecorations.push({
@@ -91,9 +96,10 @@ function activate(context) {
     function updateConfiguration() {
         let anyChanges = false;
 
-        let newShouldRenderEOL = (vscode.workspace.getConfiguration('editor', null).get('renderWhitespace', 'none') !== 'none')
-        if (shouldRenderEOL !== newShouldRenderEOL) {
-            shouldRenderEOL = newShouldRenderEOL
+        let editorConfiguration = vscode.workspace.getConfiguration('editor', null)
+        let newRenderWhitespace = (editorConfiguration.get('renderWhitespace', 'none') !== 'none')
+        if (renderWhitespace !== newRenderWhitespace) {
+            renderWhitespace = newRenderWhitespace
             anyChanges = true
         }
 
@@ -103,6 +109,7 @@ function activate(context) {
         let newSymbolCRLF = customConfiguration.get('crlfCharacter',    defaultCRLFSymbol) || defaultCRLFSymbol
         let newHighlightNonDefault = customConfiguration.get('highlightNonDefault', false)
         let newHighlightExtraWhitespace = customConfiguration.get('highlightExtraWhitespace', false)
+        let newAlwaysHighlightIssues = customConfiguration.get('alwaysHighlightIssues', false)
 
         let filesConfiguration = vscode.workspace.getConfiguration('files', null)
         let newDefaultEol = filesConfiguration.get('eol', 'auto') || 'auto'
@@ -127,11 +134,17 @@ function activate(context) {
             highlightExtraWhitespace = newHighlightExtraWhitespace
             anyChanges = true
         }
+        if (alwaysHighlightIssues !== newAlwaysHighlightIssues) {
+            alwaysHighlightIssues = newAlwaysHighlightIssues
+            anyChanges = true
+        }
 
         if (defaultEol !== newDefaultEol) {
             defaultEol = newDefaultEol
             anyChanges = true
         }
+
+        shouldRender = renderWhitespace || alwaysHighlightIssues
 
         return anyChanges
     }

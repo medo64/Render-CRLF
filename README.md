@@ -33,6 +33,8 @@ extension):
 
 * `code-eol.highlightExtraWhitespace`: If true, trailing whitespace will be colored as error. Note this is only shown if `renderWhitespace` is turned on.
 
+* `code-eol.alwaysHighlightIssues`: If true, extra whitespace and/or non-default line ending will be highlighted even when whitespace rendering is turned off.
+
 Color is taken from `editorWhitespace.foreground` theme color (also used by
 Visual Studio Code to color whitespace symbols). color for non-default line
 ending is taken from `errorForeground` theme color.
