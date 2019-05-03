@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.4.1]
+
+### Fixed
+- Fixed tar vulnerability CVE-2018-20834
+
+
 ## [1.4.0]
 
 ### Changed
