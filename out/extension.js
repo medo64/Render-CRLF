@@ -9,25 +9,24 @@ function activate(context) {
     const defaultLFSymbol   = '↓'
     const defaultCRSymbol   = '←'
     const defaultCRLFSymbol = '↵'
+    const symbolNone = ''
     const LF = 1
     const CRLF = 2
 
     var symbolLF
     var symbolCR
     var symbolCRLF
-    var shouldRender
-    var renderWhitespace
+    var shouldRenderEOL
     var highlightNonDefault;
     var highlightExtraWhitespace;
-    var alwaysHighlightIssues;
     var defaultEol
 
     function renderDecorations(editor, ranges) {
         if (!editor) { return }
 
-        var eolDecorations = []
+        var decorations = []
         var extraWhitespaceDecorations = []
-        if (shouldRender) {
+        if (shouldRenderEOL) {
             const document = editor.document
 
             //determine what is exactly visible
@@ -49,13 +48,13 @@ function activate(context) {
 
             const lineEnding = document.eol
 
-            let currentEolSymbol
+            let currentSymbol = symbolNone
             let nonDefaultLineEnding = false
             if (lineEnding == LF) {
-                currentEolSymbol = symbolLF
+                currentSymbol = symbolLF
                 nonDefaultLineEnding = (defaultEol != '\n')
             } else if (lineEnding == CRLF) {
-                currentEolSymbol = symbolCRLF
+                currentSymbol = symbolCRLF
                 nonDefaultLineEnding = (defaultEol != '\r\n')
             }
 
@@ -63,21 +62,18 @@ function activate(context) {
             const themeColorError = new vscode.ThemeColor('errorForeground')
             const themeColorWhitespace = new vscode.ThemeColor('editorWhitespace.foreground')
 
-            const eolColor = highlightNonDefault && nonDefaultLineEnding ? themeColorError : themeColorWhitespace
-            const eolDecoration = { after: { contentText: currentEolSymbol, color: eolColor } }
-
-            const shouldRenderEol = renderWhitespace || (alwaysHighlightIssues && nonDefaultLineEnding)
-            const shouldRenderExtraWhitespace = (renderWhitespace && highlightExtraWhitespace) || (alwaysHighlightIssues && highlightExtraWhitespace)
+            const whitespaceColor = highlightNonDefault && nonDefaultLineEnding ? themeColorError : themeColorWhitespace
+            const decoration = { after: { contentText: currentSymbol, color: whitespaceColor } }
 
             for (let i=startLine; i<=endLine; i++) {
                 var line = document.lineAt(i)
-                if (shouldRenderEol && (i != endLine)) {
-                    eolDecorations.push({
+                if (i != endLine) {
+                    decorations.push({
                         range: new vscode.Range(line.range.end, line.range.end),
-                        renderOptions: eolDecoration
+                        renderOptions: decoration
                     })
                 }
-                if (shouldRenderExtraWhitespace) {
+                if (highlightExtraWhitespace) {
                     const lastWhitespace = line.text.search("\\s+$")
                     if (lastWhitespace >= 0) {
                         extraWhitespaceDecorations.push({
@@ -88,17 +84,16 @@ function activate(context) {
             }
         }
 
-        if (editor.setDecorations) { editor.setDecorations(decorationType, eolDecorations) }
+        if (editor.setDecorations) { editor.setDecorations(decorationType, decorations) }
         if (editor.setDecorations && highlightExtraWhitespace) { editor.setDecorations(extraWhitespaceDecorationType, extraWhitespaceDecorations) }
     }
 
     function updateConfiguration() {
         let anyChanges = false;
 
-        let editorConfiguration = vscode.workspace.getConfiguration('editor', null)
-        let newRenderWhitespace = (editorConfiguration.get('renderWhitespace', 'none') !== 'none')
-        if (renderWhitespace !== newRenderWhitespace) {
-            renderWhitespace = newRenderWhitespace
+        let newShouldRenderEOL = (vscode.workspace.getConfiguration('editor', null).get('renderWhitespace', 'none') !== 'none')
+        if (shouldRenderEOL !== newShouldRenderEOL) {
+            shouldRenderEOL = newShouldRenderEOL
             anyChanges = true
         }
 
@@ -108,7 +103,6 @@ function activate(context) {
         let newSymbolCRLF = customConfiguration.get('crlfCharacter',    defaultCRLFSymbol) || defaultCRLFSymbol
         let newHighlightNonDefault = customConfiguration.get('highlightNonDefault', false)
         let newHighlightExtraWhitespace = customConfiguration.get('highlightExtraWhitespace', false)
-        let newAlwaysHighlightIssues = customConfiguration.get('alwaysHighlightIssues', false)
 
         let filesConfiguration = vscode.workspace.getConfiguration('files', null)
         let newDefaultEol = filesConfiguration.get('eol', 'auto') || 'auto'
@@ -133,17 +127,11 @@ function activate(context) {
             highlightExtraWhitespace = newHighlightExtraWhitespace
             anyChanges = true
         }
-        if (alwaysHighlightIssues !== newAlwaysHighlightIssues) {
-            alwaysHighlightIssues = newAlwaysHighlightIssues
-            anyChanges = true
-        }
 
         if (defaultEol !== newDefaultEol) {
             defaultEol = newDefaultEol
             anyChanges = true
         }
-
-        shouldRender = renderWhitespace || alwaysHighlightIssues
 
         return anyChanges
     }
