@@ -44,6 +44,7 @@ function activate(context) {
 
             let startLine = Number(document.lineAt(startPosition).lineNumber)
             let endLine = Number(document.validatePosition(endPosition.translate(2, 0)).line);
+            if (startLine > 0) { startLine -= 1; } //in case of partial previous line
 
             const lineEnding = document.eol
 
