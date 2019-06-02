@@ -1,7 +1,7 @@
 {
     "name": "render-crlf",
     "displayName": "Render CRLF Line Endings",
-    "description": "Displays LF/CR/CRLF line ending symbol and optinally extra whitespace when 'Render whitespace' is turned on.",
+    "description": "Displays LF/CR/CRLF line ending symbol and optionally extra whitespace when 'Render whitespace' is turned on.",
     "icon": "ICON.png",
     "version": "1.4.2",
     "publisher": "medo64",
