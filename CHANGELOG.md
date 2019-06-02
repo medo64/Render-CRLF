@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.4.2]
+
+### Fixed
+- Fixed rendering of partial line
+
+
 ## [1.4.1]
 
 ### Fixed
