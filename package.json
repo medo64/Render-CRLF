@@ -82,8 +82,8 @@
     },
     "dependencies": {},
     "devDependencies": {
-        "eslint": "^4.19.1",
-        "vsce": "^1.50.0",
-        "vscode": "^1.1.33"
+        "eslint": "^5.16.0",
+        "vsce": "^1.62.0",
+        "vscode": "^1.1.34"
     }
 }
