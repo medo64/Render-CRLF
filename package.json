@@ -83,7 +83,7 @@
     "dependencies": {},
     "devDependencies": {
         "eslint": "^5.16.0",
-        "vsce": "^1.62.0",
+        "vsce": "^1.64.0",
         "vscode": "^1.1.34"
     }
 }
