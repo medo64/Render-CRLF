@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.4.3]
+
+### Fixed
+- Fixed diff dependency security vulnerability
+
+
 ## [1.4.2]
 
 ### Fixed
