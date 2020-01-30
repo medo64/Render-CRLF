@@ -78,7 +78,8 @@ Therefore, while you can configure it, you will never see CR as a line ending.
 
 For performance reasons Visual Studio Code doesn't synchronize files that are
 over 5MB in size (see [issue 27100](https://github.com/Microsoft/vscode/issues/27100)).
-Therefore, no line-ending characters will be visible on large files.
+Therefore, no line-ending characters will be visible on large files. To avoid
+this you can set `editor.largeFileOptimizations` to `false`.
 
 ### Slow Update For Large Files
 
