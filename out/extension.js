@@ -16,8 +16,9 @@ function activate(context) {
     var symbolCR
     var symbolCRLF
     var shouldRenderEOL
-    var highlightNonDefault;
-    var highlightExtraWhitespace;
+    var shouldRenderOnlySelection
+    var highlightNonDefault
+    var highlightExtraWhitespace
     var defaultEol
 
     function renderDecorations(editor, ranges) {
@@ -27,16 +28,17 @@ function activate(context) {
         var extraWhitespaceDecorations = []
         if (shouldRenderEOL) {
             const document = editor.document
+            const selections = editor.selections
 
             //determine what is exactly visible
             let visibleRanges = (ranges == null) ? editor.visibleRanges : ranges
             let startOffset = document.offsetAt(visibleRanges[0].start)
             let endOffset = document.offsetAt(visibleRanges[0].end)
             for(let i=1; i<visibleRanges.length; i++) {
-                 let nextStartOffset = document.offsetAt(visibleRanges[i].start)
-                 let nextEndOffset = document.offsetAt(visibleRanges[i].end)
-                 if (startOffset > nextStartOffset) { startOffset = nextStartOffset; }
-                 if (endOffset < nextEndOffset) { endOffset = nextEndOffset; }
+                let nextStartOffset = document.offsetAt(visibleRanges[i].start)
+                let nextEndOffset = document.offsetAt(visibleRanges[i].end)
+                if (startOffset > nextStartOffset) { startOffset = nextStartOffset; }
+                if (endOffset < nextEndOffset) { endOffset = nextEndOffset; }
             }
 
             let startPosition = document.positionAt(startOffset)
@@ -68,10 +70,27 @@ function activate(context) {
             for (let i=startLine; i<=endLine; i++) {
                 var line = document.lineAt(i)
                 if (i != endLine) {
-                    eolDecorations.push({
-                        range: new vscode.Range(line.range.end, line.range.end),
-                        renderOptions: eolDecoration
-                    })
+                    const eolPosition = line.range.end
+                    let shouldDecorate = false
+                    if (shouldRenderOnlySelection) { //check if decoration falls within selection
+                        if ((selections !== null) && selections.length > 0) {
+                            selections.forEach(selection => { //check each selection
+                                const hasSelection = (selection.start.line !== selection.end.line) || (selection.start.character !== selection.end.character)
+                                if (hasSelection && eolPosition.isAfterOrEqual(selection.start) && eolPosition.isBeforeOrEqual(selection.end)) {
+                                    shouldDecorate = true
+                                    return
+                                }
+                            });
+                        }
+                    } else { //decorate all
+                        shouldDecorate = true
+                    }
+                    if (shouldDecorate) {
+                        eolDecorations.push({
+                            range: new vscode.Range(eolPosition, eolPosition),
+                            renderOptions: eolDecoration
+                        })
+                    }
                 }
                 if (highlightExtraWhitespace) {
                     const lastWhitespace = line.text.search("\\s+$")
@@ -91,9 +110,17 @@ function activate(context) {
     function updateConfiguration() {
         let anyChanges = false;
 
-        let newShouldRenderEOL = (vscode.workspace.getConfiguration('editor', null).get('renderWhitespace', 'none') !== 'none')
+        const renderWhitespaceSetting = vscode.workspace.getConfiguration('editor', null).get('renderWhitespace', 'none').toString()
+
+        let newShouldRenderEOL = (renderWhitespaceSetting !== 'none')
         if (shouldRenderEOL !== newShouldRenderEOL) {
             shouldRenderEOL = newShouldRenderEOL
+            anyChanges = true
+        }
+
+        let newShouldRenderOnlySelection = (renderWhitespaceSetting === 'selection')
+        if (shouldRenderOnlySelection !== newShouldRenderOnlySelection) {
+            shouldRenderOnlySelection = newShouldRenderOnlySelection
             anyChanges = true
         }
 
@@ -148,6 +175,12 @@ function activate(context) {
     vscode.window.onDidChangeTextEditorVisibleRanges((e) => {
         if ((e.textEditor != null) && (e.textEditor.document != null) && (e.visibleRanges.length > 0)) {
             renderDecorations(e.textEditor, e.visibleRanges);
+        }
+    }, null, context.subscriptions)
+
+    vscode.window.onDidChangeTextEditorSelection((e) => {
+        if (shouldRenderOnlySelection && (e.textEditor != null) && (e.textEditor.document != null) && (e.selections.length > 0)) {
+            renderDecorations(e.textEditor);
         }
     }, null, context.subscriptions)
 

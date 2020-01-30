@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.4.6]
+
+### Fixed
+- Properly processing `editor.renderWhitespace`=`selection`
+
+
 ## [1.4.5]
 
 ### Fixed
