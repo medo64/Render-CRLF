@@ -14,18 +14,26 @@ Fully supports language-specific EOL settings.
 
 ## Features
 
-* If whitespace rendering is turned on, you will see symbol for either LF (`↓`),
+If whitespace rendering is turned on, you will see symbol for either LF (`↓`),
 CRLF (`↵`), or CR (`←`).
 
    ![Screenshot](https://raw.githubusercontent.com/medo64/render-crlf/master/images/screenshot.gif)
 
-* Works well with `editor.largeFileOptimizations=false`.
+Works well with `editor.largeFileOptimizations: false` regardless of document
+size.
 
-* Supports rendering only selection (`editor.renderWhitespace=selection`).
+Supports rendering only selection (`editor.renderWhitespace: selection`).
 
-* Supports highligthing of non-default EOL - even with language-specific settings.
+   ![Screenshot](https://raw.githubusercontent.com/medo64/render-crlf/master/images/screenshot-selection.png)
 
-* Supports highlighting of training whitespace.
+Supports highligthing of non-default EOL - even with language-specific settings
+(`code-eol.highlightNonDefault: true`).
+
+   ![Screenshot](https://raw.githubusercontent.com/medo64/render-crlf/master/images/screenshot-highlight-eof.png)
+
+Supports highlighting of training whitespace (`code-eol.highlightExtraWhitespace: true`).
+
+   ![Screenshot](https://raw.githubusercontent.com/medo64/render-crlf/master/images/screenshot-highlight-whitespace.png)
 
 
 ## Extension Settings
