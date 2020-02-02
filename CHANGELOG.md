@@ -1,5 +1,14 @@
 # Change Log
 
+## [1.5.0]
+
+### Changed
+- Support for language-specific line endings
+
+### Fixed
+- Fixed `files.eol`=`auto` highlighting
+
+
 ## [1.4.6]
 
 ### Fixed
