@@ -1,6 +1,7 @@
 'use strict';
 
 const vscode = require('vscode')
+const isWindows = process.platform === 'win32';
 
 
 function activate(context) {
@@ -133,6 +134,7 @@ function activate(context) {
 
         let filesConfiguration = vscode.workspace.getConfiguration('files', null)
         let newDefaultEol = filesConfiguration.get('eol', 'auto') || 'auto'
+        if (newDefaultEol === 'auto') { newDefaultEol = isWindows ? '\r\n' : '\n' }
 
         if (symbolLF !== newSymbolLF) {
             symbolLF = newSymbolLF
