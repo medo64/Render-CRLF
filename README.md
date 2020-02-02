@@ -9,13 +9,23 @@ whitespace characters as errors.
 Since extension only renders visible portion of text, it is fast even for huge
 documents.
 
+Fully supports language-specific EOL settings.
+
 
 ## Features
 
-If whitespace rendering is turned on, you will see symbol for either LF (`↓`),
+* If whitespace rendering is turned on, you will see symbol for either LF (`↓`),
 CRLF (`↵`), or CR (`←`).
 
-![Screenshot](https://raw.githubusercontent.com/medo64/render-crlf/master/images/screenshot.gif)
+   ![Screenshot](https://raw.githubusercontent.com/medo64/render-crlf/master/images/screenshot.gif)
+
+* Works well with `editor.largeFileOptimizations=false`.
+
+* Supports rendering only selection (`editor.renderWhitespace=selection`).
+
+* Supports highligthing of non-default EOL - even with language-specific settings.
+
+* Supports highlighting of training whitespace.
 
 
 ## Extension Settings
