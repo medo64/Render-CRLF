@@ -191,26 +191,27 @@ function activate(context) {
         renderDecorations(e)
     }, null, context.subscriptions)
 
-    vscode.window.onDidChangeTextEditorVisibleRanges((e) => {
-        if ((e.textEditor != null) && (e.textEditor.document != null) && (e.visibleRanges.length > 0)) {
-            renderDecorations(e.textEditor, e.visibleRanges);
-        }
-    }, null, context.subscriptions)
-
     vscode.window.onDidChangeTextEditorSelection((e) => {
         if (shouldRenderOnlySelection && (e.textEditor != null) && (e.textEditor.document != null) && (e.selections.length > 0)) {
             renderDecorations(e.textEditor);
         }
     }, null, context.subscriptions)
 
-    vscode.workspace.onDidChangeTextDocument(() => {
-        renderDecorations(vscode.window.activeTextEditor)
+    vscode.window.onDidChangeTextEditorVisibleRanges((e) => {
+        if ((e.textEditor != null) && (e.textEditor.document != null) && (e.visibleRanges.length > 0)) {
+            renderDecorations(e.textEditor, e.visibleRanges);
+        }
     }, null, context.subscriptions)
+
 
     vscode.workspace.onDidChangeConfiguration(() => {
         if (updateConfiguration()) {
             renderDecorations(vscode.window.activeTextEditor)
         }
+    }, null, context.subscriptions)
+
+    vscode.workspace.onDidChangeTextDocument(() => {
+        renderDecorations(vscode.window.activeTextEditor)
     }, null, context.subscriptions)
 }
 exports.activate = activate
