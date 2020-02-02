@@ -50,15 +50,16 @@ function activate(context) {
             if (startLine > 0) { startLine -= 1; } //in case of partial previous line
 
             const lineEnding = document.eol
+            const defaultDocumentEol = getDefaultDocumentEol(document)
 
             let currentEolSymbol
             let nonDefaultLineEnding = false
             if (lineEnding == LF) {
                 currentEolSymbol = symbolLF
-                nonDefaultLineEnding = (defaultEol != '\n')
+                nonDefaultLineEnding = (defaultDocumentEol != '\n')
             } else if (lineEnding == CRLF) {
                 currentEolSymbol = symbolCRLF
-                nonDefaultLineEnding = (defaultEol != '\r\n')
+                nonDefaultLineEnding = (defaultDocumentEol != '\r\n')
             }
 
             //created on every call as there is no theme change event
@@ -134,7 +135,6 @@ function activate(context) {
 
         let filesConfiguration = vscode.workspace.getConfiguration('files', null)
         let newDefaultEol = filesConfiguration.get('eol', 'auto') || 'auto'
-        if (newDefaultEol === 'auto') { newDefaultEol = isWindows ? '\r\n' : '\n' }
 
         if (symbolLF !== newSymbolLF) {
             symbolLF = newSymbolLF
@@ -163,6 +163,23 @@ function activate(context) {
         }
 
         return anyChanges
+    }
+
+    function getDefaultDocumentEol(document) {
+        let eolResult = defaultEol
+        const languageId = document.languageId
+        if (languageId) {
+            const languageSpecificConfiguration = vscode.workspace.getConfiguration('[' + languageId + ']')
+            const languageSpecificEol = languageSpecificConfiguration['files.eol']
+            if (languageSpecificEol) {
+                eolResult = languageSpecificEol
+            }
+        }
+        if (eolResult === 'auto') {
+            return isWindows ? '\r\n' : '\n'
+        } else {
+            return eolResult
+        }
     }
 
 
