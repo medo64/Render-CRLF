@@ -3,7 +3,7 @@
     "displayName": "Render Line Endings",
     "description": "Displays LF/CR/CRLF line ending symbol and optionally extra whitespace when 'Render whitespace' is turned on.",
     "icon": "ICON.png",
-    "version": "1.5.0",
+    "version": "1.5.1",
     "publisher": "medo64",
     "galleryBanner": {
         "color": "#373E6D",
@@ -83,7 +83,7 @@
     "dependencies": {},
     "devDependencies": {
         "eslint": "^5.16.0",
-        "vsce": "^1.71.0",
+        "vsce": "^1.74.0",
         "vscode": "^1.1.36"
     }
 }

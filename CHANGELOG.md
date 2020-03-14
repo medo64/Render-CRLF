@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.5.1]
+
+### Changed
+- Security updates
+
+
 ## [1.5.0]
 
 ### Changed
