@@ -64,15 +64,18 @@ Default line ending is determined based on `files.eol` setting.
     "code-eol.returnCharacter" : "←",
     "code-eol.crlfCharacter"   : "↵",
 
+
 ### Atom Style Configuration
 
     "code-eol.newlineCharacter": "¬",
     "code-eol.returnCharacter" : "¤",
     "code-eol.crlfCharacter"   : "¤¬",
 
+
 ### Mark Non-Default Line Ending
 
     "code-eol.highlightNonDefault": true,
+
 
 ### Mark Extra Whitespace
 
@@ -87,10 +90,12 @@ Visual Studio Code normalizes line endings upon load and thus this extension
 will only show one kind of line ending character. Currently it is not possible
 to have multiple different line endings (see [issue 127](https://github.com/Microsoft/vscode/issues/127)).
 
+
 ### CR Line Ending Is Not Supported
 
 Visual Studio does not support CR line ending (see [issue 35797](https://github.com/Microsoft/vscode/issues/35797)).
 Therefore, while you can configure it, you will never see CR as a line ending.
+
 
 ### Not Rendering Glyphs For Large Files
 
@@ -99,9 +104,9 @@ over 5MB in size (see [issue 27100](https://github.com/Microsoft/vscode/issues/2
 Therefore, no line-ending characters will be visible on large files. To avoid
 this you can set `editor.largeFileOptimizations` to `false`.
 
+
 ### Slow Update For Large Files
 
-If there is an extension that parses the whole text (e.g. other line ending
-visualization extension), you might see delayed line ending character updates
-and temporary visual artefacts. This is due to serial nature of event processing
-within VS Code. The only workaround is to disable other line ending extension.
+This extension doesn't process the whole file but just a visible portion so it's
+highly unlikely it will be the cause. I recommend disabling each extension in
+turn to determine which extension is causing the issue.
