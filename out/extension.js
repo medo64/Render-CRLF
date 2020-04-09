@@ -169,10 +169,12 @@ function activate(context) {
         let eolResult = defaultEol
         const languageId = document.languageId
         if (languageId) {
-            const languageSpecificConfiguration = vscode.workspace.getConfiguration('[' + languageId + ']')
-            const languageSpecificEol = languageSpecificConfiguration['files.eol']
-            if (languageSpecificEol) {
-                eolResult = languageSpecificEol
+            const languageSpecificConfiguration = vscode.workspace.getConfiguration('[' + languageId + ']', null)
+            if (languageSpecificConfiguration !== null) {
+                const languageSpecificEol = languageSpecificConfiguration['files.eol']
+                if (languageSpecificEol) {
+                    eolResult = languageSpecificEol
+                }
             }
         }
         if (eolResult === 'auto') {
