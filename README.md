@@ -51,6 +51,8 @@ extension):
 
 * `code-eol.highlightExtraWhitespace`: If true, trailing whitespace will be colored as error. Note this is only shown if `renderWhitespace` is turned on.
 
+* `code-eol.decorateBeforeEol`: If true, decoration will come before end of the line thus playing better with extensions that use decorations after end of the line. Do note that cursor will be positioned visually at the wrong place on the empty line (albeit that's just a visual artefact and functionality is not impacted).
+
 Color is taken from `editorWhitespace.foreground` theme color (also used by
 Visual Studio Code to color whitespace symbols). color for non-default line
 ending is taken from `errorForeground` theme color.
@@ -82,6 +84,11 @@ Default line ending is determined based on `files.eol` setting.
     "code-eol.highlightExtraWhitespace": true,
 
 
+### Place Decorations Before EOL Instead of After
+
+    "code-eol.decorateBeforeEol": true,
+
+
 ## Known Issues
 
 ### Mixed Line Endings Are Not Supported
@@ -110,3 +117,13 @@ this you can set `editor.largeFileOptimizations` to `false`.
 This extension doesn't process the whole file but just a visible portion so it's
 highly unlikely it will be the cause. I recommend disabling each extension in
 turn to determine which extension is causing the issue.
+
+
+### Conflict with GitLens
+
+This extension might be in conflict with other extensions providing their
+information as end of the line decorations, the most notable example being
+GitLens. This is due to [issue #33852](https://github.com/microsoft/vscode/issues/33852)
+and it cannot be solved at this moment.
+
+As a workaround you can try setting `code-eol.decorateBeforeEol` to `true`.

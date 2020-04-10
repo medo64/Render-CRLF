@@ -19,6 +19,7 @@ function activate(context) {
     var lastEolSymbol = null
     var lastThemeColorError = null
     var lastThemeColorWhitespace = null
+    var lastDecorationBeforeEof = null
 
     // settings
     var symbolLF
@@ -28,6 +29,7 @@ function activate(context) {
     var shouldRenderOnlySelection
     var highlightNonDefault
     var highlightExtraWhitespace
+    var decorateBeforeEol
     var defaultEol
 
     function renderDecorations(editor, ranges) {
@@ -75,15 +77,20 @@ function activate(context) {
             const themeColorWhitespace = new vscode.ThemeColor('editorWhitespace.foreground')
 
             const eolColor = highlightNonDefault && nonDefaultLineEnding ? themeColorError : themeColorWhitespace
-            if ((eolDecorationType == null) || (lastEolSymbol !== currentEolSymbol) || (lastThemeColorError !== themeColorError) || (lastThemeColorWhitespace !== themeColorWhitespace)) {
+            if ((eolDecorationType == null) || (lastEolSymbol !== currentEolSymbol) || (lastThemeColorError !== themeColorError) || (lastThemeColorWhitespace !== themeColorWhitespace) || (lastDecorationBeforeEof !== decorateBeforeEol)) {
                 if (eolDecorationType != null) {
                     if (editor.setDecorations) { editor.setDecorations(eolDecorationType, []) }
                     eolDecorationType.dispose();
                 }
-                eolDecorationType = vscode.window.createTextEditorDecorationType({ after: { contentText: currentEolSymbol, color: eolColor } });
+                if (decorateBeforeEol) {
+                    eolDecorationType = vscode.window.createTextEditorDecorationType({ before: { contentText: currentEolSymbol, color: eolColor } });
+                } else {
+                    eolDecorationType = vscode.window.createTextEditorDecorationType({ after: { contentText: currentEolSymbol, color: eolColor } });
+                }
                 lastEolSymbol = currentEolSymbol
                 lastThemeColorError = themeColorError
                 lastThemeColorWhitespace = themeColorWhitespace
+                lastDecorationBeforeEof = decorateBeforeEol
             }
 
             if ((extraWhitespaceDecorationType == null) || (lastThemeColorError !== themeColorError)) {
@@ -157,6 +164,7 @@ function activate(context) {
         let newSymbolCRLF = customConfiguration.get('crlfCharacter',    defaultCRLFSymbol) || defaultCRLFSymbol
         let newHighlightNonDefault = customConfiguration.get('highlightNonDefault', false)
         let newHighlightExtraWhitespace = customConfiguration.get('highlightExtraWhitespace', false)
+        let newDecorateBeforeEol = customConfiguration.get('decorateBeforeEol', false)
 
         let filesConfiguration = vscode.workspace.getConfiguration('files', null)
         let newDefaultEol = filesConfiguration.get('eol', 'auto') || 'auto'
@@ -179,6 +187,10 @@ function activate(context) {
         }
         if (highlightExtraWhitespace !== newHighlightExtraWhitespace) {
             highlightExtraWhitespace = newHighlightExtraWhitespace
+            anyChanges = true
+        }
+        if (decorateBeforeEol !== newDecorateBeforeEol) {
+            decorateBeforeEol = newDecorateBeforeEol
             anyChanges = true
         }
 
