@@ -5,14 +5,22 @@ const isWindows = process.platform === 'win32';
 
 
 function activate(context) {
-    const decorationType = vscode.window.createTextEditorDecorationType({});
-    const extraWhitespaceDecorationType = vscode.window.createTextEditorDecorationType({ color: new vscode.ThemeColor('errorForeground') });
     const defaultLFSymbol   = '↓'
     const defaultCRSymbol   = '←'
     const defaultCRLFSymbol = '↵'
     const LF = 1
     const CRLF = 2
 
+    // decorations
+    var eolDecorationType = null
+    var extraWhitespaceDecorationType = null
+
+    // to determine if decoration types need recreation
+    var lastEolSymbol = null
+    var lastThemeColorError = null
+    var lastThemeColorWhitespace = null
+
+    // settings
     var symbolLF
     var symbolCR
     var symbolCRLF
@@ -62,12 +70,30 @@ function activate(context) {
                 nonDefaultLineEnding = (defaultDocumentEol != '\r\n')
             }
 
-            //created on every call as there is no theme change event
+            //checking on every call as there is no theme change event
             const themeColorError = new vscode.ThemeColor('errorForeground')
             const themeColorWhitespace = new vscode.ThemeColor('editorWhitespace.foreground')
 
             const eolColor = highlightNonDefault && nonDefaultLineEnding ? themeColorError : themeColorWhitespace
-            const eolDecoration = { after: { contentText: currentEolSymbol, color: eolColor } }
+            if ((eolDecorationType == null) || (lastEolSymbol !== currentEolSymbol) || (lastThemeColorError !== themeColorError) || (lastThemeColorWhitespace !== themeColorWhitespace)) {
+                if (eolDecorationType != null) {
+                    if (editor.setDecorations) { editor.setDecorations(eolDecorationType, []) }
+                    eolDecorationType.dispose();
+                }
+                eolDecorationType = vscode.window.createTextEditorDecorationType({ after: { contentText: currentEolSymbol, color: eolColor } });
+                lastEolSymbol = currentEolSymbol
+                lastThemeColorError = themeColorError
+                lastThemeColorWhitespace = themeColorWhitespace
+            }
+
+            if ((extraWhitespaceDecorationType == null) || (lastThemeColorError !== themeColorError)) {
+                if (extraWhitespaceDecorationType != null) {
+                    if (editor.setDecorations) { editor.setDecorations(extraWhitespaceDecorationType, []) }
+                    extraWhitespaceDecorationType.dispose();
+                }
+                extraWhitespaceDecorationType = vscode.window.createTextEditorDecorationType({ color: themeColorError });
+                lastThemeColorError = themeColorError
+            }
 
             for (let i=startLine; i<=endLine; i++) {
                 var line = document.lineAt(i)
@@ -89,8 +115,7 @@ function activate(context) {
                     }
                     if (shouldDecorate) {
                         eolDecorations.push({
-                            range: new vscode.Range(eolPosition, eolPosition),
-                            renderOptions: eolDecoration
+                            range: new vscode.Range(eolPosition, eolPosition)
                         })
                     }
                 }
@@ -105,7 +130,7 @@ function activate(context) {
             }
         }
 
-        if (editor.setDecorations) { editor.setDecorations(decorationType, eolDecorations) }
+        if (editor.setDecorations) { editor.setDecorations(eolDecorationType, eolDecorations) }
         if (editor.setDecorations && highlightExtraWhitespace) { editor.setDecorations(extraWhitespaceDecorationType, extraWhitespaceDecorations) }
     }
 
