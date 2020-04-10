@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.5.3]
+
+### Fixed
+- Fixed excessive extension host log output [issue](https://github.com/medo64/Render-CRLF/issues/6)
+- Added workaround for [issue with GitLab](https://github.com/medo64/Render-CRLF/issues/5)
+
+
 ## [1.5.2]
 
 ### Fixed
