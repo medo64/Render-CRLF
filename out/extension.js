@@ -120,6 +120,9 @@ function activate(context) {
                     } else { //decorate all
                         shouldDecorate = true
                     }
+                    if (shouldDecorate && decorateBeforeEol && (line.text.length == 0)) {
+                        shouldDecorate = false //don't decorate empty lines to avoid wrong cursor positioning when 'before' decoration is used
+                    }
                     if (shouldDecorate) {
                         eolDecorations.push({
                             range: new vscode.Range(eolPosition, eolPosition)

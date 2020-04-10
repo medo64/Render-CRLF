@@ -75,7 +75,7 @@
                     "code-eol.decorateBeforeEol": {
                         "type": "boolean",
                         "default": false,
-                        "description": "If set, decoration will come before end of the line thus playing better with extensions that use decorations after end of the line. Do note that cursor will be positioned visually at the wrong place on the empty line (albeit that's just a visual artefact and functionality is not impacted)."
+                        "description": "If true, decoration will come before end of the line thus playing better with extensions that use decorations after end of the line. Do note that line ending will not be rendered on empty lines if this is used."
                     }
                 }
             }

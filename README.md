@@ -51,7 +51,7 @@ extension):
 
 * `code-eol.highlightExtraWhitespace`: If true, trailing whitespace will be colored as error. Note this is only shown if `renderWhitespace` is turned on.
 
-* `code-eol.decorateBeforeEol`: If true, decoration will come before end of the line thus playing better with extensions that use decorations after end of the line. Do note that cursor will be positioned visually at the wrong place on the empty line (albeit that's just a visual artefact and functionality is not impacted).
+* `code-eol.decorateBeforeEol`: If true, decoration will come before end of the line thus playing better with extensions that use decorations after end of the line. Do note that line ending will not be rendered on empty lines if this is used.
 
 Color is taken from `editorWhitespace.foreground` theme color (also used by
 Visual Studio Code to color whitespace symbols). color for non-default line
