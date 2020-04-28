@@ -147,9 +147,10 @@ function activate(context) {
     function updateConfiguration() {
         let anyChanges = false;
 
-        const renderWhitespaceSetting = vscode.workspace.getConfiguration('editor', null).get('renderWhitespace', 'none').toString()
+        const editorConfiguration = vscode.workspace.getConfiguration('editor', null)
+        const renderWhitespaceSetting = editorConfiguration.get('renderWhitespace', 'none').toString()
 
-        let newShouldRenderEOL = (renderWhitespaceSetting !== 'none')
+        const newShouldRenderEOL = (renderWhitespaceSetting !== 'none')
         if (shouldRenderEOL !== newShouldRenderEOL) {
             shouldRenderEOL = newShouldRenderEOL
             anyChanges = true
@@ -161,16 +162,16 @@ function activate(context) {
             anyChanges = true
         }
 
-        let customConfiguration = vscode.workspace.getConfiguration('code-eol', null)
-        let newSymbolLF =   customConfiguration.get('newlineCharacter', defaultLFSymbol)   || defaultLFSymbol
-        let newSymbolCR =   customConfiguration.get('returnCharacter',  defaultCRSymbol)   || defaultCRSymbol
-        let newSymbolCRLF = customConfiguration.get('crlfCharacter',    defaultCRLFSymbol) || defaultCRLFSymbol
-        let newHighlightNonDefault = customConfiguration.get('highlightNonDefault', false)
-        let newHighlightExtraWhitespace = customConfiguration.get('highlightExtraWhitespace', false)
-        let newDecorateBeforeEol = customConfiguration.get('decorateBeforeEol', false)
+        const customConfiguration = vscode.workspace.getConfiguration('code-eol', null)
+        const newSymbolLF =   customConfiguration.get('newlineCharacter', defaultLFSymbol)   || defaultLFSymbol
+        const newSymbolCR =   customConfiguration.get('returnCharacter',  defaultCRSymbol)   || defaultCRSymbol
+        const newSymbolCRLF = customConfiguration.get('crlfCharacter',    defaultCRLFSymbol) || defaultCRLFSymbol
+        const newHighlightNonDefault = customConfiguration.get('highlightNonDefault', false)
+        const newHighlightExtraWhitespace = customConfiguration.get('highlightExtraWhitespace', false)
+        const newDecorateBeforeEol = customConfiguration.get('decorateBeforeEol', false)
 
-        let filesConfiguration = vscode.workspace.getConfiguration('files', null)
-        let newDefaultEol = filesConfiguration.get('eol', 'auto') || 'auto'
+        const filesConfiguration = vscode.workspace.getConfiguration('files', null)
+        const newDefaultEol = filesConfiguration.get('eol', 'auto') || 'auto'
 
         if (symbolLF !== newSymbolLF) {
             symbolLF = newSymbolLF
