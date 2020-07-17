@@ -3,31 +3,31 @@ Render Line Endings
 
 This extension shows end-of-line characters (CR, LF, or CRLF) when whitespace
 rendering is turned on. Additionally, it can mark all non-default line endings
-in a different color. Furthermore, it can be also configured to show trailing
-whitespace characters as errors.
+in a different color. It can be also configured to show trailing whitespace
+characters as errors.
 
-Since extension only renders visible portion of text, it is fast even for huge
-documents.
+Since the extension only renders visible portion of text, it's fast, even for
+huge documents.
 
-Fully supports language-specific EOL settings.
+It fully supports language-specific EOL settings.
 
 
 ## Features
 
-If whitespace rendering is turned on, you will see symbol for either LF (`↓`),
-CRLF (`↵`), or CR (`←`).
+If whitespace rendering is turned on, you will see the symbol for either LF
+(`↓`), CRLF (`↵`), or CR (`←`).
 
    ![Screenshot](https://raw.githubusercontent.com/medo64/render-crlf/master/images/screenshot.gif)
 
-Works well with `editor.largeFileOptimizations: false` regardless of document
-size.
+Works well with `editor.largeFileOptimizations: false` regardless of the
+document's size.
 
-Supports rendering only selection (`editor.renderWhitespace: selection`).
+Supports rendering of only the selection (`editor.renderWhitespace: selection`).
 
    ![Screenshot](https://raw.githubusercontent.com/medo64/render-crlf/master/images/screenshot-selection.png)
 
-Supports highligthing of non-default EOL - even with language-specific settings
-(`code-eol.highlightNonDefault: true`).
+Supports highligthing of non-default EOL - even with the language-specific
+settings (`code-eol.highlightNonDefault: true`).
 
    ![Screenshot](https://raw.githubusercontent.com/medo64/render-crlf/master/images/screenshot-highlight-eof.png)
 
@@ -51,10 +51,10 @@ extension):
 
 * `code-eol.highlightExtraWhitespace`: If true, trailing whitespace will be colored as error. Note this is only shown if `renderWhitespace` is turned on.
 
-* `code-eol.decorateBeforeEol`: If true, decoration will come before end of the line thus playing better with extensions that use decorations after end of the line. Do note that line ending will not be rendered on empty lines if this is used.
+* `code-eol.decorateBeforeEol`: If true, decoration will come before the end of the line thus playing better with extensions that use decorations after the end of the line. Do note that the line ending will not be rendered on empty lines if this is used.
 
 Color is taken from `editorWhitespace.foreground` theme color (also used by
-Visual Studio Code to color whitespace symbols). color for non-default line
+Visual Studio Code to color whitespace symbols). Color for non-default line
 ending is taken from `errorForeground` theme color.
 
 Default line ending is determined based on `files.eol` setting.
@@ -93,7 +93,7 @@ Default line ending is determined based on `files.eol` setting.
 
 ### Mixed Line Endings Are Not Supported
 
-Visual Studio Code normalizes line endings upon load and thus this extension
+Visual Studio Code normalizes the line endings upon load and thus this extension
 will only show one kind of line ending character. Currently it is not possible
 to have multiple different line endings (see [issue 127](https://github.com/Microsoft/vscode/issues/127)).
 
