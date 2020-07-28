@@ -22,14 +22,14 @@ function activate(context) {
     var lastDecorationBeforeEof = null
 
     // settings
+    var defaultRenderWhitespace
+    var defaultEol
     var symbolLF
     var symbolCR
     var symbolCRLF
-    var defaultRenderWhitespace
     var highlightNonDefault
     var highlightExtraWhitespace
     var decorateBeforeEol
-    var defaultEol
 
     function renderDecorations(editor, ranges) {
         if (!editor) { return }
@@ -154,6 +154,9 @@ function activate(context) {
         const editorConfiguration = vscode.workspace.getConfiguration('editor', null)
         const newDefaultRenderWhitespace = editorConfiguration.get('renderWhitespace', 'none') || 'selection'
 
+        const filesConfiguration = vscode.workspace.getConfiguration('files', null)
+        const newDefaultEol = filesConfiguration.get('eol', 'auto') || 'auto'
+
         const customConfiguration = vscode.workspace.getConfiguration('code-eol', null)
         const newSymbolLF =   customConfiguration.get('newlineCharacter', defaultLFSymbol)   || defaultLFSymbol
         const newSymbolCR =   customConfiguration.get('returnCharacter',  defaultCRSymbol)   || defaultCRSymbol
@@ -162,11 +165,13 @@ function activate(context) {
         const newHighlightExtraWhitespace = customConfiguration.get('highlightExtraWhitespace', false)
         const newDecorateBeforeEol = customConfiguration.get('decorateBeforeEol', false)
 
-        const filesConfiguration = vscode.workspace.getConfiguration('files', null)
-        const newDefaultEol = filesConfiguration.get('eol', 'auto') || 'auto'
-
         if (defaultRenderWhitespace !== newDefaultRenderWhitespace) {
             defaultRenderWhitespace = newDefaultRenderWhitespace
+            anyChanges = true
+        }
+
+        if (defaultEol !== newDefaultEol) {
+            defaultEol = newDefaultEol
             anyChanges = true
         }
 
@@ -192,11 +197,6 @@ function activate(context) {
         }
         if (decorateBeforeEol !== newDecorateBeforeEol) {
             decorateBeforeEol = newDecorateBeforeEol
-            anyChanges = true
-        }
-
-        if (defaultEol !== newDefaultEol) {
-            defaultEol = newDefaultEol
             anyChanges = true
         }
 
