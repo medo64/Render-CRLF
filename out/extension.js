@@ -60,7 +60,7 @@ function activate(context) {
             if (startLine > 0) { startLine -= 1; } //in case of partial previous line
 
             const lineEnding = document.eol
-            const defaultDocumentEol = getDefaultDocumentEol(document)
+            const defaultDocumentEol = getDocumentEol(document)
 
             let currentEolSymbol
             let nonDefaultLineEnding = false
@@ -206,7 +206,7 @@ function activate(context) {
         return anyChanges
     }
 
-    function getDefaultDocumentEol(document) {
+    function getDocumentEol(document) {
         let eolResult = defaultEol
         const languageId = document.languageId
         if (languageId) {
