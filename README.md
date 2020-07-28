@@ -41,17 +41,25 @@ Supports highlighting of training whitespace (`code-eol.highlightExtraWhitespace
 This extension contributes the following settings (compatible with `code-eol`
 extension):
 
-* `code-eol.newlineCharacter`: Character used to display LF (line-feed) line ending (aka Linux/Mac line ending).
+* `code-eol.newlineCharacter`: Character used to display LF (line-feed) line
+ending (aka Linux/Mac line ending).
 
-* `code-eol.returnCharacter`: Character used to display CR (carriage-return) line ending (aka old Macintosh line ending).
+* `code-eol.returnCharacter`: Character used to display CR (carriage-return)
+line ending (aka old Macintosh line ending).
 
-* `code-eol.code-eol.crlfCharacter`: Character used to display CRLF (carriage-return, line-feed) line ending (aka Windows line ending).
+* `code-eol.code-eol.crlfCharacter`: Character used to display CRLF
+(carriage-return, line-feed) line ending (aka Windows line ending).
 
-* `code-eol.highlightNonDefault`: If true, non-default line ending will be colored as error.
+* `code-eol.highlightNonDefault`: If true, non-default line ending will be
+colored as error.
 
-* `code-eol.highlightExtraWhitespace`: If true, trailing whitespace will be colored as error. Note this is only shown if `renderWhitespace` is turned on.
+* `code-eol.highlightExtraWhitespace`: If true, trailing whitespace will be
+colored as error. Note this is only shown if `renderWhitespace` is turned on.
 
-* `code-eol.decorateBeforeEol`: If true, decoration will come before the end of the line thus playing better with extensions that use decorations after the end of the line. Do note that the line ending will not be rendered on empty lines if this is used.
+* `code-eol.decorateBeforeEol`: If true, decoration will come before the end of
+the line thus playing better with extensions that use decorations after the end
+of the line. Do note that the line ending will not be rendered on empty lines if
+this is used.
 
 Color is taken from `editorWhitespace.foreground` theme color (also used by
 Visual Studio Code to color whitespace symbols). Color for non-default line

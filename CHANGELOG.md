@@ -1,5 +1,15 @@
 # Change Log
 
+## [1.5.5]
+
+### Changed
+- Support for [language-specific renderWhitespace setting](https://github.com/medo64/Render-CRLF/issues/7)
+- All other settings also allow for language-specific behavior
+
+### Fixed
+- Language change immediately updates window
+
+
 ## [1.5.4]
 
 ### Fixed
@@ -10,7 +20,7 @@
 
 ### Fixed
 - Fixed excessive extension host log output [issue](https://github.com/medo64/Render-CRLF/issues/6)
-- Added workaround for [issue with GitLab](https://github.com/medo64/Render-CRLF/issues/5)
+- Added workaround for [issue with GitLens](https://github.com/medo64/Render-CRLF/issues/5)
 
 
 ## [1.5.2]
