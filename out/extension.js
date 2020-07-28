@@ -25,8 +25,7 @@ function activate(context) {
     var symbolLF
     var symbolCR
     var symbolCRLF
-    var shouldRenderEOL
-    var shouldRenderOnlySelection
+    var defaultRenderWhitespace
     var highlightNonDefault
     var highlightExtraWhitespace
     var decorateBeforeEol
@@ -35,10 +34,15 @@ function activate(context) {
     function renderDecorations(editor, ranges) {
         if (!editor) { return }
 
+        const document = editor.document
+
+        const renderWhitespaceSetting = getDocumentRenderWhitespace(editor.document)
+        const shouldRenderEOL = (renderWhitespaceSetting !== 'none');
+        const shouldRenderOnlySelection = (renderWhitespaceSetting === 'selection')
+
         var eolDecorations = []
         var extraWhitespaceDecorations = []
         if (shouldRenderEOL) {
-            const document = editor.document
             const selections = editor.selections
 
             //determine what is exactly visible
@@ -148,19 +152,7 @@ function activate(context) {
         let anyChanges = false;
 
         const editorConfiguration = vscode.workspace.getConfiguration('editor', null)
-        const renderWhitespaceSetting = editorConfiguration.get('renderWhitespace', 'none').toString()
-
-        const newShouldRenderEOL = (renderWhitespaceSetting !== 'none')
-        if (shouldRenderEOL !== newShouldRenderEOL) {
-            shouldRenderEOL = newShouldRenderEOL
-            anyChanges = true
-        }
-
-        let newShouldRenderOnlySelection = (renderWhitespaceSetting === 'selection')
-        if (shouldRenderOnlySelection !== newShouldRenderOnlySelection) {
-            shouldRenderOnlySelection = newShouldRenderOnlySelection
-            anyChanges = true
-        }
+        const newDefaultRenderWhitespace = editorConfiguration.get('renderWhitespace', 'none') || 'selection'
 
         const customConfiguration = vscode.workspace.getConfiguration('code-eol', null)
         const newSymbolLF =   customConfiguration.get('newlineCharacter', defaultLFSymbol)   || defaultLFSymbol
@@ -172,6 +164,11 @@ function activate(context) {
 
         const filesConfiguration = vscode.workspace.getConfiguration('files', null)
         const newDefaultEol = filesConfiguration.get('eol', 'auto') || 'auto'
+
+        if (defaultRenderWhitespace !== newDefaultRenderWhitespace) {
+            defaultRenderWhitespace = newDefaultRenderWhitespace
+            anyChanges = true
+        }
 
         if (symbolLF !== newSymbolLF) {
             symbolLF = newSymbolLF
@@ -206,6 +203,22 @@ function activate(context) {
         return anyChanges
     }
 
+
+    function getDocumentRenderWhitespace(document) {
+        let renderWhitespaceResult = defaultRenderWhitespace
+        const languageId = document.languageId
+        if (languageId) {
+            const languageSpecificConfiguration = vscode.workspace.getConfiguration('[' + languageId + ']', null)
+            if (languageSpecificConfiguration !== null) {
+                const languageSpecificRenderWhitespace = languageSpecificConfiguration['editor.renderWhitespace']
+                if (languageSpecificRenderWhitespace) {
+                    renderWhitespaceResult = languageSpecificRenderWhitespace
+                }
+            }
+        }
+        return renderWhitespaceResult
+    }
+
     function getDocumentEol(document) {
         let eolResult = defaultEol
         const languageId = document.languageId
@@ -235,7 +248,7 @@ function activate(context) {
     }, null, context.subscriptions)
 
     vscode.window.onDidChangeTextEditorSelection((e) => {
-        if (shouldRenderOnlySelection && (e.textEditor != null) && (e.textEditor.document != null) && (e.selections.length > 0)) {
+        if ((e.textEditor != null) && (e.textEditor.document != null) && (e.selections.length > 0)) {
             renderDecorations(e.textEditor);
         }
     }, null, context.subscriptions)
