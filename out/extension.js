@@ -36,7 +36,7 @@ function activate(context) {
 
         const document = editor.document
 
-        const renderWhitespaceSetting = getDocumentRenderWhitespace(editor.document)
+        const [ renderWhitespaceSetting , eolSetting ] = getDocumentSettings(editor.document)
         const shouldRenderEOL = (renderWhitespaceSetting !== 'none');
         const shouldRenderOnlySelection = (renderWhitespaceSetting === 'selection')
 
@@ -64,16 +64,15 @@ function activate(context) {
             if (startLine > 0) { startLine -= 1; } //in case of partial previous line
 
             const lineEnding = document.eol
-            const defaultDocumentEol = getDocumentEol(document)
 
             let currentEolSymbol
             let nonDefaultLineEnding = false
             if (lineEnding == LF) {
                 currentEolSymbol = symbolLF
-                nonDefaultLineEnding = (defaultDocumentEol != '\n')
+                nonDefaultLineEnding = (eolSetting != '\n')
             } else if (lineEnding == CRLF) {
                 currentEolSymbol = symbolCRLF
-                nonDefaultLineEnding = (defaultDocumentEol != '\r\n')
+                nonDefaultLineEnding = (eolSetting != '\r\n')
             }
 
             //checking on every call as there is no theme change event
@@ -204,38 +203,34 @@ function activate(context) {
     }
 
 
-    function getDocumentRenderWhitespace(document) {
+    function getDocumentSettings(document) {
         let renderWhitespaceResult = defaultRenderWhitespace
-        const languageId = document.languageId
-        if (languageId) {
-            const languageSpecificConfiguration = vscode.workspace.getConfiguration('[' + languageId + ']', null)
-            if (languageSpecificConfiguration !== null) {
-                const languageSpecificRenderWhitespace = languageSpecificConfiguration['editor.renderWhitespace']
-                if (languageSpecificRenderWhitespace) {
-                    renderWhitespaceResult = languageSpecificRenderWhitespace
-                }
-            }
-        }
-        return renderWhitespaceResult
-    }
-
-    function getDocumentEol(document) {
         let eolResult = defaultEol
+
         const languageId = document.languageId
         if (languageId) {
             const languageSpecificConfiguration = vscode.workspace.getConfiguration('[' + languageId + ']', null)
             if (languageSpecificConfiguration !== null) {
-                const languageSpecificEol = languageSpecificConfiguration['files.eol']
-                if (languageSpecificEol) {
-                    eolResult = languageSpecificEol
+
+                {
+                    const languageSpecificRenderWhitespace = languageSpecificConfiguration['editor.renderWhitespace']
+                    if (languageSpecificRenderWhitespace) {
+                        renderWhitespaceResult = languageSpecificRenderWhitespace
+                    }
+                }
+
+                {
+                    const languageSpecificEol = languageSpecificConfiguration['files.eol']
+                    if (languageSpecificEol) {
+                        eolResult = languageSpecificEol
+                    }
                 }
             }
         }
-        if (eolResult === 'auto') {
-            return isWindows ? '\r\n' : '\n'
-        } else {
-            return eolResult
-        }
+
+        if (eolResult === 'auto') { eolResult = isWindows ? '\r\n' : '\n' }
+
+        return [ renderWhitespaceResult, eolResult ]
     }
 
 
