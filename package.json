@@ -42,6 +42,7 @@
                 "title": "Render CRLF Line Endings",
                 "properties": {
                     "code-eol.newlineCharacter": {
+                        "scope": "language-overridable",
                         "description": "Character used to display LF (line-feed) line ending (aka Linux/Mac line ending).",
                         "type": "string",
                         "minLength": 1,
@@ -49,6 +50,7 @@
                         "default": "↓"
                     },
                     "code-eol.returnCharacter": {
+                        "scope": "language-overridable",
                         "description": "Character used to display CR (carriage-return) line ending (aka old Macintosh line ending).",
                         "type": "string",
                         "minLength": 1,
@@ -56,6 +58,7 @@
                         "default": "←"
                     },
                     "code-eol.crlfCharacter": {
+                        "scope": "language-overridable",
                         "description": "Character used to display CRLF (carriage-return, line-feed) line ending (aka Windows line ending).",
                         "type": "string",
                         "minLength": 1,
@@ -63,16 +66,19 @@
                         "default": "↵"
                     },
                     "code-eol.highlightNonDefault": {
+                        "scope": "language-overridable",
                         "type": "boolean",
                         "default": false,
                         "description": "If set, non-default line endings will be hightlighted as errors."
                     },
                     "code-eol.highlightExtraWhitespace": {
+                        "scope": "language-overridable",
                         "type": "boolean",
                         "default": false,
                         "description": "If set, extra whitespace at line ending will be hightlighted as errors."
                     },
                     "code-eol.decorateBeforeEol": {
+                        "scope": "language-overridable",
                         "type": "boolean",
                         "default": false,
                         "description": "If true, decoration will come before end of the line thus playing better with extensions that use decorations after end of the line. Do note that line ending will not be rendered on empty lines if this is used."

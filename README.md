@@ -9,7 +9,7 @@ characters as errors.
 Since the extension only renders visible portion of text, it's fast, even for
 huge documents.
 
-It fully supports language-specific EOL settings.
+It fully supports language-specific EOL and whitespace settings.
 
 
 ## Features

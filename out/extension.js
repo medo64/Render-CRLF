@@ -24,21 +24,22 @@ function activate(context) {
     // settings
     var defaultRenderWhitespace
     var defaultEol
-    var symbolLF
-    var symbolCR
-    var symbolCRLF
-    var highlightNonDefault
-    var highlightExtraWhitespace
-    var decorateBeforeEol
+    var defaultSymbolLF
+    var defaultSymbolCR
+    var defaultSymbolCRLF
+    var defaultHighlightNonDefault
+    var defaultHighlightExtraWhitespace
+    var defaultDecorateBeforeEol
 
     function renderDecorations(editor, ranges) {
         if (!editor) { return }
 
         const document = editor.document
 
-        const [ renderWhitespaceSetting , eolSetting ] = getDocumentSettings(editor.document)
-        const shouldRenderEOL = (renderWhitespaceSetting !== 'none');
-        const shouldRenderOnlySelection = (renderWhitespaceSetting === 'selection')
+        const [ renderWhitespace, eol, symbolLF, symbolCRLF, highlightNonDefault, highlightExtraWhitespace, decorateBeforeEol ]
+            = getDocumentSettings(editor.document)
+        const shouldRenderEOL = (renderWhitespace !== 'none');
+        const shouldRenderOnlySelection = (renderWhitespace === 'selection')
 
         var eolDecorations = []
         var extraWhitespaceDecorations = []
@@ -69,10 +70,10 @@ function activate(context) {
             let nonDefaultLineEnding = false
             if (lineEnding == LF) {
                 currentEolSymbol = symbolLF
-                nonDefaultLineEnding = (eolSetting != '\n')
+                nonDefaultLineEnding = (eol != '\n')
             } else if (lineEnding == CRLF) {
                 currentEolSymbol = symbolCRLF
-                nonDefaultLineEnding = (eolSetting != '\r\n')
+                nonDefaultLineEnding = (eol != '\r\n')
             }
 
             //checking on every call as there is no theme change event
@@ -157,12 +158,12 @@ function activate(context) {
         const newDefaultEol = filesConfiguration.get('eol', 'auto') || 'auto'
 
         const customConfiguration = vscode.workspace.getConfiguration('code-eol', null)
-        const newSymbolLF =   customConfiguration.get('newlineCharacter', defaultLFSymbol)   || defaultLFSymbol
-        const newSymbolCR =   customConfiguration.get('returnCharacter',  defaultCRSymbol)   || defaultCRSymbol
-        const newSymbolCRLF = customConfiguration.get('crlfCharacter',    defaultCRLFSymbol) || defaultCRLFSymbol
-        const newHighlightNonDefault = customConfiguration.get('highlightNonDefault', false)
-        const newHighlightExtraWhitespace = customConfiguration.get('highlightExtraWhitespace', false)
-        const newDecorateBeforeEol = customConfiguration.get('decorateBeforeEol', false)
+        const newDefaultSymbolLF =   customConfiguration.get('newlineCharacter', defaultLFSymbol)   || defaultLFSymbol
+        const newDefaultSymbolCR =   customConfiguration.get('returnCharacter',  defaultCRSymbol)   || defaultCRSymbol
+        const newDefaultSymbolCRLF = customConfiguration.get('crlfCharacter',    defaultCRLFSymbol) || defaultCRLFSymbol
+        const newDefaultHighlightNonDefault = customConfiguration.get('highlightNonDefault', false)
+        const newDefaultHighlightExtraWhitespace = customConfiguration.get('highlightExtraWhitespace', false)
+        const newDefaultDecorateBeforeEol = customConfiguration.get('decorateBeforeEol', false)
 
         if (defaultRenderWhitespace !== newDefaultRenderWhitespace) {
             defaultRenderWhitespace = newDefaultRenderWhitespace
@@ -174,28 +175,28 @@ function activate(context) {
             anyChanges = true
         }
 
-        if (symbolLF !== newSymbolLF) {
-            symbolLF = newSymbolLF
+        if (defaultSymbolLF !== newDefaultSymbolLF) {
+            defaultSymbolLF = newDefaultSymbolLF
             anyChanges = true
         }
-        if (symbolCR !== newSymbolCR) {
-            symbolCR = newSymbolCR
+        if (defaultSymbolCR !== newDefaultSymbolCR) {
+            defaultSymbolCR = newDefaultSymbolCR
             anyChanges = true
         }
-        if (symbolCRLF !== newSymbolCRLF) {
-            symbolCRLF = newSymbolCRLF
+        if (defaultSymbolCRLF !== newDefaultSymbolCRLF) {
+            defaultSymbolCRLF = newDefaultSymbolCRLF
             anyChanges = true
         }
-        if (highlightNonDefault !== newHighlightNonDefault) {
-            highlightNonDefault = newHighlightNonDefault
+        if (defaultHighlightNonDefault !== newDefaultHighlightNonDefault) {
+            defaultHighlightNonDefault = newDefaultHighlightNonDefault
             anyChanges = true
         }
-        if (highlightExtraWhitespace !== newHighlightExtraWhitespace) {
-            highlightExtraWhitespace = newHighlightExtraWhitespace
+        if (defaultHighlightExtraWhitespace !== newDefaultHighlightExtraWhitespace) {
+            defaultHighlightExtraWhitespace = newDefaultHighlightExtraWhitespace
             anyChanges = true
         }
-        if (decorateBeforeEol !== newDecorateBeforeEol) {
-            decorateBeforeEol = newDecorateBeforeEol
+        if (defaultDecorateBeforeEol !== newDefaultDecorateBeforeEol) {
+            defaultDecorateBeforeEol = newDefaultDecorateBeforeEol
             anyChanges = true
         }
 
@@ -204,33 +205,50 @@ function activate(context) {
 
 
     function getDocumentSettings(document) {
-        let renderWhitespaceResult = defaultRenderWhitespace
-        let eolResult = defaultEol
+        let renderWhitespace = defaultRenderWhitespace
+        let eol = defaultEol
+        let symbolLF = defaultSymbolLF
+        //let symbolCR = defaultSymbolCR
+        let symbolCRLF = defaultSymbolCRLF
+        let highlightNonDefault = defaultHighlightNonDefault
+        let highlightExtraWhitespace = defaultHighlightExtraWhitespace
+        let decorateBeforeEol = defaultDecorateBeforeEol
 
         const languageId = document.languageId
         if (languageId) {
             const languageSpecificConfiguration = vscode.workspace.getConfiguration('[' + languageId + ']', null)
             if (languageSpecificConfiguration !== null) {
 
-                {
-                    const languageSpecificRenderWhitespace = languageSpecificConfiguration['editor.renderWhitespace']
-                    if (languageSpecificRenderWhitespace) {
-                        renderWhitespaceResult = languageSpecificRenderWhitespace
-                    }
-                }
+                const languageSpecificRenderWhitespace = languageSpecificConfiguration['editor.renderWhitespace']
+                if (languageSpecificRenderWhitespace) { renderWhitespace = languageSpecificRenderWhitespace }
 
-                {
-                    const languageSpecificEol = languageSpecificConfiguration['files.eol']
-                    if (languageSpecificEol) {
-                        eolResult = languageSpecificEol
-                    }
-                }
+                const languageSpecificEol = languageSpecificConfiguration['files.eol']
+                if (languageSpecificEol) { eol = languageSpecificEol }
+
+                const languageSpecificSymbolLF = languageSpecificConfiguration['code-eol.newlineCharacter']
+                if (languageSpecificSymbolLF) { symbolLF = languageSpecificSymbolLF }
+
+                //const languageSpecificSymbolCR = languageSpecificConfiguration['code-eol.returnCharacter']
+                //if (languageSpecificSymbolCR) { symbolCR = languageSpecificSymbolCR }
+
+                const languageSpecificSymbolCRLF = languageSpecificConfiguration['code-eol.crlfCharacter']
+                if (languageSpecificSymbolCRLF) { symbolCRLF = languageSpecificSymbolCRLF }
+
+                const languageSpecificHighlightNonDefault = languageSpecificConfiguration['code-eol.highlightNonDefault']
+                if (languageSpecificHighlightNonDefault) { highlightNonDefault = languageSpecificHighlightNonDefault }
+
+                const languageSpecificHighlightExtraWhitespace = languageSpecificConfiguration['code-eol.highlightExtraWhitespace']
+                if (languageSpecificHighlightExtraWhitespace) { highlightExtraWhitespace = languageSpecificHighlightExtraWhitespace }
+
+                const languageSpecificDecorateBeforeEol = languageSpecificConfiguration['code-eol.decorateBeforeEol']
+                if (languageSpecificDecorateBeforeEol) { decorateBeforeEol = languageSpecificDecorateBeforeEol }
+
             }
         }
 
-        if (eolResult === 'auto') { eolResult = isWindows ? '\r\n' : '\n' }
+        if (eol === 'auto') { eol = isWindows ? '\r\n' : '\n' }
 
-        return [ renderWhitespaceResult, eolResult ]
+        return [ renderWhitespace, eol, symbolLF, symbolCRLF, highlightNonDefault, highlightExtraWhitespace, decorateBeforeEol ]
     }
 
 
