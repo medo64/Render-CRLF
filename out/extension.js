@@ -274,6 +274,7 @@ function activate(context) {
 
 
     vscode.workspace.onDidChangeConfiguration(() => {
+        updateConfiguration()
         renderDecorations(vscode.window.activeTextEditor)
     }, null, context.subscriptions)
 

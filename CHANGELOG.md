@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.5.6]
+
+### Fixed
+- Dynamic configuration update bug
+
+
 ## [1.5.5]
 
 ### Changed
