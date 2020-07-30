@@ -36,6 +36,22 @@ Supports highlighting of training whitespace (`code-eol.highlightExtraWhitespace
    ![Screenshot](https://raw.githubusercontent.com/medo64/render-crlf/master/images/screenshot-highlight-whitespace.png)
 
 
+# Render Whitespace
+
+Whether extension is decorating or not is handled by `editor.renderWhitespace`
+setting (accessible through `View` `Render Whitespace` menu). The following
+settings are supported:
+
+* `none`: Extension will not add end-of-line decorations.
+
+* `boundary`: Extension will not add end-of-line decorations.
+
+* `selection`: Extension will render end-of-line decorations only if they are
+               within selection.
+
+* `all`: Extension will render all end-of-line decorations.
+
+
 ## Extension Settings
 
 This extension contributes the following settings (compatible with `code-eol`

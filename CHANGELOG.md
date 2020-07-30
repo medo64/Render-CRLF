@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.5.7]
+
+### Changed
+- If `renderWhitespace` is `boundary`, no decorations will be added
+
+
 ## [1.5.6]
 
 ### Fixed

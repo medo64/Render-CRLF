@@ -38,7 +38,7 @@ function activate(context) {
 
         const [ renderWhitespace, eol, symbolLF, symbolCRLF, highlightNonDefault, highlightExtraWhitespace, decorateBeforeEol ]
             = getDocumentSettings(editor.document)
-        const shouldRenderEOL = (renderWhitespace !== 'none');
+        const shouldRenderEOL = (renderWhitespace !== 'none') && (renderWhitespace !== 'boundary');
         const shouldRenderOnlySelection = (renderWhitespace === 'selection')
 
         var eolDecorations = []
