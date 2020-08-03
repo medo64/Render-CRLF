@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
 const vscode = require('vscode')
-const isWindows = process.platform === 'win32';
+const isWindows = process.platform === 'win32'
 
 
 function activate(context) {
@@ -38,11 +38,54 @@ function activate(context) {
 
         const [ renderWhitespace, eol, symbolLF, symbolCRLF, highlightNonDefault, highlightExtraWhitespace, decorateBeforeEol ]
             = getDocumentSettings(editor.document)
-        const shouldRenderEOL = (renderWhitespace !== 'none') && (renderWhitespace !== 'boundary');
+        const shouldRenderEOL = (renderWhitespace !== 'none') && (renderWhitespace !== 'boundary')
         const shouldRenderOnlySelection = (renderWhitespace === 'selection')
 
-        let eolDecorationType = null
-        let extraWhitespaceDecorationType = null
+        const lineEnding = document.eol
+
+        let currentEolSymbol
+        let nonDefaultLineEnding = false
+        if (lineEnding == LF) {
+            currentEolSymbol = symbolLF
+            nonDefaultLineEnding = (eol != '\n')
+        } else if (lineEnding == CRLF) {
+            currentEolSymbol = symbolCRLF
+            nonDefaultLineEnding = (eol != '\r\n')
+        }
+
+        //checking on every call as there is no theme change event
+        const themeColorError = new vscode.ThemeColor('errorForeground')
+        const themeColorWhitespace = new vscode.ThemeColor('editorWhitespace.foreground')
+        const eolColor = highlightNonDefault && nonDefaultLineEnding ? themeColorError : themeColorWhitespace
+
+        let eolDecorationType = (editor.id in eolDecorationTypes) ? eolDecorationTypes[editor.id] : null
+        if ((eolDecorationType == null) || (lastEolSymbol !== currentEolSymbol) || (lastThemeColorError !== themeColorError) || (lastThemeColorWhitespace !== themeColorWhitespace) || (lastDecorationBeforeEof !== decorateBeforeEol)) {
+            if (eolDecorationType != null) {
+                if (editor.setDecorations) { editor.setDecorations(eolDecorationType, []) }
+                eolDecorationType.dispose()
+            }
+            if (decorateBeforeEol) {
+                eolDecorationType = vscode.window.createTextEditorDecorationType({ before: { contentText: currentEolSymbol, color: eolColor } })
+            } else {
+                eolDecorationType = vscode.window.createTextEditorDecorationType({ after: { contentText: currentEolSymbol, color: eolColor } })
+            }
+            lastEolSymbol = currentEolSymbol
+            lastThemeColorError = themeColorError
+            lastThemeColorWhitespace = themeColorWhitespace
+            lastDecorationBeforeEof = decorateBeforeEol
+        }
+        eolDecorationTypes[editor.id] =  eolDecorationType
+
+        let extraWhitespaceDecorationType = (editor.id in extraWhitespaceDecorationTypes) ? extraWhitespaceDecorationTypes[editor.id] : null
+        if ((extraWhitespaceDecorationType == null) || (lastThemeColorError !== themeColorError)) {
+            if (extraWhitespaceDecorationType != null) {
+                if (editor.setDecorations) { editor.setDecorations(extraWhitespaceDecorationType, []) }
+                extraWhitespaceDecorationType.dispose()
+            }
+            extraWhitespaceDecorationType = vscode.window.createTextEditorDecorationType({ color: themeColorError })
+            lastThemeColorError = themeColorError
+        }
+        extraWhitespaceDecorationTypes[editor.id] =  extraWhitespaceDecorationType
 
         var eolDecorations = []
         var extraWhitespaceDecorations = []
@@ -56,62 +99,16 @@ function activate(context) {
             for(let i=1; i<visibleRanges.length; i++) {
                 let nextStartOffset = document.offsetAt(visibleRanges[i].start)
                 let nextEndOffset = document.offsetAt(visibleRanges[i].end)
-                if (startOffset > nextStartOffset) { startOffset = nextStartOffset; }
-                if (endOffset < nextEndOffset) { endOffset = nextEndOffset; }
+                if (startOffset > nextStartOffset) { startOffset = nextStartOffset }
+                if (endOffset < nextEndOffset) { endOffset = nextEndOffset }
             }
 
             let startPosition = document.positionAt(startOffset)
             let endPosition = document.positionAt(endOffset)
 
             let startLine = Number(document.lineAt(startPosition).lineNumber)
-            let endLine = Number(document.validatePosition(endPosition.translate(2, 0)).line);
-            if (startLine > 0) { startLine -= 1; } //in case of partial previous line
-
-            const lineEnding = document.eol
-
-            let currentEolSymbol
-            let nonDefaultLineEnding = false
-            if (lineEnding == LF) {
-                currentEolSymbol = symbolLF
-                nonDefaultLineEnding = (eol != '\n')
-            } else if (lineEnding == CRLF) {
-                currentEolSymbol = symbolCRLF
-                nonDefaultLineEnding = (eol != '\r\n')
-            }
-
-            //checking on every call as there is no theme change event
-            const themeColorError = new vscode.ThemeColor('errorForeground')
-            const themeColorWhitespace = new vscode.ThemeColor('editorWhitespace.foreground')
-
-            const eolColor = highlightNonDefault && nonDefaultLineEnding ? themeColorError : themeColorWhitespace
-            if (editor.id in eolDecorationTypes) { eolDecorationType = eolDecorationTypes[editor.id] }
-            if ((eolDecorationType == null) || (lastEolSymbol !== currentEolSymbol) || (lastThemeColorError !== themeColorError) || (lastThemeColorWhitespace !== themeColorWhitespace) || (lastDecorationBeforeEof !== decorateBeforeEol)) {
-                if (eolDecorationType != null) {
-                    if (editor.setDecorations) { editor.setDecorations(eolDecorationType, []) }
-                    eolDecorationType.dispose();
-                }
-                if (decorateBeforeEol) {
-                    eolDecorationType = vscode.window.createTextEditorDecorationType({ before: { contentText: currentEolSymbol, color: eolColor } });
-                } else {
-                    eolDecorationType = vscode.window.createTextEditorDecorationType({ after: { contentText: currentEolSymbol, color: eolColor } });
-                }
-                lastEolSymbol = currentEolSymbol
-                lastThemeColorError = themeColorError
-                lastThemeColorWhitespace = themeColorWhitespace
-                lastDecorationBeforeEof = decorateBeforeEol
-            }
-            eolDecorationTypes[editor.id] =  eolDecorationType
-
-            if (editor.id in extraWhitespaceDecorationTypes) { extraWhitespaceDecorationType = extraWhitespaceDecorationTypes[editor.id] }
-            if ((extraWhitespaceDecorationType == null) || (lastThemeColorError !== themeColorError)) {
-                if (extraWhitespaceDecorationType != null) {
-                    if (editor.setDecorations) { editor.setDecorations(extraWhitespaceDecorationType, []) }
-                    extraWhitespaceDecorationType.dispose();
-                }
-                extraWhitespaceDecorationType = vscode.window.createTextEditorDecorationType({ color: themeColorError });
-                lastThemeColorError = themeColorError
-            }
-            extraWhitespaceDecorationTypes[editor.id] =  extraWhitespaceDecorationType
+            let endLine = Number(document.validatePosition(endPosition.translate(2, 0)).line)
+            if (startLine > 0) { startLine -= 1 } //in case of partial previous line
 
             for (let i=startLine; i<=endLine; i++) {
                 var line = document.lineAt(i)
@@ -126,7 +123,7 @@ function activate(context) {
                                     shouldDecorate = true
                                     return
                                 }
-                            });
+                            })
                         }
                     } else { //decorate all
                         shouldDecorate = true
@@ -156,7 +153,7 @@ function activate(context) {
     }
 
     function updateConfiguration() {
-        let anyChanges = false;
+        let anyChanges = false
 
         const editorConfiguration = vscode.workspace.getConfiguration('editor', null)
         const newDefaultRenderWhitespace = editorConfiguration.get('renderWhitespace', 'none') || 'selection'
@@ -269,20 +266,20 @@ function activate(context) {
 
     vscode.window.onDidChangeTextEditorSelection((e) => {
         if ((e.textEditor != null) && (e.textEditor.document != null) && (e.selections.length > 0)) {
-            renderDecorations(e.textEditor);
+            renderDecorations(e.textEditor)
         }
     }, null, context.subscriptions)
 
     vscode.window.onDidChangeTextEditorVisibleRanges((e) => {
         if ((e.textEditor != null) && (e.textEditor.document != null) && (e.visibleRanges.length > 0)) {
-            renderDecorations(e.textEditor, e.visibleRanges);
+            renderDecorations(e.textEditor, e.visibleRanges)
         }
     }, null, context.subscriptions)
 
     vscode.window.onDidChangeVisibleTextEditors((e) => {
         e.forEach(editor => {
             renderDecorations(editor)
-        });
+        })
     }, null, context.subscriptions)
 
 

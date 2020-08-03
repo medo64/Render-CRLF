@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.5.9]
+
+### Fixed
+- Turning off Render Whitespace didn't update [file immediately]()
+
+
 ## [1.5.8]
 
 ### Fixed
