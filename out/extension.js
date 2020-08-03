@@ -138,7 +138,7 @@ function activate(context) {
                     }
                 }
                 if (highlightExtraWhitespace) {
-                    const lastWhitespace = line.text.search("\\s+$")
+                    const lastWhitespace = line.text.search('\\s+$')
                     if (lastWhitespace >= 0) {
                         extraWhitespaceDecorations.push({
                             range: new vscode.Range(new vscode.Position(line.range.end.line, lastWhitespace), line.range.end)
