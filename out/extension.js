@@ -225,6 +225,7 @@ function activate(context) {
     }
 
 
+    /** @param {vscode.TextDocument} document */
     function getDocumentSettings(document) {
         let renderWhitespace = defaultRenderWhitespace
         let eol = defaultEol
@@ -283,7 +284,7 @@ function activate(context) {
         renderDecorations(e)
     }, null, context.subscriptions)
 
-    /** @param e: vscode.TextEditorSelectionChangeEvent */
+    /** @param {vscode.TextEditorSelectionChangeEvent} e */
     vscode.window.onDidChangeTextEditorSelection((e) => {
         if (isDebug) { console.debug('onDidChangeTextEditorSelection()') }
         if ((e.textEditor != null) && (e.textEditor.document != null) && (e.selections.length > 0)) {
@@ -291,7 +292,7 @@ function activate(context) {
         }
     }, null, context.subscriptions)
 
-    /** @param e: vscode.TextEditorVisibleRangesChangeEvent */
+    /** @param {vscode.TextEditorVisibleRangesChangeEvent} e */
     vscode.window.onDidChangeTextEditorVisibleRanges((e) => {
         if (isDebug) { console.debug('onDidChangeTextEditorVisibleRanges()') }
         if ((e.textEditor != null) && (e.textEditor.document != null) && (e.visibleRanges.length > 0)) {
@@ -299,7 +300,7 @@ function activate(context) {
         }
     }, null, context.subscriptions)
 
-    /** @param e: vscode.TextEditor[] */
+    /** @param {vscode.TextEditor[]} e */
     vscode.window.onDidChangeVisibleTextEditors((e) => {
         if (isDebug) { console.debug('onDidChangeVisibleTextEditors()') }
         e.forEach(editor => {
