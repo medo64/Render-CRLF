@@ -38,6 +38,7 @@ function activate(context) {
     function renderDecorations(editor, ranges) {
         if (!editor) { return }
 
+        const startTime = new Date().getTime()
         const document = editor.document
         const id = editor.id
 
@@ -153,8 +154,12 @@ function activate(context) {
             }
         }
 
+        if (context.extensionMode === 2) { console.debug('renderDecorations: ' + (new Date().getTime() - startTime) + ' ms') }
+
         if (editor.setDecorations) { editor.setDecorations(eolDecorationType, eolDecorations) }
         if (editor.setDecorations && highlightExtraWhitespace) { editor.setDecorations(extraWhitespaceDecorationType, extraWhitespaceDecorations) }
+
+        if (context.extensionMode === 2) { console.debug('renderDecorations (setDecorations): ' + (new Date().getTime() - startTime) + ' ms') }
     }
 
     function updateConfiguration() {
