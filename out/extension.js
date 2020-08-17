@@ -95,6 +95,7 @@ function activate(context) {
 
         var eolDecorations = []
         var extraWhitespaceDecorations = []
+
         if (shouldRenderEOL) {
             const selections = editor.selections
 

@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.5.10]
+
+### Fixed
+- Security updates for dependencies
+
+
 ## [1.5.9]
 
 ### Fixed
