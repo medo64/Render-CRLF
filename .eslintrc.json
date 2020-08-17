@@ -5,6 +5,9 @@
         "es6": true,
         "node": true
     },
+    "parserOptions": {
+       "ecmaVersion": 2017
+    },
     "extends": [
         "eslint:recommended"
     ],
@@ -12,6 +15,7 @@
          "indent":          [ "error", 4 ],
          "linebreak-style": [ "error", "unix" ],
          "quotes":          [ "error", "single" ],
-         "semi":            [ "error", "never" ]
+         "semi":            [ "error", "never" ],
+         "no-console":      "off"
     }
 }
