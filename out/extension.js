@@ -4,7 +4,10 @@ const vscode = require('vscode')
 const isWindows = process.platform === 'win32'
 
 
+/** @param {vscode.ExtensionContext} context */
 function activate(context) {
+    const isDebug = (context.extensionMode === 2)
+
     const defaultLFSymbol   = '↓'
     const defaultCRSymbol   = '←'
     const defaultCRLFSymbol = '↵'
@@ -36,9 +39,10 @@ function activate(context) {
      * @param {vscode.Range[]} [ranges]
      */
     function renderDecorations(editor, ranges) {
+        if (isDebug) { console.debug('renderDecorations()') }
         if (!editor) { return }
 
-        const startTime = new Date().getTime()
+        const startTime = isDebug ? new Date().getTime() : null
         const document = editor.document
         const id = editor.id
 
@@ -155,12 +159,12 @@ function activate(context) {
             }
         }
 
-        if (context.extensionMode === 2) { console.debug('renderDecorations: ' + (new Date().getTime() - startTime) + ' ms') }
+        if (isDebug) { console.debug('renderDecorations() ready for decorating in ' + (new Date().getTime() - startTime) + ' ms') }
 
         if (editor.setDecorations) { editor.setDecorations(eolDecorationType, eolDecorations) }
         if (editor.setDecorations && highlightExtraWhitespace) { editor.setDecorations(extraWhitespaceDecorationType, extraWhitespaceDecorations) }
 
-        if (context.extensionMode === 2) { console.debug('renderDecorations (setDecorations): ' + (new Date().getTime() - startTime) + ' ms') }
+        if (isDebug) { console.debug('renderDecorations() finished in ' + (new Date().getTime() - startTime) + ' ms') }
     }
 
     function updateConfiguration() {
@@ -271,15 +275,15 @@ function activate(context) {
     renderDecorations(vscode.window.activeTextEditor)
 
 
-    /** @param e: vscode.TextEditor */
+    /** @param {vscode.TextEditor} e */
     vscode.window.onDidChangeActiveTextEditor((e) => {
-        if (context.extensionMode === 2) { console.debug('onDidChangeActiveTextEditor') }
+        if (isDebug) { console.debug('onDidChangeActiveTextEditor()') }
         renderDecorations(e)
     }, null, context.subscriptions)
 
     /** @param e: vscode.TextEditorSelectionChangeEvent */
     vscode.window.onDidChangeTextEditorSelection((e) => {
-        if (context.extensionMode === 2) { console.debug('onDidChangeTextEditorSelection') }
+        if (isDebug) { console.debug('onDidChangeTextEditorSelection()') }
         if ((e.textEditor != null) && (e.textEditor.document != null) && (e.selections.length > 0)) {
             renderDecorations(e.textEditor)
         }
@@ -287,7 +291,7 @@ function activate(context) {
 
     /** @param e: vscode.TextEditorVisibleRangesChangeEvent */
     vscode.window.onDidChangeTextEditorVisibleRanges((e) => {
-        if (context.extensionMode === 2) { console.debug('onDidChangeTextEditorVisibleRanges') }
+        if (isDebug) { console.debug('onDidChangeTextEditorVisibleRanges()') }
         if ((e.textEditor != null) && (e.textEditor.document != null) && (e.visibleRanges.length > 0)) {
             renderDecorations(e.textEditor, e.visibleRanges)
         }
@@ -295,7 +299,7 @@ function activate(context) {
 
     /** @param e: vscode.TextEditor[] */
     vscode.window.onDidChangeVisibleTextEditors((e) => {
-        if (context.extensionMode === 2) { console.debug('onDidChangeVisibleTextEditors') }
+        if (isDebug) { console.debug('onDidChangeVisibleTextEditors()') }
         e.forEach(editor => {
             renderDecorations(editor)
         })
@@ -303,13 +307,13 @@ function activate(context) {
 
 
     vscode.workspace.onDidChangeConfiguration(() => {
-        if (context.extensionMode === 2) { console.debug('onDidChangeConfiguration') }
+        if (isDebug) { console.debug('onDidChangeConfiguration()') }
         updateConfiguration()
         renderDecorations(vscode.window.activeTextEditor)
     }, null, context.subscriptions)
 
     vscode.workspace.onDidChangeTextDocument(() => {
-        if (context.extensionMode === 2) { console.debug('onDidChangeTextDocument') }
+        if (isDebug) { console.debug('onDidChangeTextDocument()') }
         renderDecorations(vscode.window.activeTextEditor)
     }, null, context.subscriptions)
 }
