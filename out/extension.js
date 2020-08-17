@@ -6,6 +6,7 @@ const isWindows = process.platform === 'win32'
 
 /** @param {vscode.ExtensionContext} context */
 function activate(context) {
+    // @ts-ignore
     const isDebug = (context.extensionMode === 2)
 
     const defaultLFSymbol   = '↓'
@@ -44,6 +45,7 @@ function activate(context) {
 
         const startTime = isDebug ? new Date().getTime() : null
         const document = editor.document
+        // @ts-ignore
         const id = editor.id
 
         const [ renderWhitespace, eol, symbolLF, symbolCRLF, highlightNonDefault, highlightExtraWhitespace, decorateBeforeEol ]
