@@ -63,9 +63,8 @@ extension):
 * `code-eol.returnCharacter`: Character used to display CR (carriage-return)
                               line ending (aka old Macintosh line ending).
 
-* `code-eol.crlfCharacter`: Character used to display CRLF
-                                     (carriage-return, line-feed) line ending
-                                     (aka Windows line ending).
+* `code-eol.crlfCharacter`: Character used to display CRLF (carriage-return,
+                            line-feed) line ending (aka Windows line ending).
 
 * `code-eol.highlightNonDefault`: If true, non-default line ending will be
                                   colored as error.

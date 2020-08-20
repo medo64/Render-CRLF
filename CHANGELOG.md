@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.5.11]
+
+### Fixed
+- Typo [corrections](https://github.com/medo64/Render-CRLF/pull/11)
+
+
 ## [1.5.10]
 
 ### Fixed
