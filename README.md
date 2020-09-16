@@ -22,7 +22,8 @@ If whitespace rendering is turned on, you will see the symbol for either LF
 Works well with `editor.largeFileOptimizations: false` regardless of the
 document's size.
 
-Supports rendering of only the selection (`editor.renderWhitespace: selection`).
+Supports rendering of only the selection (`editor.renderWhitespace: selection`)
+and trailing whitespace (`editor.renderWhitespace: trailing`).
 
    ![Screenshot](https://raw.githubusercontent.com/medo64/render-crlf/master/images/screenshot-selection.png)
 
