@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.5.12]
+
+### Fixed
+- Updated extension description to properly render in Extensions view
+- Security updates for dependencies
+
+
 ## [1.5.11]
 
 ### Fixed
