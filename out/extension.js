@@ -321,9 +321,12 @@ function activate(context) {
         renderDecorations(vscode.window.activeTextEditor, true)
     }, null, context.subscriptions)
 
-    vscode.workspace.onDidChangeTextDocument(() => {
-        if (isDebug) { console.debug(new Date().getTime() + ' onDidChangeTextDocument()') }
-        renderDecorations(vscode.window.activeTextEditor)
+    /** @param {vscode.TextDocumentChangeEvent} e */
+    vscode.workspace.onDidChangeTextDocument((e) => {
+        if (isDebug) {console.debug(new Date().getTime() + ' onDidChangeTextDocument(' + (e.contentChanges.length > 0 ? 'contentChanges' : '') + ')') }
+        if (e.contentChanges.length > 0) {
+            renderDecorations(vscode.window.activeTextEditor)
+        }
     }, null, context.subscriptions)
 }
 exports.activate = activate
