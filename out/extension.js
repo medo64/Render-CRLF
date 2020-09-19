@@ -21,8 +21,6 @@ function activate(context) {
 
     // to determine if decoration types need recreation
     var lastEolSymbol = null
-    var lastThemeColorError = null
-    var lastThemeColorWhitespace = null
     var lastDecorationBeforeEof = null
 
     // settings
@@ -71,7 +69,7 @@ function activate(context) {
         const eolColor = highlightNonDefault && nonDefaultLineEnding ? themeColorError : themeColorWhitespace
 
         let eolDecorationType = (id in eolDecorationTypes) ? eolDecorationTypes[id] : null
-        if ((eolDecorationType == null) || configurationUpdate || (lastEolSymbol !== currentEolSymbol) || (lastThemeColorError !== themeColorError) || (lastThemeColorWhitespace !== themeColorWhitespace) || (lastDecorationBeforeEof !== decorateBeforeEol)) {
+        if ((eolDecorationType == null) || configurationUpdate || (lastEolSymbol !== currentEolSymbol) || (lastDecorationBeforeEof !== decorateBeforeEol)) {
             if (eolDecorationType != null) {
                 if (editor.setDecorations) { editor.setDecorations(eolDecorationType, []) }
                 eolDecorationType.dispose()
@@ -85,8 +83,6 @@ function activate(context) {
                 if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() created new EOL "after" decorations (' + id + ')') }
             }
             lastEolSymbol = currentEolSymbol
-            lastThemeColorError = themeColorError
-            lastThemeColorWhitespace = themeColorWhitespace
             lastDecorationBeforeEof = decorateBeforeEol
             eolDecorationTypes[id] =  eolDecorationType
         }
@@ -100,7 +96,6 @@ function activate(context) {
             }
             extraWhitespaceDecorationType = vscode.window.createTextEditorDecorationType({ color: themeColorError })
             if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() created new extra whitespace decorations (' + id + ')') }
-            lastThemeColorError = themeColorError
             extraWhitespaceDecorationTypes[id] =  extraWhitespaceDecorationType
         }
 
