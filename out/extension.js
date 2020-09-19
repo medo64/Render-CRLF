@@ -40,13 +40,14 @@ function activate(context) {
      * @param {vscode.Range[]} [ranges]
      */
     function renderDecorations(editor, ranges) {
-        if (isDebug) { console.debug('renderDecorations()') }
+        if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations()') }
         if (!editor) { return }
 
         const startTime = isDebug ? new Date().getTime() : null
         const document = editor.document
         // @ts-ignore
         const id = editor.id
+        if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() ID is ' + id) }
 
         const [ renderWhitespace, eol, symbolLF, symbolCRLF, highlightNonDefault, highlightExtraWhitespace, decorateBeforeEol ]
             = getDocumentSettings(editor.document)
@@ -75,11 +76,14 @@ function activate(context) {
             if (eolDecorationType != null) {
                 if (editor.setDecorations) { editor.setDecorations(eolDecorationType, []) }
                 eolDecorationType.dispose()
+                if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() disposed old EOL decorations') }
             }
             if (decorateBeforeEol) {
                 eolDecorationType = vscode.window.createTextEditorDecorationType({ before: { contentText: currentEolSymbol, color: eolColor } })
+                if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() created new EOL decorations (styled before)') }
             } else {
                 eolDecorationType = vscode.window.createTextEditorDecorationType({ after: { contentText: currentEolSymbol, color: eolColor } })
+                if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() created new EOL decorations (styled after)') }
             }
             lastEolSymbol = currentEolSymbol
             lastThemeColorError = themeColorError
@@ -93,8 +97,10 @@ function activate(context) {
             if (extraWhitespaceDecorationType != null) {
                 if (editor.setDecorations) { editor.setDecorations(extraWhitespaceDecorationType, []) }
                 extraWhitespaceDecorationType.dispose()
+                if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() disposed old extra whitespace decorations') }
             }
             extraWhitespaceDecorationType = vscode.window.createTextEditorDecorationType({ color: themeColorError })
+            if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() created new extra whitespace decorations') }
             lastThemeColorError = themeColorError
         }
         extraWhitespaceDecorationTypes[id] =  extraWhitespaceDecorationType
@@ -107,6 +113,7 @@ function activate(context) {
 
             //determine what is exactly visible
             let visibleRanges = (ranges == null) ? editor.visibleRanges : ranges
+            if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() visible reanges are from line ' + visibleRanges[0].start.line + ' to ' + visibleRanges[0].end.line) }
             let startOffset = document.offsetAt(visibleRanges[0].start)
             let endOffset = document.offsetAt(visibleRanges[0].end)
             for(let i=1; i<visibleRanges.length; i++) {
@@ -122,6 +129,7 @@ function activate(context) {
             let startLine = Number(document.lineAt(startPosition).lineNumber)
             let endLine = Number(document.validatePosition(endPosition.translate(2, 0)).line)
             if (startLine > 0) { startLine -= 1 } //in case of partial previous line
+            if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() rendering from line ' + startLine + ' to ' + endLine) }
 
             for (let i=startLine; i<=endLine; i++) {
                 var line = document.lineAt(i)
@@ -161,12 +169,12 @@ function activate(context) {
             }
         }
 
-        if (isDebug) { console.debug('renderDecorations() ready for decorating in ' + (new Date().getTime() - startTime) + ' ms') }
+        if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() ready for decorating in ' + (new Date().getTime() - startTime) + ' ms') }
 
         if (editor.setDecorations) { editor.setDecorations(eolDecorationType, eolDecorations) }
         if (editor.setDecorations && highlightExtraWhitespace) { editor.setDecorations(extraWhitespaceDecorationType, extraWhitespaceDecorations) }
 
-        if (isDebug) { console.debug('renderDecorations() finished in ' + (new Date().getTime() - startTime) + ' ms') }
+        if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() finished in ' + (new Date().getTime() - startTime) + ' ms') }
     }
 
     function updateConfiguration() {
@@ -280,13 +288,13 @@ function activate(context) {
 
     /** @param {vscode.TextEditor} e */
     vscode.window.onDidChangeActiveTextEditor((e) => {
-        if (isDebug) { console.debug('onDidChangeActiveTextEditor()') }
+        if (isDebug) { console.debug(new Date().getTime() + ' onDidChangeActiveTextEditor()') }
         renderDecorations(e)
     }, null, context.subscriptions)
 
     /** @param {vscode.TextEditorSelectionChangeEvent} e */
     vscode.window.onDidChangeTextEditorSelection((e) => {
-        if (isDebug) { console.debug('onDidChangeTextEditorSelection()') }
+        if (isDebug) { console.debug(new Date().getTime() + ' onDidChangeTextEditorSelection()') }
         if ((e.textEditor != null) && (e.textEditor.document != null) && (e.selections.length > 0)) {
             renderDecorations(e.textEditor)
         }
@@ -294,7 +302,7 @@ function activate(context) {
 
     /** @param {vscode.TextEditorVisibleRangesChangeEvent} e */
     vscode.window.onDidChangeTextEditorVisibleRanges((e) => {
-        if (isDebug) { console.debug('onDidChangeTextEditorVisibleRanges()') }
+        if (isDebug) { console.debug(new Date().getTime() + ' onDidChangeTextEditorVisibleRanges()') }
         if ((e.textEditor != null) && (e.textEditor.document != null) && (e.visibleRanges.length > 0)) {
             renderDecorations(e.textEditor, e.visibleRanges)
         }
@@ -302,7 +310,7 @@ function activate(context) {
 
     /** @param {vscode.TextEditor[]} e */
     vscode.window.onDidChangeVisibleTextEditors((e) => {
-        if (isDebug) { console.debug('onDidChangeVisibleTextEditors()') }
+        if (isDebug) { console.debug(new Date().getTime() + ' onDidChangeVisibleTextEditors()') }
         e.forEach(editor => {
             renderDecorations(editor)
         })
@@ -310,13 +318,13 @@ function activate(context) {
 
 
     vscode.workspace.onDidChangeConfiguration(() => {
-        if (isDebug) { console.debug('onDidChangeConfiguration()') }
+        if (isDebug) { console.debug(new Date().getTime() + ' onDidChangeConfiguration()') }
         updateConfiguration()
         renderDecorations(vscode.window.activeTextEditor)
     }, null, context.subscriptions)
 
     vscode.workspace.onDidChangeTextDocument(() => {
-        if (isDebug) { console.debug('onDidChangeTextDocument()') }
+        if (isDebug) { console.debug(new Date().getTime() + ' onDidChangeTextDocument()') }
         renderDecorations(vscode.window.activeTextEditor)
     }, null, context.subscriptions)
 }
