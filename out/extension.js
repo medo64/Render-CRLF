@@ -41,7 +41,7 @@ function activate(context) {
      * @param {vscode.Range[]} [ranges]
      */
     function renderDecorations(editor, configurationUpdate = false, ranges) {
-        if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations()') }
+        if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations()') }
         if (!editor) { return }
 
         const startTime = isDebug ? new Date().getTime() : null
@@ -73,14 +73,14 @@ function activate(context) {
             if (eolDecorationType != null) {
                 if (editor.setDecorations) { editor.setDecorations(eolDecorationType, []) }
                 eolDecorationType.dispose()
-                if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() disposed old EOL decorations') }
+                if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() disposed old EOL decorations') }
             }
             if (decorateBeforeEol) {
                 eolDecorationType = vscode.window.createTextEditorDecorationType({ before: { contentText: currentEolSymbol, color: eolColor }, rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed })
-                if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() created new EOL "before" decorations (' + id + ')') }
+                if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() created new EOL "before" decorations (' + id + ')') }
             } else {
                 eolDecorationType = vscode.window.createTextEditorDecorationType({ after: { contentText: currentEolSymbol, color: eolColor }, rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed })
-                if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() created new EOL "after" decorations (' + id + ')') }
+                if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() created new EOL "after" decorations (' + id + ')') }
             }
             lastEolSymbol = currentEolSymbol
             lastDecorationBeforeEof = decorateBeforeEol
@@ -92,10 +92,10 @@ function activate(context) {
             if (extraWhitespaceDecorationType != null) {
                 if (editor.setDecorations) { editor.setDecorations(extraWhitespaceDecorationType, []) }
                 extraWhitespaceDecorationType.dispose()
-                if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() disposed old extra whitespace decorations') }
+                if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() disposed old extra whitespace decorations') }
             }
             extraWhitespaceDecorationType = vscode.window.createTextEditorDecorationType({ color: themeColorError })
-            if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() created new extra whitespace decorations (' + id + ')') }
+            if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() created new extra whitespace decorations (' + id + ')') }
             extraWhitespaceDecorationTypes[id] =  extraWhitespaceDecorationType
         }
 
@@ -107,7 +107,7 @@ function activate(context) {
 
             //determine what is exactly visible
             let visibleRanges = (ranges == null) ? editor.visibleRanges : ranges
-            if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() visible reanges are from line ' + visibleRanges[0].start.line + ' to ' + visibleRanges[0].end.line) }
+            if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() visible reanges are from line ' + visibleRanges[0].start.line + ' to ' + visibleRanges[0].end.line) }
             let startOffset = document.offsetAt(visibleRanges[0].start)
             let endOffset = document.offsetAt(visibleRanges[0].end)
             for(let i=1; i<visibleRanges.length; i++) {
@@ -123,7 +123,7 @@ function activate(context) {
             let startLine = Number(document.lineAt(startPosition).lineNumber)
             let endLine = Number(document.validatePosition(endPosition.translate(2, 0)).line)
             if (startLine > 0) { startLine -= 1 } //in case of partial previous line
-            if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() rendering from line ' + startLine + ' to ' + endLine) }
+            if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() rendering from line ' + startLine + ' to ' + endLine) }
 
             for (let i=startLine; i<=endLine; i++) {
                 var line = document.lineAt(i)
@@ -163,12 +163,12 @@ function activate(context) {
             }
         }
 
-        if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() ready for decorating in ' + (new Date().getTime() - startTime) + ' ms') }
+        if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() ready for decorating in ' + (new Date().getTime() - startTime) + ' ms') }
 
         if (editor.setDecorations) { editor.setDecorations(eolDecorationType, eolDecorations) }
         if (editor.setDecorations && highlightExtraWhitespace) { editor.setDecorations(extraWhitespaceDecorationType, extraWhitespaceDecorations) }
 
-        if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() finished in ' + (new Date().getTime() - startTime) + ' ms') }
+        if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() finished in ' + (new Date().getTime() - startTime) + ' ms') }
     }
 
     function updateConfiguration() {
@@ -280,6 +280,7 @@ function activate(context) {
     }
 
 
+    if (isDebug) { console.debug(new Date().getTime() + ' init') }
     updateConfiguration()
     renderDecorations(vscode.window.activeTextEditor)
 
