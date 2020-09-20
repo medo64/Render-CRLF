@@ -76,10 +76,10 @@ function activate(context) {
                 if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() disposed old EOL decorations') }
             }
             if (decorateBeforeEol) {
-                eolDecorationType = vscode.window.createTextEditorDecorationType({ before: { contentText: currentEolSymbol, color: eolColor } })
+                eolDecorationType = vscode.window.createTextEditorDecorationType({ before: { contentText: currentEolSymbol, color: eolColor }, rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed })
                 if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() created new EOL "before" decorations (' + id + ')') }
             } else {
-                eolDecorationType = vscode.window.createTextEditorDecorationType({ after: { contentText: currentEolSymbol, color: eolColor } })
+                eolDecorationType = vscode.window.createTextEditorDecorationType({ after: { contentText: currentEolSymbol, color: eolColor }, rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed })
                 if (isDebug) { console.debug(new Date().getTime() + ' renderDecorations() created new EOL "after" decorations (' + id + ')') }
             }
             lastEolSymbol = currentEolSymbol
