@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.5.13]
+
+### Changed
+- Performance improvements
+
+
 ## [1.5.12]
 
 ### Fixed
