@@ -107,7 +107,7 @@ function activate(context) {
 
             //determine what is exactly visible
             let visibleRanges = (ranges == null) ? editor.visibleRanges : ranges
-            if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() visible reanges are from line ' + visibleRanges[0].start.line + ' to ' + visibleRanges[0].end.line) }
+            if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() visible ranges are from line ' + visibleRanges[0].start.line + ' to ' + visibleRanges[0].end.line) }
             let startOffset = document.offsetAt(visibleRanges[0].start)
             let endOffset = document.offsetAt(visibleRanges[0].end)
             for(let i=1; i<visibleRanges.length; i++) {
