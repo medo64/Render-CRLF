@@ -38,7 +38,7 @@ function activate(context) {
     /**
      * @param {vscode.TextEditor} editor
      * @param {boolean} [configurationUpdate]
-     * @param {vscode.Range[]} [ranges]
+     * @param {readonly vscode.Range[]} [ranges]
      */
     function renderDecorations(editor, configurationUpdate = false, ranges) {
         if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations()') }
