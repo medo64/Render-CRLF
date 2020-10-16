@@ -17,7 +17,7 @@ It fully supports language-specific EOL and whitespace settings.
 If whitespace rendering is turned on, you will see the symbol for either LF
 (`↓`), CRLF (`↵`), or CR (`←`).
 
-   ![Screenshot](https://raw.githubusercontent.com/medo64/render-crlf/master/images/screenshot.gif)
+   ![Screenshot](https://raw.githubusercontent.com/medo64/Render-CRLF/main/images/screenshot.gif)
 
 Works well with `editor.largeFileOptimizations: false` regardless of the
 document's size.
@@ -25,16 +25,16 @@ document's size.
 Supports rendering of only the selection (`editor.renderWhitespace: selection`)
 and trailing whitespace (`editor.renderWhitespace: trailing`).
 
-   ![Screenshot](https://raw.githubusercontent.com/medo64/render-crlf/master/images/screenshot-selection.png)
+   ![Screenshot](https://raw.githubusercontent.com/medo64/Render-CRLF/main/images/screenshot-selection.png)
 
-Supports highligthing of non-default EOL - even with the language-specific
+Supports highlighting of non-default EOL - even with the language-specific
 settings (`code-eol.highlightNonDefault: true`).
 
-   ![Screenshot](https://raw.githubusercontent.com/medo64/render-crlf/master/images/screenshot-highlight-eof.png)
+   ![Screenshot](https://raw.githubusercontent.com/medo64/Render-CRLF/main/images/screenshot-highlight-eof.png)
 
 Supports highlighting of training whitespace (`code-eol.highlightExtraWhitespace: true`).
 
-   ![Screenshot](https://raw.githubusercontent.com/medo64/render-crlf/master/images/screenshot-highlight-whitespace.png)
+   ![Screenshot](https://raw.githubusercontent.com/medo64/Render-CRLF/main/images/screenshot-highlight-whitespace.png)
 
 
 # Render Whitespace
