@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.5.19]
+
+### Fixed
+- Security updates for dependencies
+
+
 ## [1.5.18]
 
 ### Fixed
