@@ -134,7 +134,7 @@ function activate(context) {
                         if ((selections !== null) && selections.length > 0) {
                             selections.forEach(selection => { //check each selection
                                 const hasSelection = (selection.start.line !== selection.end.line) || (selection.start.character !== selection.end.character)
-                                if (hasSelection && eolPosition.isAfterOrEqual(selection.start) && eolPosition.isBeforeOrEqual(selection.end)) {
+                                if (hasSelection && eolPosition.isAfterOrEqual(selection.start) && eolPosition.isBefore(selection.end)) {
                                     shouldDecorate = true
                                     return
                                 }
