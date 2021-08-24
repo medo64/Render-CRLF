@@ -1,5 +1,10 @@
 # Change Log
 
+## [1.5.21]
+
+- Changed outside selection not to include character after
+
+
 ## [1.5.20]
 
 ### Fixed
