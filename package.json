@@ -3,7 +3,7 @@
     "displayName": "Render Line Endings",
     "description": "Displays the line ending symbol and optionally extra whitespace when 'Render whitespace' is turned on.",
     "icon": "ICON.png",
-    "version": "1.5.21",
+    "version": "1.5.22",
     "publisher": "medo64",
     "galleryBanner": {
         "color": "#373E6D",
@@ -90,8 +90,8 @@
     "scripts": {},
     "dependencies": {},
     "devDependencies": {
-        "eslint": "^5.16.0",
-        "vsce": "^1.100.1",
+        "eslint": "^8.7.0",
+        "vsce": "^1.103.1",
         "vscode-test": "^1.6.1"
     }
 }
