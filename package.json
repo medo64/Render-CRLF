@@ -33,7 +33,7 @@
     },
     "main": "./out/extension",
     "activationEvents": [
-        "*"
+        "onStartupFinished"
     ],
     "contributes": {
         "configuration": [
