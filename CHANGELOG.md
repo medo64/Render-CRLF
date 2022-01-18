@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.5.22]
+
+### Fixed
+- Security updates for dependencies
+
+
 ## [1.5.21]
 
 - Changed outside selection not to include character after
