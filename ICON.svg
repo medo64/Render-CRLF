@@ -5,12 +5,8 @@
  <defs>
 	</defs>
  <g id="Layer 1" transform="scale(1 -1)">
-  <ellipse rx="29.118" ry="29.118" transform="translate(48 48)" fill="#85c3de" stroke="none" stroke-width="2.647" fill-rule="nonzero" stroke-linejoin="miter"/>
-  <mask id="TranspMask">
-   <rect x="-10%" y="-10%" width="120%" height="120%" fill="#cccccc" stroke="none"/>
-  </mask>
-  <g id="Group" fill="#000000" fill-rule="nonzero" stroke-linejoin="miter" stroke="none" stroke-width="2.647" mask="url(#TranspMask)">
-   <path d="M 48,93 C 72.812,93 93,72.812 93,48 L 93,45.353 L 43.613,45.353 L 54.671,34.295 L 50.926,30.551 L 33.48,48 L 50.926,65.446 L 54.671,61.701 L 43.613,50.647 L 87.618,50.647 C 86.248,71.308 69.007,87.706 48,87.706 C 26.103,87.706 8.294,69.893 8.294,48 C 8.294,26.103 26.103,8.294 48,8.294 C 67.066,8.294 83.164,21.868 86.866,40.059 L 92.27,40.059 C 88.5,18.911 69.981,3 48,3 C 23.185,3 3,23.185 3,48 C 3,72.812 23.185,93 48,93 Z" marker-start="none" marker-end="none"/>
-  </g>
+  <ellipse rx="44.625" ry="44.625" transform="translate(48 48)" fill-rule="nonzero" stroke-linejoin="miter" stroke="none" fill="#ffffff" stroke-width="4.055"/>
+  <ellipse cx="48" cy="48" rx="29.116" ry="29.116" fill-rule="nonzero" stroke-linejoin="miter" stroke="none" fill="#85c3de" stroke-width="2.646"/>
+  <path d="M 48,93 C 72.812,93 93,72.812 93,48 L 93,45.353 L 43.613,45.353 L 54.671,34.295 L 50.926,30.551 L 33.48,48 L 50.926,65.446 L 54.671,61.701 L 43.613,50.647 L 87.618,50.647 C 86.248,71.308 69.007,87.706 48,87.706 C 26.103,87.706 8.294,69.893 8.294,48 C 8.294,26.103 26.103,8.294 48,8.294 C 67.066,8.294 83.164,21.868 86.866,40.059 L 92.27,40.059 C 88.5,18.911 69.981,3 48,3 C 23.185,3 3,23.185 3,48 C 3,72.812 23.185,93 48,93 Z" fill-rule="nonzero" stroke-linejoin="miter" stroke="none" stroke-width="2.646" fill="#000000" marker-start="none" marker-end="none"/>
  </g>
 </svg>
