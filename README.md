@@ -1,5 +1,4 @@
-Render Line Endings
-===================
+# Render Line Endings
 
 This extension shows end-of-line characters (CR, LF, or CRLF) when whitespace
 rendering is turned on. Additionally, it can mark all non-default line endings
