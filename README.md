@@ -1,4 +1,5 @@
-# Render Line Endings
+Render Line Endings
+===================
 
 This extension shows end-of-line characters (CR, LF, or CRLF) when whitespace
 rendering is turned on. Additionally, it can mark all non-default line endings
@@ -77,31 +78,41 @@ Default line ending is determined based on `files.eol` setting.
 
 ### Default Configuration
 
+```json
     "code-eol.newlineCharacter": "↓",
     "code-eol.returnCharacter" : "←",
     "code-eol.crlfCharacter"   : "↵",
+```
 
 
 ### Atom Style Configuration
 
+```json
     "code-eol.newlineCharacter": "¬",
     "code-eol.returnCharacter" : "¤",
     "code-eol.crlfCharacter"   : "¤¬",
+```
 
 
 ### Mark Non-Default Line Ending
 
+```json
     "code-eol.highlightNonDefault": true,
+```
 
 
 ### Mark Extra Whitespace
 
+```json
     "code-eol.highlightExtraWhitespace": true,
+```
 
 
 ### Place Decorations Before EOL Instead of After
 
+```json
     "code-eol.decorateBeforeEol": true,
+```
 
 
 ## Known Issues
