@@ -25,6 +25,7 @@ function activate(context) {
 
     // settings
     var defaultRenderWhitespace
+    var defaultWordWrap
     var defaultEol
     var defaultSymbolLF
     var defaultSymbolCR
@@ -49,9 +50,9 @@ function activate(context) {
         // @ts-ignore
         const id = editor.id
 
-        const [ renderWhitespace, eol, symbolLF, symbolCRLF, highlightNonDefault, highlightExtraWhitespace, decorateBeforeEol ]
+        const [ renderWhitespace, wordWrap, eol, symbolLF, symbolCRLF, highlightNonDefault, highlightExtraWhitespace, decorateBeforeEol ]
             = getDocumentSettings(editor.document)
-        const shouldRenderEOL = (renderWhitespace !== 'none') && (renderWhitespace !== 'boundary')
+        const shouldRenderEOL = (renderWhitespace !== 'none') && (renderWhitespace !== 'boundary') || (wordWrap !== 'off')
         const shouldRenderOnlySelection = (renderWhitespace === 'selection')
 
         const lineEnding = document.eol
@@ -176,6 +177,7 @@ function activate(context) {
 
         const editorConfiguration = vscode.workspace.getConfiguration('editor', null)
         const newDefaultRenderWhitespace = editorConfiguration.get('renderWhitespace', 'none') || 'selection'
+        const newDefaultWordWrap = editorConfiguration.get('wordWrap', 'off') || 'off'
 
         const filesConfiguration = vscode.workspace.getConfiguration('files', null)
         const newDefaultEol = filesConfiguration.get('eol', 'auto') || 'auto'
@@ -190,6 +192,11 @@ function activate(context) {
 
         if (defaultRenderWhitespace !== newDefaultRenderWhitespace) {
             defaultRenderWhitespace = newDefaultRenderWhitespace
+            anyChanges = true
+        }
+
+        if (defaultWordWrap !== newDefaultWordWrap) {
+            defaultWordWrap = newDefaultWordWrap
             anyChanges = true
         }
 
@@ -234,6 +241,7 @@ function activate(context) {
     /** @param {vscode.TextDocument} document */
     function getDocumentSettings(document) {
         let renderWhitespace = defaultRenderWhitespace
+        let wordWrap = defaultWordWrap
         let eol = defaultEol
         let symbolLF = defaultSymbolLF
         //let symbolCR = defaultSymbolCR
@@ -249,6 +257,9 @@ function activate(context) {
 
                 const languageSpecificRenderWhitespace = languageSpecificConfiguration['editor.renderWhitespace']
                 if (languageSpecificRenderWhitespace) { renderWhitespace = languageSpecificRenderWhitespace }
+
+                const languageSpecificWordWrap = languageSpecificConfiguration['editor.wordWrap']
+                if (languageSpecificWordWrap) { wordWrap = languageSpecificWordWrap }
 
                 const languageSpecificEol = languageSpecificConfiguration['files.eol']
                 if (languageSpecificEol) { eol = languageSpecificEol }
@@ -276,7 +287,7 @@ function activate(context) {
 
         if (eol === 'auto') { eol = isWindows ? '\r\n' : '\n' }
 
-        return [ renderWhitespace, eol, symbolLF, symbolCRLF, highlightNonDefault, highlightExtraWhitespace, decorateBeforeEol ]
+        return [ renderWhitespace, wordWrap, eol, symbolLF, symbolCRLF, highlightNonDefault, highlightExtraWhitespace, decorateBeforeEol ]
     }
 
 
