@@ -6,6 +6,9 @@
 - Option to show line endings on word-wrap (courtesy of [ytomino](https://github.com/medo64/Render-CRLF/issues/20))
 - Added configuration parameter `forceShowOnWordWrap`.
 
+### Fixed
+- Security updates for dependencies
+
 
 ## [1.5.25]
 
