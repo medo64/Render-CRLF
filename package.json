@@ -3,7 +3,7 @@
     "displayName": "Render Line Endings",
     "description": "Displays the line ending symbol and optionally extra whitespace when 'Render whitespace' is turned on.",
     "icon": "ICON.png",
-    "version": "1.5.25",
+    "version": "1.6.0",
     "publisher": "medo64",
     "galleryBanner": {
         "color": "#373E6D",
@@ -82,6 +82,12 @@
                         "type": "boolean",
                         "default": false,
                         "description": "If true, decoration will come before end of the line thus playing better with extensions that use decorations after end of the line. Do note that line ending will not be rendered on empty lines if this is used."
+                    },
+                    "code-eol.forceShowOnWordWrap": {
+                        "scope": "language-overridable",
+                        "type": "boolean",
+                        "default": false,
+                        "description": "If true, decoration will be shown when word-wrap is not off (regardless of the other settings)."
                     }
                 }
             }

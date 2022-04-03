@@ -69,6 +69,8 @@ extension):
 
 * `code-eol.decorateBeforeEol`: If true, decoration will come before the end of the line thus playing better with extensions that use decorations after the end of the line. Do note that the line ending will not be rendered on empty lines if this is used.
 
+* `code-eol.forceShowOnWordWrap`: If true, decoration will be shown when word-wrap is not off (regardless of the other settings).
+
 Color is taken from `editorWhitespace.foreground` theme color (also used by
 Visual Studio Code to color whitespace symbols). Color for non-default line
 ending is taken from `errorForeground` theme color.

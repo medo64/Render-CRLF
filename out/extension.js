@@ -33,6 +33,7 @@ function activate(context) {
     var defaultHighlightNonDefault
     var defaultHighlightExtraWhitespace
     var defaultDecorateBeforeEol
+    var defaultForceShowOnWordWrap
     var themeColorError
     var themeColorWhitespace
 
@@ -50,9 +51,18 @@ function activate(context) {
         // @ts-ignore
         const id = editor.id
 
-        const [ renderWhitespace, wordWrap, eol, symbolLF, symbolCRLF, highlightNonDefault, highlightExtraWhitespace, decorateBeforeEol ]
-            = getDocumentSettings(editor.document)
-        const shouldRenderEOL = (renderWhitespace !== 'none') && (renderWhitespace !== 'boundary') || (wordWrap !== 'off')
+        const [
+            renderWhitespace,
+            wordWrap,
+            eol,
+            symbolLF,
+            symbolCRLF,
+            highlightNonDefault,
+            highlightExtraWhitespace,
+            decorateBeforeEol,
+            forceShowOnWordWrap
+        ] = getDocumentSettings(editor.document)
+        const shouldRenderEOL = (renderWhitespace !== 'none') && (renderWhitespace !== 'boundary') || (forceShowOnWordWrap && (wordWrap !== 'off'))
         const shouldRenderOnlySelection = (renderWhitespace === 'selection')
 
         const lineEnding = document.eol
@@ -189,6 +199,7 @@ function activate(context) {
         const newDefaultHighlightNonDefault = customConfiguration.get('highlightNonDefault', false)
         const newDefaultHighlightExtraWhitespace = customConfiguration.get('highlightExtraWhitespace', false)
         const newDefaultDecorateBeforeEol = customConfiguration.get('decorateBeforeEol', false)
+        const newDefaultForceShowOnWordWrap = customConfiguration.get('forceShowOnWordWrap', false)
 
         if (defaultRenderWhitespace !== newDefaultRenderWhitespace) {
             defaultRenderWhitespace = newDefaultRenderWhitespace
@@ -229,6 +240,10 @@ function activate(context) {
             defaultDecorateBeforeEol = newDefaultDecorateBeforeEol
             anyChanges = true
         }
+        if (defaultForceShowOnWordWrap !== newDefaultForceShowOnWordWrap) {
+            defaultForceShowOnWordWrap = newDefaultForceShowOnWordWrap
+            anyChanges = true
+        }
 
         //read on every call as there is no theme change event
         themeColorError = new vscode.ThemeColor('errorForeground')
@@ -249,6 +264,7 @@ function activate(context) {
         let highlightNonDefault = defaultHighlightNonDefault
         let highlightExtraWhitespace = defaultHighlightExtraWhitespace
         let decorateBeforeEol = defaultDecorateBeforeEol
+        let forceShowOnWordWrap = defaultForceShowOnWordWrap
 
         const languageId = document.languageId
         if (languageId) {
@@ -282,12 +298,24 @@ function activate(context) {
                 const languageSpecificDecorateBeforeEol = languageSpecificConfiguration['code-eol.decorateBeforeEol']
                 if (languageSpecificDecorateBeforeEol) { decorateBeforeEol = languageSpecificDecorateBeforeEol }
 
+                const languageSpecificForceShowOnWordWrap = languageSpecificConfiguration['code-eol.forceShowOnWordWrap']
+                if (languageSpecificForceShowOnWordWrap) { forceShowOnWordWrap = languageSpecificForceShowOnWordWrap }
             }
         }
 
         if (eol === 'auto') { eol = isWindows ? '\r\n' : '\n' }
 
-        return [ renderWhitespace, wordWrap, eol, symbolLF, symbolCRLF, highlightNonDefault, highlightExtraWhitespace, decorateBeforeEol ]
+        return [
+            renderWhitespace,
+            wordWrap,
+            eol,
+            symbolLF,
+            symbolCRLF,
+            highlightNonDefault,
+            highlightExtraWhitespace,
+            decorateBeforeEol,
+            forceShowOnWordWrap,
+        ]
     }
 
 
