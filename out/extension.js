@@ -22,10 +22,12 @@ function activate(context) {
     // to determine if decoration types need recreation
     var lastEolSymbol = null
     var lastDecorationBeforeEof = null
+    var lastExperimentalWhitespaceRendering = null
 
     // settings
     var defaultRenderWhitespace
     var defaultWordWrap
+    var defaultExperimentalWhitespaceRendering
     var defaultEol
     var defaultSymbolLF
     var defaultSymbolCR
@@ -53,6 +55,7 @@ function activate(context) {
 
         const [
             renderWhitespace,
+            experimentalWhitespaceRendering,
             wordWrap,
             eol,
             symbolLF,
@@ -99,14 +102,22 @@ function activate(context) {
         }
 
         let extraWhitespaceDecorationType = (id in extraWhitespaceDecorationTypes) ? extraWhitespaceDecorationTypes[id] : null
-        if ((extraWhitespaceDecorationType == null) || configurationUpdate) {
+        if ((extraWhitespaceDecorationType == null) || configurationUpdate || (lastExperimentalWhitespaceRendering !== experimentalWhitespaceRendering)) {
             if (extraWhitespaceDecorationType != null) {
                 if (editor.setDecorations) { editor.setDecorations(extraWhitespaceDecorationType, []) }
                 extraWhitespaceDecorationType.dispose()
                 if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() disposed old extra whitespace decorations') }
             }
-            extraWhitespaceDecorationType = vscode.window.createTextEditorDecorationType({ color: themeColorError })
+            // Without experimental whitespace rendering, middle dots inserted into the text can be colored
+            // Otherwise, the whitespace is rendered as an overlay, so the whitespace text cannot be colored
+            const extraWhitespaceDecorationOptions =
+                experimentalWhitespaceRendering === 'off'
+                    ? { color: themeColorError }
+                    : { textDecoration: 'line-through dotted var(--vscode-editorError-foreground)' }
+            extraWhitespaceDecorationOptions.rangeBehavior = vscode.DecorationRangeBehavior.ClosedClosed
+            extraWhitespaceDecorationType = vscode.window.createTextEditorDecorationType(extraWhitespaceDecorationOptions)
             if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() created new extra whitespace decorations (' + id + ')') }
+            lastExperimentalWhitespaceRendering = experimentalWhitespaceRendering
             extraWhitespaceDecorationTypes[id] =  extraWhitespaceDecorationType
         }
 
@@ -188,6 +199,7 @@ function activate(context) {
         const editorConfiguration = vscode.workspace.getConfiguration('editor', null)
         const newDefaultRenderWhitespace = editorConfiguration.get('renderWhitespace', 'none') || 'selection'
         const newDefaultWordWrap = editorConfiguration.get('wordWrap', 'off') || 'off'
+        const newDefaultExperimentalWhitespaceRendering = editorConfiguration.get('experimentalWhitespaceRendering', 'svg') || 'svg'
 
         const filesConfiguration = vscode.workspace.getConfiguration('files', null)
         const newDefaultEol = filesConfiguration.get('eol', 'auto') || 'auto'
@@ -203,6 +215,11 @@ function activate(context) {
 
         if (defaultRenderWhitespace !== newDefaultRenderWhitespace) {
             defaultRenderWhitespace = newDefaultRenderWhitespace
+            anyChanges = true
+        }
+
+        if (defaultExperimentalWhitespaceRendering !== newDefaultExperimentalWhitespaceRendering) {
+            defaultExperimentalWhitespaceRendering = newDefaultExperimentalWhitespaceRendering
             anyChanges = true
         }
 
@@ -256,6 +273,7 @@ function activate(context) {
     /** @param {vscode.TextDocument} document */
     function getDocumentSettings(document) {
         let renderWhitespace = defaultRenderWhitespace
+        let experimentalWhitespaceRendering = defaultExperimentalWhitespaceRendering
         let wordWrap = defaultWordWrap
         let eol = defaultEol
         let symbolLF = defaultSymbolLF
@@ -273,6 +291,9 @@ function activate(context) {
 
                 const languageSpecificRenderWhitespace = languageSpecificConfiguration['editor.renderWhitespace']
                 if (languageSpecificRenderWhitespace) { renderWhitespace = languageSpecificRenderWhitespace }
+
+                const languageSpecificExperimentalWhitespaceRendering = languageSpecificConfiguration['editor.experimentalWhitespaceRendering']
+                if (languageSpecificExperimentalWhitespaceRendering) { experimentalWhitespaceRendering = languageSpecificExperimentalWhitespaceRendering }
 
                 const languageSpecificWordWrap = languageSpecificConfiguration['editor.wordWrap']
                 if (languageSpecificWordWrap) { wordWrap = languageSpecificWordWrap }
@@ -307,6 +328,7 @@ function activate(context) {
 
         return [
             renderWhitespace,
+            experimentalWhitespaceRendering,
             wordWrap,
             eol,
             symbolLF,
