@@ -114,6 +114,7 @@ function activate(context) {
                 experimentalWhitespaceRendering === 'off'
                     ? { color: themeColorError }
                     : { textDecoration: 'line-through dotted var(--vscode-editorError-foreground)' }
+            extraWhitespaceDecorationOptions.rangeBehavior = vscode.DecorationRangeBehavior.ClosedClosed
             extraWhitespaceDecorationType = vscode.window.createTextEditorDecorationType(extraWhitespaceDecorationOptions)
             if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() created new extra whitespace decorations (' + id + ')') }
             lastExperimentalWhitespaceRendering = experimentalWhitespaceRendering
