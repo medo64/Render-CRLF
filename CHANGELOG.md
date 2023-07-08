@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.7.0]
+
+### Fixed
+- Partially fixed rendering for extra whitespace [issue #27](https://github.com/medo64/Render-CRLF/issues/27); rendering is different than default
+- Security updates for dependencies
+
+
 ## [1.6.0]
 
 ### Changed
