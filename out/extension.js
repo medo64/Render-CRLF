@@ -105,7 +105,7 @@ function activate(context) {
                 extraWhitespaceDecorationType.dispose()
                 if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() disposed old extra whitespace decorations') }
             }
-            extraWhitespaceDecorationType = vscode.window.createTextEditorDecorationType({ backgroundColor: themeColorError })
+            extraWhitespaceDecorationType = vscode.window.createTextEditorDecorationType({ textDecoration: 'line-through dotted var(--vscode-editorError-foreground)' })
             if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() created new extra whitespace decorations (' + id + ')') }
             extraWhitespaceDecorationTypes[id] =  extraWhitespaceDecorationType
         }
