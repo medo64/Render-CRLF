@@ -105,7 +105,7 @@ function activate(context) {
                 extraWhitespaceDecorationType.dispose()
                 if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() disposed old extra whitespace decorations') }
             }
-            extraWhitespaceDecorationType = vscode.window.createTextEditorDecorationType({ color: themeColorError })
+            extraWhitespaceDecorationType = vscode.window.createTextEditorDecorationType({ backgroundColor: themeColorError })
             if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() created new extra whitespace decorations (' + id + ')') }
             extraWhitespaceDecorationTypes[id] =  extraWhitespaceDecorationType
         }
