@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.7.1]
+
+### Fixed
+
+- Changed rendering for extra whitespace to use underline instead of line-through
+
+
 ## [1.7.0]
 
 ### Fixed
