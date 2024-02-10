@@ -32,7 +32,7 @@ settings (`code-eol.highlightNonDefault: true`).
 
    ![Screenshot](https://raw.githubusercontent.com/medo64/Render-CRLF/main/images/screenshot-highlight-eof.png)
 
-Supports highlighting of training whitespace (`code-eol.highlightExtraWhitespace: true`).
+Supports highlighting of trailing whitespace (`code-eol.highlightExtraWhitespace: true`).
 
    ![Screenshot](https://raw.githubusercontent.com/medo64/Render-CRLF/main/images/screenshot-highlight-whitespace.png)
 
@@ -151,7 +151,7 @@ turn to determine which extension is causing the issue.
 
 This extension might be in conflict with other extensions providing their
 information as end of the line decorations, the most notable example being
-GitLens. This is due to [issue #33852](https://github.com/microsoft/vscode/issues/33852)
+GitLens. This is due to [issue 33852](https://github.com/microsoft/vscode/issues/33852)
 and it cannot be solved at this moment.
 
 As a workaround you can try setting `code-eol.decorateBeforeEol` to `true`.
