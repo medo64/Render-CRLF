@@ -40,7 +40,7 @@ Supports highlighting of trailing whitespace (`code-eol.highlightExtraWhitespace
 # Render Whitespace
 
 Whether extension is decorating or not is handled by `editor.renderWhitespace`
-setting (accessible through `View` `Render Whitespace` menu). The following
+setting (accessible through `View > Appearance > Render Whitespace`). The following
 settings are supported:
 
 * `none`: Extension will not add end-of-line decorations.
