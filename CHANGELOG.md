@@ -1,5 +1,13 @@
 # Change Log
 
+## [1.8.0]
+
+### Fixed
+
+- Fixed readme - courtesy of [Peter Kehl](https://github.com/peter-kehl) and [Miroma](https://github.com/its-miroma)
+- Security updates for dependencies
+
+
 ## [1.7.1]
 
 ### Fixed
