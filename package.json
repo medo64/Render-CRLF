@@ -81,7 +81,7 @@
                         "scope": "language-overridable",
                         "type": "boolean",
                         "default": false,
-                        "description": "If set, rendered characters will come before the end of the line, thus playing better with extensions that use decorations after the end of the line.\nNote: If set, line endings will not be rendered on empty lines."
+                        "description": "If set, rendered characters will come before the end of the line.\nNote: If set, line endings will not be rendered on empty lines."
                     },
                     "code-eol.forceShowOnWordWrap": {
                         "scope": "language-overridable",

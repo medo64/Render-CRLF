@@ -32,15 +32,15 @@ whitespace rendering is on.
 This extension contributes the following settings (compatible with `code-eol`
 extension):
 
-| Setting                               | Default | Description                                                                                                                                                                                                              |
-| ------------------------------------- | :-----: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `"code-eol.newlineCharacter"`         |  `"↓"`  | Character used to display `LF`, Linux and Mac's line ending.                                                                                                                                                             |
-| `"code-eol.returnCharacter"`          |  `"←"`  | Character used to display `CR`, old Macintosh' line ending.<br>Note: `CR` files are not supported by VS Code: see [`microsoft/vscode#35797](https://github.com/microsoft/vscode/issues/35797).                           |
-| `"code-eol.crlfCharacter"`            |  `"↵"`  | Character used to display `CRLF`, Windows' line ending.                                                                                                                                                                  |
-| `"code-eol.highlightNonDefault"`      | `false` | If set, non-standard line endings will be highlighted as errors.<br>The standard EOL is taken from `files.eol`.                                                                                                          |
-| `"code-eol.highlightExtraWhitespace"` | `false` | If set, trailing whitespace will be highlighted as errors.                                                                                                                                                               |
-| `"code-eol.decorateBeforeEol"`        | `false` | If set, rendered characters will come before the end of the line, thus playing better with extensions that use decorations after the end of the line.<br>Note: If set, line endings will not be rendered on empty lines. |
-| `"code-eol.forceShowOnWordWrap"`      | `false` | If set, rendered characters will always be shown when word wrap is on, regardless of the other settings.                                                                                                                 |
+| Setting                               | Default | Description                                                                                                                                                                                    |
+| ------------------------------------- | :-----: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `"code-eol.newlineCharacter"`         |  `"↓"`  | Character used to display `LF`, Linux and Mac's line ending.                                                                                                                                   |
+| `"code-eol.returnCharacter"`          |  `"←"`  | Character used to display `CR`, old Macintosh' line ending.<br>Note: `CR` files are not supported by VS Code: see [`microsoft/vscode#35797](https://github.com/microsoft/vscode/issues/35797). |
+| `"code-eol.crlfCharacter"`            |  `"↵"`  | Character used to display `CRLF`, Windows' line ending.                                                                                                                                        |
+| `"code-eol.highlightNonDefault"`      | `false` | If set, non-standard line endings will be highlighted as errors.<br>The standard EOL is taken from `files.eol`.                                                                                |
+| `"code-eol.highlightExtraWhitespace"` | `false` | If set, trailing whitespace will be highlighted as errors.                                                                                                                                     |
+| `"code-eol.decorateBeforeEol"`        | `false` | If set, rendered characters will come before the end of the line.<br>Note: If set, line endings will not be rendered on empty lines.                                                           |
+| `"code-eol.forceShowOnWordWrap"`      | `false` | If set, rendered characters will always be shown when word wrap is on, regardless of the other settings.                                                                                       |
 
 ## Upstream Issues
 
@@ -65,15 +65,4 @@ To avoid this you can set:
 
 ```json
 "editor.largeFileOptimizations": false
-```
-
-### Conflict with GitLens ([`microsoft/vscode#33852`](https://github.com/microsoft/vscode/issues/33852))
-
-This extension might conflict with other extensions that provide information as
-end of the line decorations, the most notable example being GitLens.
-
-As a workaround you can set:
-
-```json
-"code-eol.decorateBeforeEol": true
 ```
