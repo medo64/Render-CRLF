@@ -1,8 +1,8 @@
 {
     "name": "render-crlf",
     "displayName": "Render Line Endings",
-    "description": "Displays the line ending symbol and optionally extra whitespace when 'Render whitespace' is turned on.",
-    "icon": "ICON.png",
+    "description": "Renders end of line characters (`CR`, `LF`, `CRLF`) when whitespace rendering is on",
+    "icon": "icon.png",
     "version": "1.8.0",
     "publisher": "medo64",
     "galleryBanner": {
@@ -39,11 +39,11 @@
         "configuration": [
             {
                 "type": "object",
-                "title": "Render CRLF Line Endings",
+                "title": "Render Line Endings",
                 "properties": {
                     "code-eol.newlineCharacter": {
                         "scope": "language-overridable",
-                        "description": "Character used to display LF (line-feed) line ending (aka Linux/Mac line ending).",
+                        "description": "Character used to display `LF`, Linux and Mac's line ending.",
                         "type": "string",
                         "minLength": 1,
                         "maxLength": 1,
@@ -51,7 +51,7 @@
                     },
                     "code-eol.returnCharacter": {
                         "scope": "language-overridable",
-                        "description": "Character used to display CR (carriage-return) line ending (aka old Macintosh line ending).",
+                        "description": "Character used to display `CR`, old Macintosh' line ending.\nNote: `CR` files are not supported by VS Code: see [`microsoft/vscode#35797](https://github.com/microsoft/vscode/issues/35797).",
                         "type": "string",
                         "minLength": 1,
                         "maxLength": 1,
@@ -59,7 +59,7 @@
                     },
                     "code-eol.crlfCharacter": {
                         "scope": "language-overridable",
-                        "description": "Character used to display CRLF (carriage-return, line-feed) line ending (aka Windows line ending).",
+                        "description": "Character used to display `CRLF`, Windows' line ending.",
                         "type": "string",
                         "minLength": 1,
                         "maxLength": 2,
@@ -69,25 +69,25 @@
                         "scope": "language-overridable",
                         "type": "boolean",
                         "default": false,
-                        "description": "If set, non-default line endings will be hightlighted as errors."
+                        "description": "If set, non-standard line endings will be highlighted as errors.\nThe standard EOL is taken from `files.eol`."
                     },
                     "code-eol.highlightExtraWhitespace": {
                         "scope": "language-overridable",
                         "type": "boolean",
                         "default": false,
-                        "description": "If set, extra whitespace at line ending will be hightlighted as errors."
+                        "description": "If set, trailing whitespace will be highlighted as errors."
                     },
                     "code-eol.decorateBeforeEol": {
                         "scope": "language-overridable",
                         "type": "boolean",
                         "default": false,
-                        "description": "If true, decoration will come before end of the line thus playing better with extensions that use decorations after end of the line. Do note that line ending will not be rendered on empty lines if this is used."
+                        "description": "If set, rendered characters will come before the end of the line.\nNote: If set, line endings will not be rendered on empty lines."
                     },
                     "code-eol.forceShowOnWordWrap": {
                         "scope": "language-overridable",
                         "type": "boolean",
                         "default": false,
-                        "description": "If true, decoration will be shown when word-wrap is not off (regardless of the other settings)."
+                        "description": "If set, rendered characters will always be shown when word wrap is on, regardless of the other settings."
                     }
                 }
             }
