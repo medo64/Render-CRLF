@@ -2,7 +2,7 @@
     "name": "render-crlf",
     "displayName": "Render Line Endings",
     "description": "Renders end of line characters (`CR`, `LF`, `CRLF`) when whitespace rendering is on",
-    "icon": "icon.png",
+    "icon": "ICON.png",
     "version": "1.8.0",
     "publisher": "medo64",
     "galleryBanner": {

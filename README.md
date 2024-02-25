@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/medo64/Render-CRLF/main/icon.png" alt="Render Line Endings logo" align="right" width="10%" height="10%">
+<img src="https://raw.githubusercontent.com/medo64/Render-CRLF/main/images/icon.png" alt="Render Line Endings logo" align="right" width="10%" height="10%">
 
 # Render Line Endings
 
