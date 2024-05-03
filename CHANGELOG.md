@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.8.1]
+
+### Fixed
+
+- Security updates for dependencies
+
+
 ## [1.8.0]
 
 ### Fixed
