@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.8.3]
+
+### Fixed
+
+- Fixed readme table
+
+
 ## [1.8.2]
 
 ### Fixed

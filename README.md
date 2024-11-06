@@ -7,11 +7,13 @@ whitespace rendering is on.
 
 ![GIF showing the behavior of the extension in VS Code](https://raw.githubusercontent.com/medo64/Render-CRLF/main/images/screenshot.gif)
 
+
 ## Installation
 
 - Press <kbd>CTRL</kbd> <kbd>P</kbd> or <kbd>COMMAND</kbd> <kbd>P</kbd>
 - Write `ext install medo64.render-crlf`
 - Press `Enter`
+
 
 ## Features
 
@@ -29,13 +31,14 @@ whitespace rendering is on.
   - `"editorWhitespace.foreground"`: Rendered characters
   - `"errorForeground"`: Non-standard EOL and trailing whitespace, if configured
 
+
 ## Settings
 
 This extension contributes the following settings (compatible with `code-eol`
 extension):
 
 | Setting                               | Default | Description                                                                                                                                                                                     |
-| ------------------------------------- | :-----: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|---------------------------------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `"code-eol.newlineCharacter"`         |  `"↓"`  | Character used to display `LF`, Linux and Mac's line ending.                                                                                                                                    |
 | `"code-eol.returnCharacter"`          |  `"←"`  | Character used to display `CR`, old Macintosh' line ending.<br>Note: `CR` files are not supported by VS Code: see [`microsoft/vscode#35797`](https://github.com/microsoft/vscode/issues/35797). |
 | `"code-eol.crlfCharacter"`            |  `"↵"`  | Character used to display `CRLF`, Windows' line ending.                                                                                                                                         |
@@ -43,6 +46,7 @@ extension):
 | `"code-eol.highlightExtraWhitespace"` | `false` | If set, trailing whitespace will be highlighted as errors.                                                                                                                                      |
 | `"code-eol.decorateBeforeEol"`        | `false` | If set, rendered characters will come before the end of the line.<br>Note: If set, line endings will not be rendered on empty lines.                                                            |
 | `"code-eol.forceShowOnWordWrap"`      | `false` | If set, rendered characters will always be shown when word wrap is on, regardless of the other settings.                                                                                        |
+
 
 ## Upstream Issues
 
