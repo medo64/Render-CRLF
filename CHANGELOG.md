@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.8.4]
+
+### Fixed
+
+- Fixed rendering word wrapped line endings when is forceShowOnWordWrap is set to true
+
+
 ## [1.8.3]
 
 ### Fixed
