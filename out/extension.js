@@ -65,8 +65,8 @@ function activate(context) {
             decorateBeforeEol,
             forceShowOnWordWrap
         ] = getDocumentSettings(editor.document)
-        const shouldRenderEOL = (renderWhitespace !== 'none') && (renderWhitespace !== 'boundary') || (forceShowOnWordWrap && (wordWrap !== 'off'))
-        const shouldRenderOnlySelection = (renderWhitespace === 'selection')
+        const shouldRenderEOL = ((renderWhitespace !== 'none') && (renderWhitespace !== 'boundary')) || (forceShowOnWordWrap && (wordWrap !== 'off'))
+        const shouldRenderOnlySelection = (renderWhitespace === 'selection') && (forceShowOnWordWrap && (wordWrap !== 'off'))
 
         const lineEnding = document.eol
 
@@ -108,6 +108,7 @@ function activate(context) {
                 extraWhitespaceDecorationType.dispose()
                 if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() disposed old extra whitespace decorations') }
             }
+
             // Without experimental whitespace rendering, middle dots inserted into the text can be colored
             // Otherwise, the whitespace is rendered as an overlay, so the whitespace text cannot be colored
             const extraWhitespaceDecorationOptions =
