@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.8.5]
+
+### Fixed
+
+- Fixed  selection rendering when forceShowOnWordWrap is false
+
+
 ## [1.8.4]
 
 ### Fixed
