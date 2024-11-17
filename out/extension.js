@@ -66,7 +66,7 @@ function activate(context) {
             forceShowOnWordWrap
         ] = getDocumentSettings(editor.document)
         const shouldRenderEOL = ((renderWhitespace !== 'none') && (renderWhitespace !== 'boundary')) || (forceShowOnWordWrap && (wordWrap !== 'off'))
-        const shouldRenderOnlySelection = (renderWhitespace === 'selection') && (forceShowOnWordWrap && (wordWrap !== 'off'))
+        const shouldRenderOnlySelection = (renderWhitespace === 'selection') && !(forceShowOnWordWrap && (wordWrap !== 'off'))
 
         const lineEnding = document.eol
 
