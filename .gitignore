@@ -1,3 +1,8 @@
+#~ VSCE Project
+
 node_modules
 .vscode-test/
 *.vsix
+
+TODO.md
+.meta.*
