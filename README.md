@@ -93,6 +93,8 @@ For example, if you want it to look similar to Atom, you can use something like 
 }
 ~~~
 
+(default characters are `↓`, `←`, and `↵`).
+
 
 #### Highlight Non-standard EOL:
 
