@@ -1,5 +1,16 @@
 # Change Log
 
+## [1.9.1]
+
+### Added
+
+- Setting to force display on boundary condition
+
+### Fixed
+
+- Fixed color overrides
+
+
 ## [1.9.0]
 
 ### Added
