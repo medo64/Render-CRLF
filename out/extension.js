@@ -364,8 +364,8 @@ function activate(context) {
 
         if (eol === 'auto') { eol = isWindows ? '\r\n' : '\n' }
 
-        if (colorDefaultForeground === null || colorDefaultForeground === '') { colorDefaultForeground = themeColorWhitespace }
-        if (colorErrorForeground === null || colorErrorForeground === '') { colorErrorForeground = themeColorError }
+        if (colorDefaultForeground === null || colorDefaultForeground === false || colorDefaultForeground === '') { colorDefaultForeground = themeColorWhitespace }
+        if (colorErrorForeground === null || colorErrorForeground === false || colorErrorForeground === '') { colorErrorForeground = themeColorError }
 
         return [
             renderWhitespace,
