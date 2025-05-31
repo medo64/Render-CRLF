@@ -48,6 +48,37 @@ extension):
 | `"code-eol.forceShowOnWordWrap"`      | `false` | If set, rendered characters will always be shown when word wrap is on, regardless of the other settings.                                                                                        |
 
 
+### Configuration Examples
+
+#### Alternate EOL Characters:
+
+~~~json
+{
+    "code-eol.newlineCharacter": "¬",
+    "code-eol.returnCharacter" : "¤",
+    "code-eol.crlfCharacter"   : "¤¬",
+}
+~~~
+
+
+#### Highlight non-standard EOL:
+
+~~~json
+{
+    "code-eol.highlightNonDefault": true,
+}
+~~~
+
+
+#### Highlight trailing whitespace only:
+
+~~~json
+{
+    "code-eol.highlightExtraWhitespace": true,
+}
+~~~
+
+
 ## Upstream Issues
 
 Please upvote the following VS Code issues:
