@@ -1,5 +1,17 @@
 # Change Log
 
+## [1.9.0]
+
+### Added
+
+- Color overrides
+
+
+### Fixed
+
+- Security updates for dependencies
+
+
 ## [1.8.6]
 
 ### Fixed
