@@ -6,7 +6,6 @@
 
 - Color overrides
 
-
 ### Fixed
 
 - Security updates for dependencies

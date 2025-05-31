@@ -9,8 +9,8 @@ function activate(context) {
     // @ts-ignore
     const isDebug = (context.extensionMode === 2)
 
-    const defaultLFSymbol   = '↓'
-    const defaultCRSymbol   = '←'
+    const defaultLFSymbol = '↓'
+    const defaultCRSymbol = '←'
     const defaultCRLFSymbol = '↵'
     const LF = 1
     const CRLF = 2
@@ -36,6 +36,7 @@ function activate(context) {
     var defaultHighlightExtraWhitespace
     var defaultDecorateBeforeEol
     var defaultForceShowOnWordWrap
+    var defaultForceShowOnBoundary
     var defaultColorDefaultForeground
     var defaultColorErrorForeground
     var themeColorError
@@ -66,10 +67,14 @@ function activate(context) {
             highlightExtraWhitespace,
             decorateBeforeEol,
             forceShowOnWordWrap,
+            forceShowOnBoundary,
             colorDefaultForeground,
             colorErrorForeground,
         ] = getDocumentSettings(editor.document)
-        const shouldRenderEOL = ((renderWhitespace !== 'none') && (renderWhitespace !== 'boundary')) || (forceShowOnWordWrap && (wordWrap !== 'off'))
+
+        const isRenderable = (renderWhitespace !== 'none')
+        const isNonBoundary = (renderWhitespace !== 'boundary') || forceShowOnBoundary
+        const shouldRenderEOL = (isRenderable && isNonBoundary) || (forceShowOnWordWrap && (wordWrap !== 'off'))
         const shouldRenderOnlySelection = (renderWhitespace === 'selection') && !(forceShowOnWordWrap && (wordWrap !== 'off'))
 
         const lineEnding = document.eol
@@ -102,7 +107,7 @@ function activate(context) {
             }
             lastEolSymbol = currentEolSymbol
             lastDecorationBeforeEof = decorateBeforeEol
-            eolDecorationTypes[id] =  eolDecorationType
+            eolDecorationTypes[id] = eolDecorationType
         }
 
         let extraWhitespaceDecorationType = (id in extraWhitespaceDecorationTypes) ? extraWhitespaceDecorationTypes[id] : null
@@ -123,7 +128,7 @@ function activate(context) {
             extraWhitespaceDecorationType = vscode.window.createTextEditorDecorationType(extraWhitespaceDecorationOptions)
             if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() created new extra whitespace decorations (' + id + ')') }
             lastExperimentalWhitespaceRendering = experimentalWhitespaceRendering
-            extraWhitespaceDecorationTypes[id] =  extraWhitespaceDecorationType
+            extraWhitespaceDecorationTypes[id] = extraWhitespaceDecorationType
         }
 
         var eolDecorations = []
@@ -137,7 +142,7 @@ function activate(context) {
             if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() visible ranges are from line ' + visibleRanges[0].start.line + ' to ' + visibleRanges[0].end.line) }
             let startOffset = document.offsetAt(visibleRanges[0].start)
             let endOffset = document.offsetAt(visibleRanges[0].end)
-            for(let i=1; i<visibleRanges.length; i++) {
+            for (let i = 1; i < visibleRanges.length; i++) {
                 let nextStartOffset = document.offsetAt(visibleRanges[i].start)
                 let nextEndOffset = document.offsetAt(visibleRanges[i].end)
                 if (startOffset > nextStartOffset) { startOffset = nextStartOffset }
@@ -152,7 +157,7 @@ function activate(context) {
             if (startLine > 0) { startLine -= 1 } //in case of partial previous line
             if (isDebug) { console.debug(new Date().getTime() + '   renderDecorations() rendering from line ' + startLine + ' to ' + endLine) }
 
-            for (let i=startLine; i<=endLine; i++) {
+            for (let i = startLine; i <= endLine; i++) {
                 var line = document.lineAt(i)
                 if (i != endLine) {
                     const eolPosition = line.range.end
@@ -210,13 +215,14 @@ function activate(context) {
         const newDefaultEol = filesConfiguration.get('eol', 'auto') || 'auto'
 
         const customConfiguration = vscode.workspace.getConfiguration('code-eol', null)
-        const newDefaultSymbolLF =   customConfiguration.get('newlineCharacter', defaultLFSymbol)   || defaultLFSymbol
-        const newDefaultSymbolCR =   customConfiguration.get('returnCharacter',  defaultCRSymbol)   || defaultCRSymbol
-        const newDefaultSymbolCRLF = customConfiguration.get('crlfCharacter',    defaultCRLFSymbol) || defaultCRLFSymbol
+        const newDefaultSymbolLF = customConfiguration.get('newlineCharacter', defaultLFSymbol) || defaultLFSymbol
+        const newDefaultSymbolCR = customConfiguration.get('returnCharacter', defaultCRSymbol) || defaultCRSymbol
+        const newDefaultSymbolCRLF = customConfiguration.get('crlfCharacter', defaultCRLFSymbol) || defaultCRLFSymbol
         const newDefaultHighlightNonDefault = customConfiguration.get('highlightNonDefault', false)
         const newDefaultHighlightExtraWhitespace = customConfiguration.get('highlightExtraWhitespace', false)
         const newDefaultDecorateBeforeEol = customConfiguration.get('decorateBeforeEol', false)
         const newDefaultForceShowOnWordWrap = customConfiguration.get('forceShowOnWordWrap', false)
+        const newDefaultForceShowOnBoundary = customConfiguration.get('forceShowOnBoundary', false)
         const newColorDefaultForeground = customConfiguration.get('colors.default.foreground', null)
         const newColorErrorForeground = customConfiguration.get('colors.error.foreground', null)
 
@@ -268,12 +274,15 @@ function activate(context) {
             defaultForceShowOnWordWrap = newDefaultForceShowOnWordWrap
             anyChanges = true
         }
+        if (defaultForceShowOnBoundary !== newDefaultForceShowOnBoundary) {
+            defaultForceShowOnBoundary = newDefaultForceShowOnBoundary
+            anyChanges = true
+        }
 
         if (defaultColorDefaultForeground !== newColorDefaultForeground) {
             defaultColorDefaultForeground = newColorDefaultForeground
             anyChanges = true
         }
-
         if (defaultColorErrorForeground !== newColorErrorForeground) {
             defaultColorErrorForeground = newColorErrorForeground
             anyChanges = true
@@ -300,6 +309,7 @@ function activate(context) {
         let highlightExtraWhitespace = defaultHighlightExtraWhitespace
         let decorateBeforeEol = defaultDecorateBeforeEol
         let forceShowOnWordWrap = defaultForceShowOnWordWrap
+        let forceShowOnBoundary = defaultForceShowOnBoundary
         let colorDefaultForeground = defaultColorDefaultForeground
         let colorErrorForeground = defaultColorErrorForeground
 
@@ -341,6 +351,9 @@ function activate(context) {
                 const languageSpecificForceShowOnWordWrap = languageSpecificConfiguration['code-eol.forceShowOnWordWrap']
                 if (languageSpecificForceShowOnWordWrap) { forceShowOnWordWrap = languageSpecificForceShowOnWordWrap }
 
+                const languageSpecificForceShowOnBoundary = languageSpecificConfiguration['code-eol.forceShowOnBoundary']
+                if (languageSpecificForceShowOnBoundary) { forceShowOnBoundary = languageSpecificForceShowOnBoundary }
+
                 const languageSpecificColorDefaultForeground = languageSpecificConfiguration['code-eol.colors.default.foreground']
                 if (languageSpecificColorDefaultForeground) { colorDefaultForeground = languageSpecificColorDefaultForeground }
 
@@ -365,6 +378,7 @@ function activate(context) {
             highlightExtraWhitespace,
             decorateBeforeEol,
             forceShowOnWordWrap,
+            forceShowOnBoundary,
             colorDefaultForeground,
             colorErrorForeground,
         ]
@@ -415,7 +429,7 @@ function activate(context) {
 
     /** @param {vscode.TextDocumentChangeEvent} e */
     vscode.workspace.onDidChangeTextDocument((e) => {
-        if (isDebug) {console.debug(new Date().getTime() + ' onDidChangeTextDocument(' + (e.contentChanges.length > 0 ? 'contentChanges' : '') + ')') }
+        if (isDebug) { console.debug(new Date().getTime() + ' onDidChangeTextDocument(' + (e.contentChanges.length > 0 ? 'contentChanges' : '') + ')') }
         if (e.contentChanges.length > 0) {
             renderDecorations(vscode.window.activeTextEditor)
         }

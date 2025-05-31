@@ -89,6 +89,12 @@
                         "default": false,
                         "description": "If set, rendered characters will always be shown when word wrap is on, regardless of the other settings."
                     },
+                    "code-eol.forceShowOnBoundary": {
+                        "scope": "language-overridable",
+                        "type": "boolean",
+                        "default": false,
+                        "description": "If set, rendered characters will always be shown when word wrap is on, regardless of the other settings."
+                    },
                     "code-eol.colors.default.foreground": {
                         "scope": "language-overridable",
                         "type": ["string", "null"],

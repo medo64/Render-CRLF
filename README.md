@@ -46,6 +46,7 @@ extension):
 | `"code-eol.highlightExtraWhitespace"`   | `false` | If set, trailing whitespace will be highlighted as errors.                                                                                                                                      |
 | `"code-eol.decorateBeforeEol"`          | `false` | If set, rendered characters will come before the end of the line.<br>Note: If set, line endings will not be rendered on empty lines.                                                            |
 | `"code-eol.forceShowOnWordWrap"`        | `false` | If set, rendered characters will always be shown when word wrap is on, regardless of the other settings.                                                                                        |
+| `"code-eol.forceShowOnBoundary"`        | `false` | If set, rendered characters will always be shown when in `boundary` mode.                                                                                                                       |
 | `"code-eol.colors.default.foreground"`  | (theme) | If set, used instead of theme default for coloring EOL characters                                                                                                                               |
 | `"code-eol.colors.error.foreground"`    | (theme) | If set, used instead of theme default for highlighting different EOL characters and extra whitespace                                                                                            |
 
