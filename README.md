@@ -50,7 +50,25 @@ extension):
 
 ### Configuration Examples
 
-#### Alternate EOL Characters:
+Here are examples of a few most common adjustments.
+
+
+#### Render All Whitespace
+
+It's perfectly fine to use `View` -> `Appearance` -> `View whitespace` and for that you don't need to edit any settings.
+However, if you want to permanently turn whitespace on, you can do so:
+
+~~~json
+{
+    "editor.renderWhitespace": "all",
+}
+~~~
+
+
+#### Alternate EOL Characters
+
+If you don't like default characters, you can select any unicode character you like.
+For example, if you want it to look similar to Atom, you can use something like this:
 
 ~~~json
 {
@@ -61,7 +79,9 @@ extension):
 ~~~
 
 
-#### Highlight non-standard EOL:
+#### Highlight Non-standard EOL:
+
+If you want to highlight files that have different ending than defined in `files.eol`, you can set `code-eol.highlightNonDefault`:
 
 ~~~json
 {
@@ -70,7 +90,9 @@ extension):
 ~~~
 
 
-#### Highlight trailing whitespace only:
+#### Highlight Trailing Whitespace Only:
+
+If you want to highlight trailing whitespace (either spaces or tab), there's a setting for that:
 
 ~~~json
 {
