@@ -36,6 +36,8 @@ function activate(context) {
     var defaultHighlightExtraWhitespace
     var defaultDecorateBeforeEol
     var defaultForceShowOnWordWrap
+    var defaultColorDefaultForeground
+    var defaultColorErrorForeground
     var themeColorError
     var themeColorWhitespace
 
@@ -63,7 +65,9 @@ function activate(context) {
             highlightNonDefault,
             highlightExtraWhitespace,
             decorateBeforeEol,
-            forceShowOnWordWrap
+            forceShowOnWordWrap,
+            colorDefaultForeground,
+            colorErrorForeground,
         ] = getDocumentSettings(editor.document)
         const shouldRenderEOL = ((renderWhitespace !== 'none') && (renderWhitespace !== 'boundary')) || (forceShowOnWordWrap && (wordWrap !== 'off'))
         const shouldRenderOnlySelection = (renderWhitespace === 'selection') && !(forceShowOnWordWrap && (wordWrap !== 'off'))
@@ -80,7 +84,7 @@ function activate(context) {
             nonDefaultLineEnding = (eol != '\r\n')
         }
 
-        const eolColor = highlightNonDefault && nonDefaultLineEnding ? themeColorError : themeColorWhitespace
+        const eolColor = highlightNonDefault && nonDefaultLineEnding ? colorErrorForeground : colorDefaultForeground
 
         let eolDecorationType = (id in eolDecorationTypes) ? eolDecorationTypes[id] : null
         if ((eolDecorationType == null) || configurationUpdate || (lastEolSymbol !== currentEolSymbol) || (lastDecorationBeforeEof !== decorateBeforeEol)) {
@@ -213,6 +217,8 @@ function activate(context) {
         const newDefaultHighlightExtraWhitespace = customConfiguration.get('highlightExtraWhitespace', false)
         const newDefaultDecorateBeforeEol = customConfiguration.get('decorateBeforeEol', false)
         const newDefaultForceShowOnWordWrap = customConfiguration.get('forceShowOnWordWrap', false)
+        const newColorDefaultForeground = customConfiguration.get('colors.default.foreground', null)
+        const newColorErrorForeground = customConfiguration.get('colors.error.foreground', null)
 
         if (defaultRenderWhitespace !== newDefaultRenderWhitespace) {
             defaultRenderWhitespace = newDefaultRenderWhitespace
@@ -263,6 +269,16 @@ function activate(context) {
             anyChanges = true
         }
 
+        if (defaultColorDefaultForeground !== newColorDefaultForeground) {
+            defaultColorDefaultForeground = newColorDefaultForeground
+            anyChanges = true
+        }
+
+        if (defaultColorErrorForeground !== newColorErrorForeground) {
+            defaultColorErrorForeground = newColorErrorForeground
+            anyChanges = true
+        }
+
         //read on every call as there is no theme change event
         themeColorError = new vscode.ThemeColor('errorForeground')
         themeColorWhitespace = new vscode.ThemeColor('editorWhitespace.foreground')
@@ -284,6 +300,8 @@ function activate(context) {
         let highlightExtraWhitespace = defaultHighlightExtraWhitespace
         let decorateBeforeEol = defaultDecorateBeforeEol
         let forceShowOnWordWrap = defaultForceShowOnWordWrap
+        let colorDefaultForeground = defaultColorDefaultForeground
+        let colorErrorForeground = defaultColorErrorForeground
 
         const languageId = document.languageId
         if (languageId) {
@@ -322,10 +340,19 @@ function activate(context) {
 
                 const languageSpecificForceShowOnWordWrap = languageSpecificConfiguration['code-eol.forceShowOnWordWrap']
                 if (languageSpecificForceShowOnWordWrap) { forceShowOnWordWrap = languageSpecificForceShowOnWordWrap }
+
+                const languageSpecificColorDefaultForeground = languageSpecificConfiguration['code-eol.colors.default.foreground']
+                if (languageSpecificColorDefaultForeground) { colorDefaultForeground = languageSpecificColorDefaultForeground }
+
+                const languageSpecificColorErrorForeground = languageSpecificConfiguration['code-eol.colors.error.foreground']
+                if (languageSpecificColorErrorForeground) { colorErrorForeground = languageSpecificColorErrorForeground }
             }
         }
 
         if (eol === 'auto') { eol = isWindows ? '\r\n' : '\n' }
+
+        if (colorDefaultForeground === null || colorDefaultForeground === '') { colorDefaultForeground = themeColorWhitespace }
+        if (colorErrorForeground === null || colorErrorForeground === '') { colorErrorForeground = themeColorError }
 
         return [
             renderWhitespace,
@@ -338,6 +365,8 @@ function activate(context) {
             highlightExtraWhitespace,
             decorateBeforeEol,
             forceShowOnWordWrap,
+            colorDefaultForeground,
+            colorErrorForeground,
         ]
     }
 

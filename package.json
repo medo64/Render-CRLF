@@ -88,6 +88,20 @@
                         "type": "boolean",
                         "default": false,
                         "description": "If set, rendered characters will always be shown when word wrap is on, regardless of the other settings."
+                    },
+                    "code-eol.colors.default.foreground": {
+                        "scope": "language-overridable",
+                        "type": ["string", "null"],
+                        "format": "color-hex",
+                        "default": false,
+                        "description": "If set, used instead of theme default for coloring EOL characters."
+                    },
+                    "code-eol.colors.error.foreground": {
+                        "scope": "language-overridable",
+                        "type": ["string", "null"],
+                        "format": "color-hex",
+                        "default": false,
+                        "description": "If set, used instead of theme default for highlighting different EOL characters and extra whitespace."
                     }
                 }
             }
@@ -95,6 +109,7 @@
     },
     "scripts": {},
     "devDependencies": {
+        "@types/node": "^22.15.29",
         "@vscode/test-electron": "^2.3.3",
         "@vscode/vsce": "^2.15.0",
         "eslint": "^8.7.0"

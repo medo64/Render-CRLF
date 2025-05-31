@@ -37,15 +37,17 @@ whitespace rendering is on.
 This extension contributes the following settings (compatible with `code-eol`
 extension):
 
-| Setting                               | Default | Description                                                                                                                                                                                     |
-|---------------------------------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `"code-eol.newlineCharacter"`         |  `"↓"`  | Character used to display `LF`, Linux and Mac's line ending.                                                                                                                                    |
-| `"code-eol.returnCharacter"`          |  `"←"`  | Character used to display `CR`, old Macintosh' line ending.<br>Note: `CR` files are not supported by VS Code: see [`microsoft/vscode#35797`](https://github.com/microsoft/vscode/issues/35797). |
-| `"code-eol.crlfCharacter"`            |  `"↵"`  | Character used to display `CRLF`, Windows' line ending.                                                                                                                                         |
-| `"code-eol.highlightNonDefault"`      | `false` | If set, non-standard line endings will be highlighted as errors.<br>The standard EOL is taken from `files.eol`.                                                                                 |
-| `"code-eol.highlightExtraWhitespace"` | `false` | If set, trailing whitespace will be highlighted as errors.                                                                                                                                      |
-| `"code-eol.decorateBeforeEol"`        | `false` | If set, rendered characters will come before the end of the line.<br>Note: If set, line endings will not be rendered on empty lines.                                                            |
-| `"code-eol.forceShowOnWordWrap"`      | `false` | If set, rendered characters will always be shown when word wrap is on, regardless of the other settings.                                                                                        |
+| Setting                                 | Default | Description                                                                                                                                                                                     |
+|-----------------------------------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `"code-eol.newlineCharacter"`           |  `"↓"`  | Character used to display `LF`, Linux and Mac's line ending.                                                                                                                                    |
+| `"code-eol.returnCharacter"`            |  `"←"`  | Character used to display `CR`, old Macintosh' line ending.<br>Note: `CR` files are not supported by VS Code: see [`microsoft/vscode#35797`](https://github.com/microsoft/vscode/issues/35797). |
+| `"code-eol.crlfCharacter"`              |  `"↵"`  | Character used to display `CRLF`, Windows' line ending.                                                                                                                                         |
+| `"code-eol.highlightNonDefault"`        | `false` | If set, non-standard line endings will be highlighted as errors.<br>The standard EOL is taken from `files.eol`.                                                                                 |
+| `"code-eol.highlightExtraWhitespace"`   | `false` | If set, trailing whitespace will be highlighted as errors.                                                                                                                                      |
+| `"code-eol.decorateBeforeEol"`          | `false` | If set, rendered characters will come before the end of the line.<br>Note: If set, line endings will not be rendered on empty lines.                                                            |
+| `"code-eol.forceShowOnWordWrap"`        | `false` | If set, rendered characters will always be shown when word wrap is on, regardless of the other settings.                                                                                        |
+| `"code-eol.colors.default.foreground"`  | (theme) | If set, used instead of theme default for coloring EOL characters                                                                                                                               |
+| `"code-eol.colors.error.foreground"`    | (theme) | If set, used instead of theme default for highlighting different EOL characters and extra whitespace                                                                                            |
 
 
 ### Configuration Examples
@@ -61,6 +63,18 @@ However, if you want to permanently turn whitespace on, you can do so:
 ~~~json
 {
     "editor.renderWhitespace": "all",
+}
+~~~
+
+
+#### Custom colors
+
+You can override theme defaults, if so desired.
+
+~~~json
+{
+    "code-eol.colors.default.foreground": "#007000",
+    "code-eol.colors.error.foreground": "#700000",
 }
 ~~~
 
@@ -105,15 +119,18 @@ If you want to highlight trailing whitespace (either spaces or tab), there's a s
 
 Please upvote the following VS Code issues:
 
+
 ### Mixed Line Endings Are Not Supported ([`microsoft/vscode#127`](https://github.com/microsoft/vscode/issues/127))
 
 VS Code normalizes line endings of mixed files upon load, and thus this
 extension will always show one kind of EOL character.
 
+
 ### `CR` Line Ending Is Not Supported ([`microsoft/vscode#35797`](https://github.com/microsoft/vscode/issues/35797))
 
 VS Code does not support the `CR` line ending. Therefore, while you can
 configure it, you will never see `CR` as a line ending.
+
 
 ### Not Rendering Glyphs For Large Files ([`microsoft/vscode#27100`](https://github.com/microsoft/vscode/issues/27100))
 
