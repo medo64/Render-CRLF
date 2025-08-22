@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.9.2]
+
+### Fixed
+
+- Security updates for dependencies
+
+
 ## [1.9.1]
 
 ### Added
