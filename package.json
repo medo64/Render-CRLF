@@ -4,6 +4,13 @@
     "description": "Renders end of line characters (`CR`, `LF`, `CRLF`) when whitespace rendering is on",
     "icon": "ICON.png",
     "version": "1.9.1",
+    "files": [
+        "out/",
+        "ICON.png",
+        "LICENSE.md",
+        "jsconfig.json",
+        "package.json"
+    ],
     "publisher": "medo64",
     "galleryBanner": {
         "color": "#373E6D",
