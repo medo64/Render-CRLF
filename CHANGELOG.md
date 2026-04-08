@@ -1,5 +1,15 @@
 # Change Log
 
+## [1.9.4]
+
+### Added
+
+- Web-based vscode support
+
+### Fixed
+
+- Security updates for dependencies
+
 ## [1.9.3]
 
 ### Fixed
