@@ -45,16 +45,15 @@
         "onStartupFinished"
     ],
     "contributes": {
-        "configuration": [
-            {
-                "type": "object",
-                "title": "Render Line Endings",
-                "properties": {
+        "configuration": {
+            "type": "object",
+            "title": "Render Line Endings",
+            "properties": {
                     "code-eol.newlineCharacter": {
                         "scope": "language-overridable",
                         "title": "Symbol for LF",
                         "description": "Character used to display `LF`, Linux and Mac's line ending.",
-                        "order": 0,
+                        "order": 2,
                         "type": "string",
                         "minLength": 1,
                         "maxLength": 1,
@@ -64,7 +63,7 @@
                         "scope": "language-overridable",
                         "title": "Symbol for CR",
                         "description": "Character used to display `CR`, old Macintosh' line ending.\nNote: `CR` files are not supported by VS Code: see [`microsoft/vscode#35797](https://github.com/microsoft/vscode/issues/35797).",
-                        "order": 0,
+                        "order": 1,
                         "type": "string",
                         "minLength": 1,
                         "maxLength": 1,
@@ -74,7 +73,7 @@
                         "scope": "language-overridable",
                         "title": "Symbol for CRLF",
                         "description": "Character used to display `CRLF`, Windows' line ending.",
-                        "order": 0,
+                        "order": 3,
                         "type": "string",
                         "minLength": 1,
                         "maxLength": 2,
@@ -132,8 +131,7 @@
                         "description": "If set, used instead of theme default for highlighting different EOL characters and extra whitespace."
                     }
                 }
-            }
-        ]
+        }
     },
     "scripts": {},
     "devDependencies": {

@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.9.8]
+
+### Changed
+
+- Another try to order CR/LF/CRLF symbols configuration
+
+
 ## [1.9.7]
 
 ### Changed
