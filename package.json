@@ -52,6 +52,7 @@
                 "properties": {
                     "code-eol.newlineCharacter": {
                         "scope": "language-overridable",
+                        "title": "LF Character",
                         "description": "Character used to display `LF`, Linux and Mac's line ending.",
                         "type": "string",
                         "minLength": 1,
@@ -60,6 +61,7 @@
                     },
                     "code-eol.returnCharacter": {
                         "scope": "language-overridable",
+                        "title": "CR Character",
                         "description": "Character used to display `CR`, old Macintosh' line ending.\nNote: `CR` files are not supported by VS Code: see [`microsoft/vscode#35797](https://github.com/microsoft/vscode/issues/35797).",
                         "type": "string",
                         "minLength": 1,
@@ -68,6 +70,7 @@
                     },
                     "code-eol.crlfCharacter": {
                         "scope": "language-overridable",
+                        "title": "CRLF Character",
                         "description": "Character used to display `CRLF`, Windows' line ending.",
                         "type": "string",
                         "minLength": 1,
@@ -76,36 +79,42 @@
                     },
                     "code-eol.highlightNonDefault": {
                         "scope": "language-overridable",
+                        "title": "Highlight Non-Default Line Endings",
                         "type": "boolean",
                         "default": false,
                         "description": "If set, non-standard line endings will be highlighted as errors.\nThe standard EOL is taken from `files.eol`."
                     },
                     "code-eol.highlightExtraWhitespace": {
                         "scope": "language-overridable",
+                        "title": "Highlight Extra Whitespace",
                         "type": "boolean",
                         "default": false,
                         "description": "If set, trailing whitespace will be highlighted as errors."
                     },
                     "code-eol.decorateBeforeEol": {
                         "scope": "language-overridable",
+                        "title": "Decorate Before EOL",
                         "type": "boolean",
                         "default": false,
                         "description": "If set, rendered characters will come before the end of the line.\nNote: If set, line endings will not be rendered on empty lines."
                     },
                     "code-eol.forceShowOnWordWrap": {
                         "scope": "language-overridable",
+                        "title": "Force Show on Word-Wrap",
                         "type": "boolean",
                         "default": false,
                         "description": "If set, rendered characters will always be shown when word wrap is on, regardless of the other settings."
                     },
                     "code-eol.forceShowOnBoundary": {
                         "scope": "language-overridable",
+                        "title": "Force Show on Boundary",
                         "type": "boolean",
                         "default": false,
                         "description": "If set, rendered characters will always be shown when word wrap is on, regardless of the other settings."
                     },
                     "code-eol.colors.default.foreground": {
                         "scope": "language-overridable",
+                        "title": "Default Foreground Color",
                         "type": ["string", "null"],
                         "format": "color-hex",
                         "default": false,
@@ -113,6 +122,7 @@
                     },
                     "code-eol.colors.error.foreground": {
                         "scope": "language-overridable",
+                        "title": "Error Foreground Color",
                         "type": ["string", "null"],
                         "format": "color-hex",
                         "default": false,
