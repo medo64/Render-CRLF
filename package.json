@@ -52,7 +52,7 @@
                 "properties": {
                     "code-eol.newlineCharacter": {
                         "scope": "language-overridable",
-                        "title": "LF Character",
+                        "title": "Symbol for LF",
                         "description": "Character used to display `LF`, Linux and Mac's line ending.",
                         "type": "string",
                         "minLength": 1,
@@ -61,7 +61,7 @@
                     },
                     "code-eol.returnCharacter": {
                         "scope": "language-overridable",
-                        "title": "CR Character",
+                        "title": "Symbol for CR",
                         "description": "Character used to display `CR`, old Macintosh' line ending.\nNote: `CR` files are not supported by VS Code: see [`microsoft/vscode#35797](https://github.com/microsoft/vscode/issues/35797).",
                         "type": "string",
                         "minLength": 1,
@@ -70,7 +70,7 @@
                     },
                     "code-eol.crlfCharacter": {
                         "scope": "language-overridable",
-                        "title": "CRLF Character",
+                        "title": "Symbol for CRLF",
                         "description": "Character used to display `CRLF`, Windows' line ending.",
                         "type": "string",
                         "minLength": 1,
