@@ -1,10 +1,18 @@
 # Change Log
 
+## [1.9.6]
+
+### Changed
+
+- Reworking configuration titles
+
+
 ## [1.9.5]
 
 ### Fixed
 
 - Readding changelog to the package
+
 
 ## [1.9.4]
 
@@ -15,6 +23,7 @@
 ### Fixed
 
 - Security updates for dependencies
+
 
 ## [1.9.3]
 
