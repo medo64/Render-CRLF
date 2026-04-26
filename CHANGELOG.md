@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.9.5]
+
+### Fixed
+
+- Readding changelog to the package
+
 ## [1.9.4]
 
 ### Added
