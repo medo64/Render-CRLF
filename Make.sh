@@ -101,8 +101,16 @@ make_upgrade() {
     echo "${ANSI_MAGENTA}┗━━━━━━━━━┛${ANSI_RESET}"
     echo
 
+    echo "${ANSI_CYAN}Audit${ANSI_RESET}"
+    npm audit
+    echo
+    echo "${ANSI_CYAN}Upgrade${ANSI_RESET}"
     npm upgrade || exit 113
+    echo
+    echo "${ANSI_CYAN}Update${ANSI_RESET}"
     npm update || exit 113
+    echo
+    echo "${ANSI_CYAN}Audit Fix${ANSI_RESET}"
     npm audit fix || exit 113
     echo
 }
