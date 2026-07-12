@@ -3,7 +3,7 @@
     "displayName": "Render Line Endings",
     "description": "Renders end of line characters (`CR`, `LF`, `CRLF`) when whitespace rendering is on",
     "icon": "ICON.png",
-    "version": "1.9.8",
+    "version": "1.9.9",
     "files": [
         "out/",
         "CHANGELOG.md",
@@ -117,7 +117,10 @@
                 "code-eol.colors.default.foreground": {
                     "scope": "language-overridable",
                     "title": "Default Foreground Color",
-                    "type": ["string", "null"],
+                    "type": [
+                        "string",
+                        "null"
+                    ],
                     "format": "color-hex",
                     "default": false,
                     "description": "If set, used instead of theme default for coloring EOL characters."
@@ -125,7 +128,10 @@
                 "code-eol.colors.error.foreground": {
                     "scope": "language-overridable",
                     "title": "Error Foreground Color",
-                    "type": ["string", "null"],
+                    "type": [
+                        "string",
+                        "null"
+                    ],
                     "format": "color-hex",
                     "default": false,
                     "description": "If set, used instead of theme default for highlighting different EOL characters and extra whitespace."
@@ -137,7 +143,7 @@
     "devDependencies": {
         "@types/node": "^22.15.29",
         "@vscode/test-electron": "^2.3.3",
-        "@vscode/vsce": "^2.15.0",
+        "@vscode/vsce": "^3.9.2",
         "eslint": "^8.7.0"
     },
     "overrides": {
