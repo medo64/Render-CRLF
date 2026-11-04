@@ -1,6 +1,13 @@
 # Change Log
 
 
+## [1.9.11]
+
+### Changed
+
+- Dependency update
+
+
 ## [1.9.10]
 
 ### Changed

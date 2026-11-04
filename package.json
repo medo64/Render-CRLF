@@ -3,7 +3,7 @@
     "displayName": "Render Line Endings",
     "description": "Renders end of line characters (`CR`, `LF`, `CRLF`) when whitespace rendering is on",
     "icon": "ICON.png",
-    "version": "1.9.10",
+    "version": "1.9.11",
     "files": [
         "out/",
         "CHANGELOG.md",
@@ -143,8 +143,8 @@
     "devDependencies": {
         "@types/node": "^22.15.29",
         "@vscode/test-electron": "^2.3.3",
-        "@vscode/vsce": "^3.9.2",
-        "eslint": "^8.7.0"
+        "@vscode/vsce": "^4.1.0",
+        "eslint": "^10.14.0"
     },
     "overrides": {
         "xml2js": "^0.5.0"
